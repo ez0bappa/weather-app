@@ -8,7 +8,7 @@
                 <i class="material-icons">=</i>
                 <nav>
                     <div>
-                        <router-link to="/shop">Weather App</router-link>
+                        <router-link to="/weather-app">Weather App</router-link>
                     </div>
                     <div>
                     </div>
