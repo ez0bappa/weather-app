@@ -4,6 +4,20 @@
             <div class="container">
                 <div class="page-content page-container" id="page-content">
                     <div class="padding">
+                        <div class="geo-data">
+                            <div v-if="errorStr">
+                                Sorry, but the following error
+                                occurred: {{errorStr}}
+                            </div>
+                            
+                            <div v-if="gettingLocation">
+                                <i>Getting your location...</i>
+                            </div>
+                            
+                            <div v-if="location">
+                                Your location data is {{ location.coords.latitude }}, {{ location.coords.longitude}}
+                            </div>
+                        </div>
                         <div class="row container d-flex justify-content-center">
                             <div class="col-lg-8 grid-margin stretch-card">
                                 <!--weather card-->
@@ -19,7 +33,7 @@
                                             </div>
                                         </div>
                                         <div class="weather-date-location">
-                                            <h3>Friday {{ query }}</h3>
+                                            <h3>{{ weather.name }}</h3>
                                             <p class="text-gray"> <span class="weather-date">25 March, 2019</span> <span class="weather-location">Sydney, Australia</span> </p>
                                         </div>
                                         <div class="weather-data d-flex">
@@ -66,6 +80,12 @@
                                 <!--weather card ends-->
                             </div>
                         </div>
+                        
+                        <div class="row">
+                            <pre>{{ JSON.stringify(weather, null, 2) }}</pre>
+
+                            <!-- {{ weather }} -->
+                        </div>
                     </div>
                 </div>
             </div>      
@@ -74,60 +94,91 @@
 </template>
 
 <script>
-    import { computed, ref } from 'vue'
+    import { computed, reactive, ref } from 'vue'
     import axios from "axios";
 
     export default {
         name: 'WeatherApp',
         data() {
             return {
-                api_key: "7f40938131da6e5fe5ebeaea4fe2d0da",
-                url_base: "https://api.openweathermap.org/data/2.5/",
                 query: "",
-                weather: {},
             }
         },
         setup() {
             const query = ref('')
+            const weather = ref('')
+            const gettingLocation = ref(Boolean);
+            const location = ref('')
+            const errorStr = ref('')
+
+            if(!("geolocation" in navigator)) {
+                errorStr.value = 'Geolocation is not available.';
+                return;
+            }
+
+            gettingLocation.value = true;
+            // get position
+            navigator.geolocation.getCurrentPosition(pos => {
+                gettingLocation.value = false;
+                location.value = pos;
+            }, err => {
+                gettingLocation.value = false;
+                errorStr.value = err.message;
+            })
 
             async function fetchWeather(e) {
                 if(e.key) {
-                    const options = {
-                    method: 'GET',
-                    url: 'https://community-open-weather-map.p.rapidapi.com/weather',
-                    params: {
-                        q: this.query,
-                        lat: '0',
-                        lon: '0',
-                        callback: 'test',
-                        id: '2172797',
-                        lang: 'null',
-                        units: 'imperial',
-                        mode: 'xml'
-                    },
-                    headers: {
-                        'X-RapidAPI-Host': 'community-open-weather-map.p.rapidapi.com',
-                        'X-RapidAPI-Key': 'db48f7ba68mshe6914830992a346p10b5a9jsn47bf2465e3ff'
-                    }
-                    };
+                    try{
+                        let result = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${query.value}&APPID=85eb9f0808084442af914cdc92e4bddd`)
 
-                    let data = axios.request(options).then(function (response) {
-                        console.log(response.data);
-                    }).catch(function (error) {
-                        console.error(error);
-                    });
 
-                    // let data = await axios.get(`https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=' + this.latitude + '&lon=' + this.longitude + '&APPID=69d3cf86b46f19cf3e049339355533aa`)
-                                
-                    console.log(data)
+                        
+                        console.log(result.data)
+                        weather.value = result.data
+                    } catch (err) {
+                        console.log(err.message)
+                    } 
 
-                    
+
+                    // const options = {
+                    //     method: 'GET',
+                    //     url: 'https://community-open-weather-map.p.rapidapi.com/weather',
+                    //     params: {
+                    //         q: 'London,uk',
+                    //         lat: '0',
+                    //         lon: '0',
+                    //         callback: 'testCB',
+                    //         id: '2172797',
+                    //         lang: 'null',
+                    //         units: 'imperial',
+                    //         mode: 'xml'
+                    //     },
+                    //     headers: {
+                    //         'X-RapidAPI-Host': 'community-open-weather-map.p.rapidapi.com',
+                    //         'X-RapidAPI-Key': 'db48f7ba68mshe6914830992a346p10b5a9jsn47bf2465e3ff'
+                    //     }
+                    // };
+
+                    // let result = await axios.request(options).then(function (response) {
+                    //     console.log(response.data);
+                    //     weather.value = response.data
+                    // }).catch(function (error) {
+                    //     console.error(error);
+                    // });
+
+                    // let location = query.value
+                    // console.log(query.value)
                 }
             }
 
             return {
                 query,
-                fetchWeather
+                fetchWeather,
+                weather,
+                gettingLocation,
+                location,
+                errorStr
+
             }
         },
     }
