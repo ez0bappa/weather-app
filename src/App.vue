@@ -1,16 +1,20 @@
 <template>
   <div class="home-entry">
     <NavbarVue />
+    <WeatherAppVue />
+
   </div>
 </template>
 
 <script>
   import NavbarVue from './components/Shared/Navbar.vue'
+  import WeatherAppVue from './components/WeatherApp/WeatherApp.vue'
 
   export default {
     name: 'App',
     components: {
-      NavbarVue
+      NavbarVue,
+      WeatherAppVue
     }
   }
 </script>

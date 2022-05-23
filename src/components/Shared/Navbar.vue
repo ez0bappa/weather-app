@@ -11,7 +11,6 @@
                         <router-link to="/shop">Weather App</router-link>
                     </div>
                     <div>
-                        <!-- <router-link to="/shop">Shop</router-link> -->
                     </div>
                 </nav>
             </header>
