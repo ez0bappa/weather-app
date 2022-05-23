@@ -11,7 +11,7 @@
                                     <div class="card-body custom-card-body">
                                         <div class="search-box">
                                             <div class="right">
-                                                <input id="location" type="text" value="" placeholder="search for location">
+                                                <input id="location" type="text" placeholder="search for location"  v-model="query" v-on:keyup.enter="fetchWeather">
                                                 <!-- <h2>Today, <span class="day">Monday 23</span></h2>
                                                 <h3 class="temperature">Temperature: <span class="temp">32 °C</span></h3>
                                                 <h3>Wind speed: <span id="wind">1.46m/s</span></h3>
@@ -19,7 +19,7 @@
                                             </div>
                                         </div>
                                         <div class="weather-date-location">
-                                            <h3>Friday</h3>
+                                            <h3>Friday {{ query }}</h3>
                                             <p class="text-gray"> <span class="weather-date">25 March, 2019</span> <span class="weather-location">Sydney, Australia</span> </p>
                                         </div>
                                         <div class="weather-data d-flex">
@@ -74,14 +74,62 @@
 </template>
 
 <script>
-import { onMounted } from '@vue/runtime-core'
+    import { computed, ref } from 'vue'
+    import axios from "axios";
+
     export default {
         name: 'WeatherApp',
-        setup() {
-            onMounted: {
-                console.log('computed test')
+        data() {
+            return {
+                api_key: "7f40938131da6e5fe5ebeaea4fe2d0da",
+                url_base: "https://api.openweathermap.org/data/2.5/",
+                query: "",
+                weather: {},
             }
-        }
+        },
+        setup() {
+            const query = ref('')
+
+            async function fetchWeather(e) {
+                if(e.key) {
+                    const options = {
+                    method: 'GET',
+                    url: 'https://community-open-weather-map.p.rapidapi.com/weather',
+                    params: {
+                        q: this.query,
+                        lat: '0',
+                        lon: '0',
+                        callback: 'test',
+                        id: '2172797',
+                        lang: 'null',
+                        units: 'imperial',
+                        mode: 'xml'
+                    },
+                    headers: {
+                        'X-RapidAPI-Host': 'community-open-weather-map.p.rapidapi.com',
+                        'X-RapidAPI-Key': 'db48f7ba68mshe6914830992a346p10b5a9jsn47bf2465e3ff'
+                    }
+                    };
+
+                    let data = axios.request(options).then(function (response) {
+                        console.log(response.data);
+                    }).catch(function (error) {
+                        console.error(error);
+                    });
+
+                    // let data = await axios.get(`https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=' + this.latitude + '&lon=' + this.longitude + '&APPID=69d3cf86b46f19cf3e049339355533aa`)
+                                
+                    console.log(data)
+
+                    
+                }
+            }
+
+            return {
+                query,
+                fetchWeather
+            }
+        },
     }
 </script>
 
