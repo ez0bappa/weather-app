@@ -1,187 +1,207 @@
 <template>
     <div class="weather-app">
         <div class="center-div"> 
-            <div class="container">
-                <div class="page-content page-container" id="page-content">
-                    <div class="padding">
-                        <div class="geo-data">
-                            <div v-if="errorStr">
-                                Sorry, but the following error
-                                occurred: {{errorStr}}
-                            </div>
-                            
-                            <div v-if="gettingLocation">
-                                <i>Getting your location...</i>
-                            </div>
-                            
-                            <div v-if="location">
-                                Your location data is {{ location.coords.latitude }}, {{ location.coords.longitude}}
-                            </div>
+            <div class="page-content page-container" id="page-content">
+                <div class="padding">
+                    <div class="geo-data">
+                        <div v-if="errorStr">
+                            Sorry, but the following error
+                            occurred: {{errorStr}}
                         </div>
-                        <div class="row container d-flex justify-content-center">
-                            <div class="col-lg-8 grid-margin stretch-card">
-                                <!--weather card-->
-                                <div class="card card-weather">
-                                    <div class="card-body custom-card-body">
-                                        <div class="search-box">
-                                            <div class="right">
-                                                <input id="location" type="text" placeholder="search for location"  v-model="query" v-on:keyup.enter="fetchWeather">
-                                                <!-- <h2>Today, <span class="day">Monday 23</span></h2>
-                                                <h3 class="temperature">Temperature: <span class="temp">32 °C</span></h3>
-                                                <h3>Wind speed: <span id="wind">1.46m/s</span></h3>
-                                                <h3>Humidity: <span id="humidity">63%</span></h3> -->
-                                            </div>
-                                        </div>
-                                        <div class="weather-date-location">
-                                            <h3>{{ weather.name }}</h3>
-                                            <p class="text-gray"> <span class="weather-date">25 March, 2019</span> <span class="weather-location">Sydney, Australia</span> </p>
-                                        </div>
-                                        <div class="weather-data d-flex">
-                                            <div class="mr-auto">
-                                                <h4 class="display-3">32
-                                        <span class="symbol">&deg;</span>C</h4>
-                                                <p> Cloudy </p>
-                                            </div>
+                        
+                        <div v-if="gettingLocation">
+                            <i>Getting your location...</i>
+                        </div>
+                        
+                        <div v-if="locationPos">
+                            Your location data is {{  }}, {{ }}
+                        </div>
+                    </div>
+                    <div class="row container d-flex justify-content-center">
+                        <div class="col-lg-8 grid-margin stretch-card">
+                            <!--weather card-->
+                            <div class="card card-weather">
+                                <div class="card-body custom-card-body">
+                                    <div class="search-box">
+                                        <div class="right">
+                                            <input id="location" type="text" placeholder="search for location"  v-model="query" v-on:keyup.enter="fetchWeather">
+                                            <!-- <h2>Today, <span class="day">Monday 23</span></h2>
+                                            <h3 class="temperature">Temperature: <span class="temp">32 °C</span></h3>
+                                            <h3>Wind speed: <span id="wind">1.46m/s</span></h3>
+                                            <h3>Humidity: <span id="humidity">63%</span></h3> -->
                                         </div>
                                     </div>
-                                    <div class="card-body p-0">
-                                        <div class="d-flex weakly-weather">
-                                            <div class="weakly-weather-item">
-                                                <p class="mb-0"> Sun </p> <i class="mdi mdi-weather-cloudy"></i>
-                                                <p class="mb-0"> 30&deg; </p>
-                                            </div>
-                                            <div class="weakly-weather-item">
-                                                <p class="mb-1"> Mon </p> <i class="mdi mdi-weather-hail"></i>
-                                                <p class="mb-0"> 31&deg; </p>
-                                            </div>
-                                            <div class="weakly-weather-item">
-                                                <p class="mb-1"> Tue </p> <i class="mdi mdi-weather-partlycloudy"></i>
-                                                <p class="mb-0"> 28&deg; </p>
-                                            </div>
-                                            <div class="weakly-weather-item">
-                                                <p class="mb-1"> Wed </p> <i class="mdi mdi-weather-pouring"></i>
-                                                <p class="mb-0"> 30&deg; </p>
-                                            </div>
-                                            <div class="weakly-weather-item">
-                                                <p class="mb-1"> Thu </p> <i class="mdi mdi-weather-pouring"></i>
-                                                <p class="mb-0"> 29&deg; </p>
-                                            </div>
-                                            <div class="weakly-weather-item">
-                                                <p class="mb-1"> Fri </p> <i class="mdi mdi-weather-snowy-rainy"></i>
-                                                <p class="mb-0"> 31&deg; </p>
-                                            </div>
-                                            <div class="weakly-weather-item">
-                                                <p class="mb-1"> Sat </p> <i class="mdi mdi-weather-snowy"></i>
-                                                <p class="mb-0"> 32&deg; </p>
-                                            </div>
+                                    <div class="weather-date-location">
+                                        <h3>city - {{ weatherApiData }}</h3>
+                                        <p class="text-gray">
+                                            <span class="weather-date">
+                                                <!-- date -> {{ weatherApiData.value }} ||  -->
+                                                <pre>{{ JSON.stringify(weatherApiData.value, null, 2) }}</pre>
+                                            </span>
+                                            <span class="weather-location">
+                                                location - {{  }}
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="weather-data d-flex">
+                                        <div class="mr-auto">
+                                            <h4 class="display-3">32
+                                    <span class="symbol">&deg;</span>C</h4>
+                                            <!-- <p>{{ weather ? weather.weather[0].description : '' }}</p> -->
                                         </div>
                                     </div>
                                 </div>
-                                <!--weather card ends-->
+                                <div class="card-body p-0">
+                                    <div class="d-flex weakly-weather">
+                                        <div class="weakly-weather-item">
+                                            <p class="mb-0"> Sun </p> <i class="mdi mdi-weather-cloudy"></i>
+                                            <p class="mb-0"> 30&deg; </p>
+                                        </div>
+                                        <div class="weakly-weather-item">
+                                            <p class="mb-1"> Mon </p> <i class="mdi mdi-weather-hail"></i>
+                                            <p class="mb-0"> 31&deg; </p>
+                                        </div>
+                                        <div class="weakly-weather-item">
+                                            <p class="mb-1"> Tue </p> <i class="mdi mdi-weather-partlycloudy"></i>
+                                            <p class="mb-0"> 28&deg; </p>
+                                        </div>
+                                        <div class="weakly-weather-item">
+                                            <p class="mb-1"> Wed </p> <i class="mdi mdi-weather-pouring"></i>
+                                            <p class="mb-0"> 30&deg; </p>
+                                        </div>
+                                        <div class="weakly-weather-item">
+                                            <p class="mb-1"> Thu </p> <i class="mdi mdi-weather-pouring"></i>
+                                            <p class="mb-0"> 29&deg; </p>
+                                        </div>
+                                        <div class="weakly-weather-item">
+                                            <p class="mb-1"> Fri </p> <i class="mdi mdi-weather-snowy-rainy"></i>
+                                            <p class="mb-0"> 31&deg; </p>
+                                        </div>
+                                        <div class="weakly-weather-item">
+                                            <p class="mb-1"> Sat </p> <i class="mdi mdi-weather-snowy"></i>
+                                            <p class="mb-0"> 32&deg; </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="row">
-                            <pre>{{ JSON.stringify(weather, null, 2) }}</pre>
-
-                            <!-- {{ weather }} -->
+                            <!--weather card ends-->
                         </div>
                     </div>
+                    
+                    <div class="row">
+                        <!-- <pre>{{ JSON.stringify(weatherApiData.value, null, 2) }}</pre> -->
+
+                        <!-- {{ weather }} -->
+                    </div>
                 </div>
-            </div>      
+            </div>
+
+            <!-- <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <WeatherApp1 />
+                    </div>
+                    <div class="col-md-6">
+                        Test
+                    </div> 
+                </div>
+            </div> -->
         </div>
     </div>
 </template>
 
 <script>
     import { computed, reactive, ref } from 'vue'
+    import WeatherApp1Vue from './WeatherApp1.vue';
     import axios from "axios";
+    import WeatherApp1 from './WeatherApp1.vue';
 
     export default {
-        name: 'WeatherApp',
-        data() {
-            return {
-                query: "",
-            }
-        },
-        setup() {
-            const query = ref('')
-            const weather = ref('')
-            const gettingLocation = ref(Boolean);
-            const location = ref('')
-            const errorStr = ref('')
-
-            if(!("geolocation" in navigator)) {
-                errorStr.value = 'Geolocation is not available.';
-                return;
-            }
-
-            gettingLocation.value = true;
-            // get position
-            navigator.geolocation.getCurrentPosition(pos => {
-                gettingLocation.value = false;
-                location.value = pos;
-            }, err => {
-                gettingLocation.value = false;
-                errorStr.value = err.message;
-            })
-
-            async function fetchWeather(e) {
-                if(e.key) {
-                    try{
-                        let result = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${query.value}&APPID=85eb9f0808084442af914cdc92e4bddd`)
+    name: "WeatherApp",
+    data() {
+        return {
+            query: "",
+        };
+    },
+    setup() {
+        const query = ref("");
+        var weatherApiData = reactive([]);
+        const gettingLocation = ref(Boolean);
+        const locationPos = ref("");
+        const errorStr = ref("");
+        const curTemp = ref("")
+        const apiData = reactive({})
 
 
-                        
-                        console.log(result.data)
-                        weather.value = result.data
-                    } catch (err) {
-                        console.log(err.message)
-                    } 
+        if (!("geolocation" in navigator)) {
+            errorStr.value = "Geolocation is not available.";
+            return;
+        }
+        gettingLocation.value = true;
+        // get position
+        navigator.geolocation.getCurrentPosition(pos => {
+            gettingLocation.value = false;
+            locationPos.value = pos;
+        }, err => {
+            gettingLocation.value = false;
+            errorStr.value = err.message;
+        });
+        async function fetchWeather(e) {
+            if (e.key) {
+                try {
+                    await axios.get(`http://api.weatherapi.com/v1/forecast.json?key=52b3ca2edfaf46a08d9190038222305&q=${query.value}&days=7`).then((response) => {
+                        if (response.status === 200) {
+                            console.log(response.data)
+                            weatherApiData.value = response.data
+                        }
+                    })
+
+                    // let result = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${query.value}&APPID=85eb9f0808084442af914cdc92e4bddd`)
+
+                    // let result = await axios.get(`http://history.openweathermap.org/data/2.5/history/city?lat=41.85&lon=-87.65&appid=52b3ca2edfaf46a08d9190038222305`); 
 
 
-                    // const options = {
-                    //     method: 'GET',
-                    //     url: 'https://community-open-weather-map.p.rapidapi.com/weather',
-                    //     params: {
-                    //         q: 'London,uk',
-                    //         lat: '0',
-                    //         lon: '0',
-                    //         callback: 'testCB',
-                    //         id: '2172797',
-                    //         lang: 'null',
-                    //         units: 'imperial',
-                    //         mode: 'xml'
-                    //     },
-                    //     headers: {
-                    //         'X-RapidAPI-Host': 'community-open-weather-map.p.rapidapi.com',
-                    //         'X-RapidAPI-Key': 'db48f7ba68mshe6914830992a346p10b5a9jsn47bf2465e3ff'
-                    //     }
-                    // };
 
-                    // let result = await axios.request(options).then(function (response) {
-                    //     console.log(response.data);
-                    //     weather.value = response.data
-                    // }).catch(function (error) {
-                    //     console.error(error);
-                    // });
-
-                    // let location = query.value
-                    // console.log(query.value)
+                    // console.log(result)
                 }
+                catch (err) {
+                    console.log(err.message);
+                }
+                // const options = {
+                //     method: 'GET',
+                //     url: 'https://community-open-weather-map.p.rapidapi.com/weather',
+                //     params: {
+                //         q: 'London,uk',
+                //         lat: '0',
+                //         lon: '0',
+                //         callback: 'testCB',
+                //         id: '2172797',
+                //         lang: 'null',
+                //         units: 'imperial',
+                //         mode: 'xml'
+                //     },
+                //     headers: {
+                //         'X-RapidAPI-Host': 'community-open-weather-map.p.rapidapi.com',
+                //         'X-RapidAPI-Key': 'db48f7ba68mshe6914830992a346p10b5a9jsn47bf2465e3ff'
+                //     }
+                // };
+                // let result = await axios.request(options)
+                // console.log(result)
+                // weather.value = response.data
             }
-
-            return {
-                query,
-                fetchWeather,
-                weather,
-                gettingLocation,
-                location,
-                errorStr
-
-            }
-        },
-    }
+        }
+        return {
+            query,
+            fetchWeather,
+            weatherApiData,
+            gettingLocation,
+            location,
+            errorStr,
+            apiData
+        };
+    },
+    components: { WeatherApp1 }
+}
 </script>
 
 <style scoped>
