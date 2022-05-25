@@ -1,5 +1,5 @@
 <template>
-    <div class="center-div"> 
+    <div class="center-div1"> 
         <div class="page-content page-container" id="page-content">
             <div class="padding">
                 <div class="row container d-flex justify-content-center">
@@ -10,33 +10,47 @@
                                 <div class="search-box">
                                     <div class="right">
                                         <input id="location" type="text" placeholder="search for location"  v-model="query" v-on:keyup.enter="fetchWeather">
-                                        <!-- <h2>Today, <span class="day">Monday 23</span></h2>
-                                        <h3 class="temperature">Temperature: <span class="temp">32 °C</span></h3>
-                                        <h3>Wind speed: <span id="wind">1.46m/s</span></h3>
-                                        <h3>Humidity: <span id="humidity">63%</span></h3> -->
                                     </div>
                                 </div>
                                 <div class="weather-date-location">
-                                <h3>{{ this.apiResponse[0] ? this.apiResponse[0].location.name : '' }}</h3>
-                                <p class="text-gray" v-if="this.apiResponse[0]">
-                                    <span class="weather-date">{{ this.apiResponse[0] ? this.apiResponse[0].location.localtime : '' }} || </span>
-                                    <span class="weather-location">{{ this.apiResponse[0] ? this.apiResponse[0].location.name : '' }} || </span>
-                                    Region : <span class="weather-location">{{ this.apiResponse[0] ? this.apiResponse[0].location.region : '' }}</span>
-                                </p>
+                                    <h3>{{ this.apiResponse[0] ? this.apiResponse[0].location.name : '' }}</h3>
+                                    <p class="text-gray" v-if="this.apiResponse[0]">
+                                        <span class="weather-date">{{ this.apiResponse[0] ? this.apiResponse[0].location.localtime : '' }} || </span>
+                                        <span class="weather-location">{{ this.apiResponse[0] ? this.apiResponse[0].location.name : '' }} || </span>
+                                        Region : <span class="weather-location">{{ this.apiResponse[0] ? this.apiResponse[0].location.region : '' }}</span>
+                                    </p>
                                 </div>
-                                <div class="weather-data d-flex">
-                                <div class="mr-auto" v-if="this.apiResponse[0]">
-                                    <h4 class="display-3">{{ this.apiResponse[0] ? this.apiResponse[0].current.temp_c : '' }} <span class="symbol">&deg;</span>C </h4>
-                                    <p> Cloudy </p>
-                                </div>
+                                <div class="weather-data">
+                                    <div class="custom-clouds">
+                                        <Clouds 
+                                            :weatherIs="this.apiResponse[0] ? this.apiResponse[0].current.condition.text : '' " 
+                                            :nowTemperature="this.apiResponse[0] ? this.apiResponse[0].current.temp_c : ''"
+                                            />
+                                    </div>
+                                    <div class="custom-clouds">
+                                        
+                                    </div>
+                                    <div class="mr-auto temperature-data" v-if="this.apiResponse[0]">
+                                        <h4 class="display-3">{{ this.apiResponse[0] ? this.apiResponse[0].current.temp_c : '' }} <span class="symbol">&deg;</span>C </h4>
+                                        <p class="weather-condition">{{ this.apiResponse[0].current.condition.text }}</p>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- <div class="speed-fog-data">
+                                Today, <span class="day">Monday 23</span>
+                                Temperature: <span class="temp">32 °C</span>
+                                Wind speed: <span id="wind">1.46m/s</span>
+                                Humidity: <span id="humidity">63%</span>
+                            </div> -->
                             <div class="card-body p-0" v-if="this.apiResponse[0]">
                                 <div class="d-flex justify-content-center weakly-weather">
                                     <div class="weakly-weather-item" v-for="(item, index) in this.apiResponse[0].forecast.forecastday" :key="index">
                                         <p class="mb-0"> {{ item.date }}</p>
                                         <i class="mdi mdi-weather-cloudy"></i>
-                                        <p class="mb-0">{{ item.day.maxtemp_c }}</p>
+                                        <div class="temperaure-range">
+                                            <span class="mb-0">{{ item.day.maxtemp_c }} &deg; C</span>
+                                            <p class="mb-0">Min: {{ item.day.mintemp_c }} &deg; C</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +64,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+    import axios from 'axios'
+    import Clouds from './Clouds/Clouds.vue'
 
     export default {
         name: 'WeatherApp1',
@@ -61,15 +76,14 @@ import axios from 'axios'
             }
 
         },
+        components: { Clouds },
         methods: {
             async fetchWeather(e) {
                 if (e.key) {
                     try {
                         let result = await axios.get(`http://api.weatherapi.com/v1/forecast.json?key=52b3ca2edfaf46a08d9190038222305&q=${this.query}&days=7`)
-                        // console.log(result.data)
-                        // this.apiResponse.push(result.data)
                         this.apiResponse = [result.data]
-                        console.log(this.apiResponse)
+                        // console.log(this.apiResponse)
                     } catch(err) {
                         console.log(err.message)
                     }
@@ -245,4 +259,17 @@ p {
     border-right: 1px solid grey;
     border-left: 1px solid grey;
 }
+
+/* .custom-clouds {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    margin-top: 40px;
+}
+
+.mr-auto.temperature-data {
+    position: absolute;
+    top: 50%;
+    left: 65%;
+} */
 </style>
