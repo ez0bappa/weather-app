@@ -10,14 +10,16 @@
 </template>
 
 <script>
-import axios from 'axios'
+    import { useToast } from "vue-toastification";
+    import axios from 'axios'
 
     export default {
         name: 'SearchBox',
         data() {
             return {
                 query: 'kolkata',
-                apiResponse: []
+                apiResponse: [],
+                toast: useToast()
             }
         },
         methods: {
@@ -28,13 +30,12 @@ import axios from 'axios'
                         // let result = await axios.get(`api.openweathermap.org/data/2.5/forecast/daily?lat=35&lon=139&cnt=10&appid=52b3ca2edfaf46a08d9190038222305`)
                         if(result.status == 200) {
                             this.apiResponse = result.data
-                            // console.log(this.apiResponse)
-                            
                             this.$emit('weatherApiData', [result.data])
                         }
-                        
                     } catch(err) {
-                        console.log(err.message)
+                        this.toast.warning('something went wrong, Please check and try again...', {
+                            timeout: 6000
+                        });
                     }
                 }
             }

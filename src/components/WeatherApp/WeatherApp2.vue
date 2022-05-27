@@ -2,16 +2,16 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4 order-md-2 mb-4 p-0" v-if="this.apiResponseData">
+                <!-- <pre>{{ JSON.stringify(filterDate[0], null, 2) }}</pre> -->
                 <div class="container">
                     <div class="row">
                         <div class="col">
                             <div class="left card-container" v-for="(data, index) in this.forecast.forecastday" :key="index">
-                                <!-- <pre>{{ JSON.stringify(data, null, 2) }}</pre> -->
                                 <div class="flip-box">
                                     <div class="front">
                                         <div id="forcast-info">
                                             <span class="Symbol">
-                                                <b class="Stat">{{ data.date }}</b>
+                                                <b class="Stat">{{ filterDate[index] }}</b>
                                                 <b class="Label"></b><br>
                                             </span><br>
                                             <div class="row">
@@ -33,9 +33,16 @@
                                         </div>
                                     </div>
                                     <div class="back">
+                                        <span class="Symbol">
+                                            <b class="Stat">{{ data.date }}</b>
+                                            <b class="Label"></b><br>
+                                        </span><br>
                                         <div class="row">
-                                            <div class="days-in">
-                                                data
+                                            <div class="col-6 text-start mt-2" style="font-size: 12px;">
+                                                <div class="d-flex justify-content-around funny-weather">
+                                                    <img class="weather-condition" :src="this.apiResponseData ? data.day.condition.icon : ''" alt="weather-pic">
+                                                    <p>{{ data.day.condition.text }}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -53,16 +60,15 @@
                         <button class="close"><i class="fa fa-times" aria-hidden="true"></i></button>
                     </div>
                     <div id="current" class="wrapper" v-if="this.apiResponseData">
-                        <div class="section-search">
-                            <!--  -->
-                            <!-- <input id="location" type="text" placeholder="search for location"  v-model="query" v-on:keyup.enter="fetchWeather"> -->
+                        <div class="time-info">
+                            {{ todayFilter.time }}
                         </div>
                         <nav>
                             <button id="unitBtn" data-units="f">C</button>
                             <button id="unitBtn" data-units="f">F</button>
                         </nav>
                         <h1 class="location" v-if="this.apiResponseData">{{ this.location.name }}, {{ location.country }}</h1>
-                        <h2 class="date" v-if="this.apiResponseData">{{ location.localtime }}</h2>
+                        <h2 class="date" v-if="this.apiResponseData">{{ todayFilter.todayIs }}, {{ todayFilter.time }}</h2>
                         <div class="weatherIcon">
                             <div class="sunny">
                                 <div class="inner" v-if="this.apiResponseData">
@@ -81,12 +87,16 @@
                                 <p>Wind Speed: {{ this.current.wind_kph }} KM.</p>
                             </div>
                         </div>
+                        <div class="globe-info-box me-4">
+                            <span class="me-2">Latitude: {{ this.location.lat }}</span><b></b>
+                            <span class="region">Longitude: {{ this.location.lon }}</span>
+                        </div>
                         <div class="globe-right me-4">
                             <span class="text-muted me-2">{{ this.apiResponseData ? this.location.region : '' }}</span>
                             <span class="region" style="font-size: 15px;color: ivory;">{{ this.apiResponseData ? this.location.tz_id : '' }}</span>
                         </div>
                     </div>
-                    <div id="future" class="wrapper" v-if="this.apiResponseData">
+                    <!-- <div id="future" class="wrapper" v-if="this.apiResponseData">
                         <div class="container">
                             <div class="card-container">
                                 <div class="front">
@@ -120,7 +130,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <footer>
                         <p id="lastUpdated">Last updated at {{ this.apiResponseData ? this.current.last_updated : '' }}</p>
                         <!-- <p>Created by <a href="http://tiffanydu.com/" title="Visit Portfolio Site" target="_blank">Tiffany Du</a> | Weather data from <a href="https://www.wunderground.com/" title="Wunderground.com" target="_blank">Wunderground</a></p> -->
@@ -152,7 +162,7 @@
         computed: {
             filterDate() {
                 if (this.apiResponseData) {
-                    var date = this.forecast.forecastday.map(item => {
+                    let date = this.forecast.forecastday.map(item => {
                         const dayOfWeekName = new Date(item.date).toLocaleString(
                             'default', {weekday: 'long'}
                         )
@@ -160,6 +170,24 @@
                     })
 
                     return date
+                }
+            },
+            todayFilter() {
+                if (this.apiResponseData) {
+                    let todayIs = this.apiResponseData.location.localtime.split(" ")
+                    let date = todayIs[0]
+                    let time = todayIs[1]
+
+
+                    const dayOfWeekName = new Date(date).toLocaleString(
+                        'default', {weekday: 'long'}
+                    )
+
+                    return ({
+                        'todayIs': dayOfWeekName,
+                        'date': date,
+                        'time': time
+                    })
                 }
             }
         },
@@ -532,9 +560,10 @@ nav {
     right: 0;
 }
 
-.globe-left.me-4 {
+.globe-left.me-4, .globe-info-box.me-4 {
     position: absolute;
 }
+
 
 /* Floating div */
 .floating {
@@ -578,9 +607,13 @@ span.celcius-fahrenheit {
     left: 64%;
 }
 
-.globe.info-box.me-4 {
+.time-info {
     position: absolute;
+    top: 5px;
+    right: 10px;
 }
+
+
 
 /* Flip box design start */
 #forcast-info {
