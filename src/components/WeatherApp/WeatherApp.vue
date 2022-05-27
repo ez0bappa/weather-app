@@ -36,7 +36,7 @@
                                         <p class="text-gray">
                                             <span class="weather-date">
                                                 <!-- date -> {{ weatherApiData.value }} ||  -->
-                                                <pre>{{ JSON.stringify(weatherApiData.value, null, 2) }}</pre>
+                                                <!-- <pre>{{ JSON.stringify(weatherApiData.value, null, 2) }}</pre> -->
                                             </span>
                                             <span class="weather-location">
                                                 location - {{  }}

@@ -4,6 +4,23 @@
             <div class="padding">
                 <div class="row container d-flex justify-content-center">
                     <div class="col-lg-8 grid-margin stretch-card">
+                        <div class="geo-data">
+                            <div v-if="errorStr">
+                                Sorry, but the following error
+                                occurred: {{errorStr}}
+                            </div>
+                            
+                            <div v-if="gettingLocation">
+                                <i>Getting your location...</i>
+                            </div>
+                            
+                            <div v-if="locationPos">
+                                Your location data is {{  }}, {{ }}
+                            </div>
+                        </div>
+                        <div class="test">
+                           <!-- Testing: {{ apiResponse }} -->
+                        </div>
                         <!--weather card-->
                         <div class="card card-weather">
                             <div class="card-body custom-card-body">
@@ -72,18 +89,37 @@
         data() {
             return {
                 query: '',
+                gettingLocation: Boolean,
+                locationPos : '',
+                errorStr: '',
                 apiResponse: []
             }
 
         },
         components: { Clouds },
+        created() {
+            if (!("geolocation" in navigator)) {
+                this.errorStr = "Geolocation is not available.";
+                return;
+            }
+            this.gettingLocation = true;
+
+            navigator.geolocation.getCurrentPosition(pos => {
+                this.gettingLocation = false;
+                this.locationPos = pos;
+            }, err => {
+                this.gettingLocation = false;
+                this.errorStr = err.message;
+            });
+        },
         methods: {
             async fetchWeather(e) {
                 if (e.key) {
                     try {
                         let result = await axios.get(`http://api.weatherapi.com/v1/forecast.json?key=52b3ca2edfaf46a08d9190038222305&q=${this.query}&days=7`)
+                        // let result = await axios.get(`api.openweathermap.org/data/2.5/forecast/daily?lat=35&lon=139&cnt=10&appid=52b3ca2edfaf46a08d9190038222305`)
                         this.apiResponse = [result.data]
-                        // console.log(this.apiResponse)
+                        console.log(this.apiResponse)
                     } catch(err) {
                         console.log(err.message)
                     }
@@ -147,7 +183,7 @@
     background-image: linear-gradient(to left bottom, #d6eef6, #dff0fa, #e7f3fc, #eff6fe, #f6f9ff);
 }
 
-.card {
+/* .card {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -157,7 +193,7 @@
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
-}
+} */
 
 
 .card-weather .card-body:first-child {

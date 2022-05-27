@@ -1,7 +1,7 @@
 <template>
     <div class="clouds" v-if="weatherIs">
         <div class="all-clouds" v-for="(item, index) in this.pairClouds" :key="index">
-          <div class="test">{{ bgImageObj }}</div>
+          <!-- <div class="test">{{ bgImageObj }}</div> -->
             <!-- <div class="icon sunny">
                 <div class="sun">
                     <div class="rays"></div>

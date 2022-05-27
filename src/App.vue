@@ -8,7 +8,7 @@
 
 <script>
   import NavbarVue from './components/Shared/Navbar.vue'
-  import WeatherAppVue from './components/WeatherApp/WeatherApp1.vue'
+  import WeatherAppVue from './components/WeatherApp/WeatherApp2.vue'
 
   export default {
     name: 'App',
