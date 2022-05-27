@@ -8,9 +8,23 @@
                         <div class="col">
                             <div class="left card-container" v-for="data in filterDate" :key="data">
                                 <div class="front">
-                                    <WeatherStockData :forecastData="this.apiResponseData.forecast" :day="date" />
-                                    <!-- <div class="date">{{ data }}</div> -->
-                                    <!-- <span class="text-muted" style="font-size: ">Sunrise: </span> -->
+                                    <!-- <WeatherStockData :forecastData="this.apiResponseData.forecast" :day="date" /> -->
+                                    <div id="forcast-info">
+                                        <span class="Symbol">
+                                            <b class="Stat">{{ data }}</b>
+                                            <b class="Label"></b><br>
+                                        </span><br>
+                                        <div class="row">
+                                            <div class="col-6 text-start mt-2" style="font-size: 12px;">
+                                                <span class="Price"><b class="Label">Sunrise</b> <b class="Stat">04:00AM</b></span><br>
+                                                <span class="Change"><b class="Label">Sunset</b> <b class="Stat">05:00PM</b> <b class="Stat"></b></span><br>
+                                            </div>
+                                            <div class="col-6 text-end mt-2" style="font-size: 12px;">
+                                                <span class="Price"><b class="Label">Moonrise</b> <b class="Stat">07:00PM</b></span><br>
+                                                <span class="Change"><b class="Label">Moonrset</b> <b class="Stat">11:00PM</b><b class="Stat"></b></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="back">
                                     <div class="row">
@@ -475,7 +489,7 @@ nav {
 .card-container {
 	position: relative;
 }
-.front, .back {
+/* .front, .back {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -495,7 +509,7 @@ nav {
 
 .card-container {
 	perspective: 75rem;
-}
+} */
 
 .globe-right {
     position: absolute;
@@ -551,4 +565,121 @@ span.celcius-fahrenheit {
 .globe.info-box.me-4 {
     position: absolute;
 }
+
+/* Flip box design start */
+#forcast-info {
+  display: block;
+  min-height: 1em;
+  background: #171E2E;
+  color: #FFF;
+  padding: 20px;
+  vertical-align: middle;
+  line-height: 1.4;
+  text-align: center;
+  transform: translateZ(0);
+  cursor: pointer;
+  font-size: 20px;
+  font-family: "Roboto", Helvetica;
+  animation-play-state: paused;
+}
+#forcast-info b {
+  font-weight: 300;
+}
+#forcast-info i {
+  font-style: normal;
+}
+#forcast-info .Name,
+#forcast-info .Label,
+#forcast-info .LastUpdated {
+  font-size: 0.7em;
+  line-height: 1;
+}
+#forcast-info span {
+  white-space: nowrap;
+  display: inline-block;
+  padding: 0 5px;
+}
+#forcast-info .Symbol,
+#forcast-info .Stat {
+  color: #88bd0a;
+}
+/* ---------------------------------- */
+/* Animations */
+#forcast-info span {
+  animation: none;
+}
+#forcast-info.is-Visible span {
+  opacity: 0;
+  transform: translate(0, -1em) translateZ(0);
+  animation-name: slide-in;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+#forcast-info.is-Loading.is-Visible span {
+  opacity: 1;
+  transform: translateZ(0);
+  animation-name: slide-out;
+  animation-fill-mode: forwards;
+}
+#forcast-info.is-Loaded.is-Visible span {
+  opacity: 0;
+  transform: translate(0, -1em);
+  animation-name: slide-in;
+  animation-fill-mode: forwards;
+}
+#forcast-info span:nth-child(10) {
+  animation-delay: 2000ms;
+}
+#forcast-info span:nth-child(9) {
+  animation-delay: 1800ms;
+}
+#forcast-info span:nth-child(8) {
+  animation-delay: 1600ms;
+}
+#forcast-info span:nth-child(7) {
+  animation-delay: 1400ms;
+}
+#forcast-info span:nth-child(6) {
+  animation-delay: 1200ms;
+}
+#forcast-info span:nth-child(5) {
+  animation-delay: 1000ms;
+}
+#forcast-info span:nth-child(4) {
+  animation-delay: 800ms;
+}
+#forcast-info span:nth-child(3) {
+  animation-delay: 600ms;
+}
+#forcast-info span:nth-child(2) {
+  animation-delay: 400ms;
+}
+#forcast-info span:nth-child(1) {
+  animation-delay: 200ms;
+}
+@keyframes slide-in {
+  0% {
+    opacity: 0;
+    transform: translate(0, -1em);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+@keyframes slide-out {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 1em);
+  }
+}
+.no-js #forcast-info {
+  display: none;
+}
+/* Flip box design end */
 </style>

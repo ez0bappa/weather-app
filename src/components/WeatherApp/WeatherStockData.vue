@@ -1,8 +1,6 @@
 <template>
     <div class="weather-stock-data">
         <div id="forcast-info">
-            <!-- <p>This is a <code>p</code> with <small>small text</small></p> -->
-            <!-- <pre>{{ JSON.stringify(forecastData, null, 2) }}</pre> -->
             <span class="Symbol">
                 <b class="Stat">PWR:<fc-quote symbol="PWR" field="exchangeShortName"></fc-quote></b>
                 <b class="Label">( Quanta Services )</b><br>
