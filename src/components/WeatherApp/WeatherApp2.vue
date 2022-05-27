@@ -4,31 +4,40 @@
             <div class="col-md-4 order-md-2 mb-4 p-0" v-if="this.apiResponseData">
                 <div class="container">
                     <div class="row">
-                        <!-- <pre>{{ JSON.stringify(filterDate, null, 2) }}</pre> -->
                         <div class="col">
-                            <div class="left card-container" v-for="data in filterDate" :key="data">
-                                <div class="front">
-                                    <!-- <WeatherStockData :forecastData="this.apiResponseData.forecast" :day="date" /> -->
-                                    <div id="forcast-info">
-                                        <span class="Symbol">
-                                            <b class="Stat">{{ data }}</b>
-                                            <b class="Label"></b><br>
-                                        </span><br>
-                                        <div class="row">
-                                            <div class="col-6 text-start mt-2" style="font-size: 12px;">
-                                                <span class="Price"><b class="Label">Sunrise</b> <b class="Stat">04:00AM</b></span><br>
-                                                <span class="Change"><b class="Label">Sunset</b> <b class="Stat">05:00PM</b> <b class="Stat"></b></span><br>
-                                            </div>
-                                            <div class="col-6 text-end mt-2" style="font-size: 12px;">
-                                                <span class="Price"><b class="Label">Moonrise</b> <b class="Stat">07:00PM</b></span><br>
-                                                <span class="Change"><b class="Label">Moonrset</b> <b class="Stat">11:00PM</b><b class="Stat"></b></span>
+                            <div class="left card-container" v-for="(data, index) in this.forecast.forecastday" :key="index">
+                                <!-- <pre>{{ JSON.stringify(data, null, 2) }}</pre> -->
+                                <div class="flip-box">
+                                    <div class="front">
+                                        <div id="forcast-info">
+                                            <span class="Symbol">
+                                                <b class="Stat">{{ data.date }}</b>
+                                                <b class="Label"></b><br>
+                                            </span><br>
+                                            <div class="row">
+                                                <div class="col-6 text-start mt-2" style="font-size: 12px;">
+                                                    <span class="Price"><b class="Label">Sunrise: </b> <b class="Stat">{{ data.astro.sunrise }}</b></span><br>
+                                                    <span class="Change"><b class="Label">Sunset: </b> <b class="Stat">{{ data.astro.sunset }}</b> <b class="Stat"></b></span><br>
+                                                    <span class="Price"><b class="Label">Moonrise: </b> <b class="Stat">{{ data.astro.moonrise }}</b></span><br>
+                                                    <span class="Change"><b class="Label">Moonrset: </b> <b class="Stat">{{ data.astro.moonset }}</b><b class="Stat"></b></span>
+                                                </div>
+                                                <div class="col-6 text-end mt-2" style="font-size: 12px;">
+                                                    <div class="temp-info">
+                                                        <span class="Price"><b class="Label">Max. temp: </b> <b class="Stat">{{ data.day.maxtemp_c }}</b></span><br>
+                                                    <span class="Change"><b class="Label">Min. temp: </b><b class="Stat">{{ data.day.mintemp_c }}</b> <b class="Stat"></b></span><br>
+                                                    <span class="Price"><b class="Label">Avg. temp: </b> <b class="Stat">{{ data.day.avgtemp_c }}</b></span><br>
+                                                    <span class="Change"><b class="Label">Chance of rain: </b> <b class="Stat">{{ data.day.daily_chance_of_rain }}%</b><b class="Stat"></b></span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="back">
-                                    <div class="row">
-                                        high
+                                    <div class="back">
+                                        <div class="row">
+                                            <div class="days-in">
+                                                data
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -38,7 +47,7 @@
             </div>
             <div class="col-md-8 order-md-1 p-0">
                 <div class="weather-app2">
-                    <SearchBox @weatherApiData="onClickChild" />
+                    <SearchBox @weatherApiData="gettingFromSearchBox" />
                     <div id="status">
                         <p>Welcome</p>
                         <button class="close"><i class="fa fa-times" aria-hidden="true"></i></button>
@@ -52,30 +61,29 @@
                             <button id="unitBtn" data-units="f">C</button>
                             <button id="unitBtn" data-units="f">F</button>
                         </nav>
-                        <h1 class="location" v-if="this.apiResponseData">{{ this.apiResponseData ? this.apiResponseData.location.name : '' }}, {{ this.apiResponseData ? this.apiResponseData.location.country : '' }}</h1>
-                        <h2 class="date" v-if="this.apiResponseData">{{ this.apiResponseData ? this.apiResponseData.location.localtime : '' }}</h2>
+                        <h1 class="location" v-if="this.apiResponseData">{{ this.location.name }}, {{ location.country }}</h1>
+                        <h2 class="date" v-if="this.apiResponseData">{{ location.localtime }}</h2>
                         <div class="weatherIcon">
                             <div class="sunny">
                                 <div class="inner" v-if="this.apiResponseData">
-                                    <img class="weather-condition w-100" :src="this.apiResponseData ? this.apiResponseData.current.condition.icon : ''" alt="weather-pic">
-                                    <!-- <img src="{{ this.apiResponseData ? this.apiResponseData.current.condition.icon : '' }}" alt="weather-condition"> -->
+                                    <img class="weather-condition w-100" :src="this.apiResponseData ? this.current.condition.icon : ''" alt="weather-pic">
                                 </div>
                             </div>
                         </div>
-                        <p class="temp">{{ this.apiResponseData ? this.apiResponseData.current.temp_c : '' }}</p><span class="celcius-fahrenheit">C</span>
-                        <p class="conditions" v-if="this.apiResponseData">{{ this.apiResponseData ? this.apiResponseData.current.condition.text : '' }}</p>
+                        <p class="temp">{{ this.apiResponseData ? this.current.temp_c : '' }}</p><span class="celcius-fahrenheit">C</span>
+                        <p class="conditions" v-if="this.apiResponseData">{{ this.apiResponseData ? this.current.condition.text : '' }}</p>
                         <div class="globe-left me-4">
                             <div class="floating humidity" v-if="this.apiResponseData">
-                                <p>Humidity: {{ this.apiResponseData.current.humidity }}</p>
+                                <p>Humidity: {{ this.current.humidity }}</p>
                             </div>
 
                             <div class="floating recipitation" v-if="this.apiResponseData">
-                                <p>Wind Speed: {{ this.apiResponseData.current.wind_kph }} KM.</p>
+                                <p>Wind Speed: {{ this.current.wind_kph }} KM.</p>
                             </div>
                         </div>
                         <div class="globe-right me-4">
-                            <span class="text-muted me-2">{{ this.apiResponseData ? this.apiResponseData.location.region : '' }}</span>
-                            <span class="region" style="font-size: 15px;color: ivory;">{{ this.apiResponseData ? this.apiResponseData.location.tz_id : '' }}</span>
+                            <span class="text-muted me-2">{{ this.apiResponseData ? this.location.region : '' }}</span>
+                            <span class="region" style="font-size: 15px;color: ivory;">{{ this.apiResponseData ? this.location.tz_id : '' }}</span>
                         </div>
                     </div>
                     <div id="future" class="wrapper" v-if="this.apiResponseData">
@@ -114,7 +122,7 @@
                         </div>
                     </div>
                     <footer>
-                        <p id="lastUpdated">Last updated at {{ this.apiResponseData ? this.apiResponseData.current.last_updated : '' }}</p>
+                        <p id="lastUpdated">Last updated at {{ this.apiResponseData ? this.current.last_updated : '' }}</p>
                         <!-- <p>Created by <a href="http://tiffanydu.com/" title="Visit Portfolio Site" target="_blank">Tiffany Du</a> | Weather data from <a href="https://www.wunderground.com/" title="Wunderground.com" target="_blank">Wunderground</a></p> -->
                     </footer>
                 </div>
@@ -131,7 +139,10 @@
         name: 'WeatherApp2',
         data() {
             return {
-                apiResponseData: ''
+                apiResponseData: '',
+                current: '',
+                forecast: '',
+                location: ''
             }
         },
         components: {
@@ -141,7 +152,7 @@
         computed: {
             filterDate() {
                 if (this.apiResponseData) {
-                    var date = this.apiResponseData.forecast.forecastday.map(item => {
+                    var date = this.forecast.forecastday.map(item => {
                         const dayOfWeekName = new Date(item.date).toLocaleString(
                             'default', {weekday: 'long'}
                         )
@@ -153,8 +164,13 @@
             }
         },
         methods: {
-            onClickChild(value) {
+            gettingFromSearchBox(value) {
                 this.apiResponseData = value[0]
+                this.current = this.apiResponseData.current
+                this.forecast = this.apiResponseData.forecast
+                this.location = this.apiResponseData.location
+
+                console.log(this.apiResponseData)
             },
 
             getImgUrl(img) {
@@ -489,7 +505,7 @@ nav {
 .card-container {
 	position: relative;
 }
-/* .front, .back {
+.front, .back {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -509,7 +525,7 @@ nav {
 
 .card-container {
 	perspective: 75rem;
-} */
+}
 
 .globe-right {
     position: absolute;
