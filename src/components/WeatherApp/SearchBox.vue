@@ -1,9 +1,9 @@
 <template>
     <div class="search-box">
-        <div class="container">
-            <div class="searchInputWrapper mb-4">
-                <input class="searchInput" type="text" placeholder='Search location...' v-model="query" v-on:keyup.enter="fetchWeather" />
-                <i class="searchInputIcon fa fa-search" v-on:click="fetchWeather"></i>
+        <div class="main mb-3">
+            <input v-model="query" v-on:keyup.enter="fetchWeather" type="text" name="input" class="input" placeholder="Enter location or place.....">
+            <div class="icon">
+                <i class="fa fa-search" aria-hidden="true"></i>
             </div>
         </div>
     </div>
@@ -17,7 +17,7 @@
         name: 'SearchBox',
         data() {
             return {
-                query: 'kolkata',
+                query: '',
                 apiResponse: [],
                 toast: useToast()
             }
@@ -27,8 +27,8 @@
                 if (e.key) {
                     try {
                         let result = await axios.get(`http://api.weatherapi.com/v1/forecast.json?key=52b3ca2edfaf46a08d9190038222305&q=${this.query}&days=7`)
-                        // let result = await axios.get(`api.openweathermap.org/data/2.5/forecast/daily?lat=35&lon=139&cnt=10&appid=52b3ca2edfaf46a08d9190038222305`)
-                        if(result.status == 200) {
+                        
+						if(result.status == 200) {
                             this.apiResponse = result.data
                             this.$emit('weatherApiData', [result.data])
                         }
@@ -44,53 +44,89 @@
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Aclonica&family=Audiowide&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 
-.heading {
-  margin-bottom: 1.5rem;
-  font-size: 1.2rem;
+*{
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
 }
 
-.searchInputWrapper {
-  position: relative;
+body{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
 }
 
-.searchInput {
-  width: 42rem;
-  height: 2rem;
-  padding: 0 1rem; 
-  border-radius: 2rem;
-  border: none;
-  transition: transform 0.1s ease-in-out;
-  background: antiquewhite;
+:root{
+	--hieght: 60px;
+	--border-radius: 30px;
 }
 
-::placeholder {
-  color: #a1a1a1;
+.main{
+	box-shadow: 0 0 10px #3498db,
+				inset 0 0 15px #3498db;
+	width: 100%;
+	max-width: 600px;
+	display: inline-flex;
+	border-radius: var(--border-radius);
+	position: relative;
+	margin: 0 20px;
 }
 
-/* hide the placeholder text on focus */
-:focus::placeholder {
-  text-indent: -999px
+.input{
+	width: 100%;
+	/*width: 500px;*/
+	height: var(--hieght);
+	padding: 0 20px;
+	font-size: 22px;
+	color: #3498db;
+	border: 2px solid #3498db;
+	border-right: none;
+	outline: none;
+	border-radius: var(--border-radius);
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	font-family: 'Poppins', sans-serif;
+	text-shadow: 0 0 10px #3498db;
+	background: transparent;
 }
 
-.searchInput:focus {
-  outline: none;
-  transform: scale(1.1);
-  transition: all 0.1s ease-in-out;
+.input::placeholder{
+	color: #3498db;
 }
 
-.searchInputIcon {
-    position: absolute;
-    cursor: pointer;
-    right: 3.2rem;
-    top: 0.5rem;
-    color: #a1a1a1;
-    transition: all 0.1s ease-in-out;
+
+
+
+.icon{
+	width: 90px;
+	height: var(--hieght);
+	border: 2px solid #3498db;
+	border-left: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-top-right-radius: var(--border-radius);
+	border-bottom-right-radius: var(--border-radius);
+	cursor: pointer;
+	background: transparent;
 }
 
-.container:focus-within > 
-.searchInputWrapper > .searchInputIcon {
-  right: 0.2rem;
+i.fa-search{
+	font-size: 23px;
+	color: #3498db;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: 0.5s;
+	text-shadow: 0 0 10px #3498db;
+	background: transparent;
+}
+
+.input:focus + .icon i.fa-search{
+	transform: rotate(360deg);
 }
 </style>

@@ -3,8 +3,8 @@ import WeatherAppVue from '../components/WeatherApp/WeatherApp.vue';
 
 const routes = [
     {
-        path: '/',
-        name: 'weather-app',
+        path: '/weather-app',
+        name: WeatherAppVue,
         component: WeatherAppVue,
     }
 ]

@@ -11,6 +11,7 @@
                         <router-link to="/weather-app">Weather App</router-link>
                     </div>
                     <div>
+                        <router-link to="/calculator">Expense Calculator</router-link>
                     </div>
                 </nav>
             </header>
