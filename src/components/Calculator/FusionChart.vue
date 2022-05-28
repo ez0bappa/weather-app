@@ -49,10 +49,6 @@
         creditLabel: false,
     });
 
-    // FusionCharts.options.creditLabel = false;
-
-    // console.log('FusionCharts', FusionCharts);
-
     export default {
         name: 'FusionchartData',
         props: {
@@ -92,7 +88,6 @@
                 console.log(`You are currently hovering over <strong>${e.data.categoryLabel}</strong> whose value is <strong>${e.data.displayValue}</strong>`)
                 this.displayValue = `You are currently hovering over <strong>${e.data.categoryLabel}</strong> whose value is <strong>${e.data.displayValue}</strong>`;
             },
-            // uses the chartInstance API 'chartType' to change the chart type after render
             onChartTypeChange: function (e) {
                 const chart = this.$refs.fc.chartObj,
                     type = e.target.value.toLowerCase();
@@ -111,14 +106,9 @@
             }
         },
         watch: { 
-            selectedTableValueData: function(newVal, oldVal) { // watch it
+            selectedTableValueData: function(newVal, oldVal) {
                 console.log('Prop changed: ', newVal, ' | was: ', oldVal)
             }
         }
-         
     }
 </script>
-
-<style scoped>
-
-</style>

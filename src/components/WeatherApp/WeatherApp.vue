@@ -66,19 +66,12 @@
                         <div class="time-info">
                             {{ todayFilter.time }}
                         </div>
-                        <!-- <nav>
-                            <button  type="button" class="celcius" id="unitBtn" data-units="c" @click="fToC(this.current.temp_f)">C</button>
-                            <button type="button" class="fahrenheit" id="unitBtn" data-units="f" @click="cToF(this.current.temp_c)">F</button>
-                        </nav> -->
-
-                        <!-- Transition design -->
                         
                         <h1 class="location text-white block" v-if="this.apiResponseData">{{ this.location.name }}, {{ location.country }}</h1>
                         <h2 class="date text-white" v-if="this.apiResponseData">{{ todayFilter.todayIs }}, {{ todayFilter.time }}</h2>
                         <div class="weatherIcon">
                             <div class="sunny">
                                 <div class="inner" v-if="this.apiResponseData">
-                                    <!-- <pre>{{ JSON.stringify(currentTemperature, null, 2) }}</pre> -->
                                     <img class="weather-condition w-100" :src="this.apiResponseData ? this.current.condition.icon : ''" alt="weather-pic">
                                 </div>
                             </div>
@@ -161,11 +154,6 @@
                     })
                 }
             },
-            // currentTemperature(temp) { 
-            //   console.log(temp)
-            //   // return (temp * (9/5) + 32); 
-            //   return temp; 
-            // }
         },
         methods: {
             gettingFromSearchBox(value) {
@@ -199,39 +187,6 @@
     padding: 0% 0% 0% 5%;
 }
 
-
-/* :focus {
-  outline: none;
-}
-html, body {
-  height: 100%;
-  width: 100%;
-}
-body {
-  color: #e71212;
-  font-family: 'Alegreya Sans', sans-serif;
-  font-weight: 300;
-  position: relative;
-  letter-spacing: 0.05rem;
-  line-height: 1.5;
-  text-align: center;
-}
-a {
-  color: #6D8CA0;
-  font-weight: 700;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-footer {
-  color: rgba(255,255,255,0.6);
-  font-size: 0.8rem;
-  letter-spacing: 0.07em;
-  line-height: 2;
-  padding: 30px 0;
-  width: 100%;
-} */
 #lastUpdated {
   color: #e71212;
   padding: 5% 0;
@@ -243,13 +198,6 @@ footer {
   content: ' --';
 }
 
-/*----------------
-  Containers
------------------*/
-/* .wrapper {
-  color: #04043888;
-  width: 100%;
-} */
 
 /*----------------
   Status Bar
@@ -334,7 +282,7 @@ nav {
   content: '\00b0'; /* Degree symbol */
   padding: 1px;
 }
-/* locateBtn Pulse Animation */
+
 #locateBtn.pulse {
   animation: pulse 2s infinite;
 }
@@ -346,8 +294,6 @@ nav {
   Current Weather
 -----------------*/
 #current {
-    /* background-image: url(https://www.visualcrossing.com/images/weather-data/accurate_affordable.jpg); */
-  /* background: radial-gradient(circle at top, #ffa949, firebrick); */
   background: linear-gradient(to bottom, #895acd, rgb(252 6 6 / 73%));
   padding: 10% 5% 20%;
   position: relative;
@@ -549,11 +495,6 @@ nav {
 
 
 /* Floating div */
-.floating {
-    /* height: 50px; 
-    width: 50px;  */
-    /* background: rgb(212 69 188); */
-}
 .floating {  
     animation-name: floating;
     animation-duration: 3s;
@@ -614,32 +555,6 @@ span.celcius-fahrenheit {
   font-family: "Roboto", Helvetica;
   animation-play-state: paused;
 }
-/* #forcast-info b {
-  font-weight: 300;
-}
-#forcast-info i {
-  font-style: normal;
-}
-#forcast-info .Name,
-#forcast-info .Label,
-#forcast-info {
-  font-size: 0.7em;
-  line-height: 1;
-}
-#forcast-info span {
-  white-space: nowrap;
-  display: inline-block;
-  padding: 0 5px;
-}
-#forcast-info .Symbol,
-#forcast-info .Stat {
-  color: #88bd0a;
-}
-.no-js #forcast-info {
-  display: none;
-} */
-/* Flip box design end */
-
 .globe-info-box.me-4 {
     font-family: fantasy;
 }
@@ -647,7 +562,5 @@ span.celcius-fahrenheit {
 .globe-right.me-4 {
     font-family: -webkit-body;
 }
-
-/* Transition design */
 
 </style>

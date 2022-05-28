@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h5>Test</h5>
         <WeatherAppVue />
     </div>
 </template>

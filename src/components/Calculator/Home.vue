@@ -16,7 +16,6 @@
                             </div>
                             
                             <div class="element add-category-submit-btn">
-                                <!-- <button type="button" class="btn btn-primary btn-sm">Small button</button> -->
                                 <button 
                                     v-bind:disabled="addedNewCategory.length == 0"
                                     @click="addCategory"
@@ -319,7 +318,6 @@ input[type=submit]:hover {
 
 /* budget-form */
 .budget-form {
-    /* width: 80%; */
     margin-left: 5px;
 }
 /* Form section Ends */
@@ -332,15 +330,6 @@ input[type=submit]:hover {
 .toggle-text {
     display: none;
 }
-
-/* .togglebutton{
-    padding : 0.1em;
-    background-color:#2196F3;
-    color:#FFF;
-    cursor:pointer;
-} */
-
-/* Button design Start */
 
 @media screen and (min-width: 82em) {
     .buttons {
@@ -428,6 +417,4 @@ input[type=submit]:hover {
     transform: rotate(35deg);
     width: 100px;
 }
-
-/* Button design End */
 </style>
