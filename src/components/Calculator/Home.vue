@@ -1,177 +1,144 @@
 <template>
     <div class="budget-planner">
-        <div class="header-section" style="background-color: #86d393">
+        <div class="container-fluid">
             <div class="budget-header-section py-3">
-                <!-- <h2>Budget App</h2> -->
                 <button v-if="editing" @click="toggleBudget(false)" class="button modern border -small -plain">Close Budget</button>
                 <button v-else @click="toggleBudget(true)" class="button modern border -small -plain">Open Budget App</button>
             </div>
-            <div v-if="editing" class="body-section" style="width: 100%; display: table; background: #a7b2b2">
-                <div style="display: table-row; height: 100px;">
-                    <!-- Left side - Add Edit Form -->
-                    <div style="width: 30%; display: table-cell; padding: 1rem;">
-                        <div class="form-body">
-                            <form @submit.prevent="submitAddEditForm" name="contact-form" novalidate class="budget-add-edit" action="">
-                                <div class="add-category" style="display: table">
-                                    <!-- Add category Section -->
-                                    <div class="element add-category input-section">
-                                        <div class="add-category-input">
-                                            <input type="text" v-model="addedNewCategory" ref="clearTextRef" placeholder="Enter here to add new category"/>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="element add-category-submit-btn">
-                                        <button 
-                                            v-bind:disabled="addedNewCategory.length == 0"
-                                            @click="addCategory"
-                                            class="btn btn-primary me-md-2" style="height: 50px;">
-                                            Add Category
-                                        </button>
-
-                                        <button
-                                            class="btn btn-primary me-md-2 toggle-text" style="height: 50px;">
-                                            Toggle Add category
-                                        </button>
-                                    </div>
-
-
-                                    <!-- Edit category section -->
-                                    <div class="edit-section">
-                                        <div class="element add-category input-section">
-                                            <div class="edit-category-input">
-                                                <input type="text" v-model="selectedCategoryValue"/>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="element add-category-submit-btn">
-                                            <button
-                                                v-bind:disabled="selectedCategoryValue.length == 0"
-                                                @click="editCategory(this.selectedCategoryKey, this.selectedCategoryValue)"
-                                                class="btn btn-primary me-md-2" style="height: 50px;">
-                                                Edit Category
-                                            </button>
-
-                                            <button
-                                                class="btn btn-primary me-md-2 toggle-text" style="height: 50px;">
-                                                Toggle Edit category
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="drop-down-section" style="display: flex; width: 35%">
-                                    <select v-model="selectedCategoryValue" @change="changeCategory($event)">
-                                        <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
-                                            {{ category.value }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <!-- <button>Submit Form</button> -->
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- Right side -->
-                    <div class="column" style="padding: 1rem;">
-                        <div v-if="selectedCategoryValue">
-                            <!-- You select - {{ selectedCategoryValue }} with key: {{selectedCategoryKey}} -->
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-sm-4 col-sm-offset-1">
-                                        <div class="box-of-stuff">
-                                            <p v-if="formErrors.length" class="text-danger">
-                                                <b>Please correct the error</b>
-                                                <ul style="list-style-type:none;">
-                                                    <li v-for="e in formErrors" v-bind:key="e.id">
-                                                        {{e}}
-                                                    </li>
-                                                </ul>
-                                            </p>
-                                            <div class="form-floating mb-3">
-                                                <input type="number" class="form-control" id="floatingInput" placeholder="Total Income" v-model="totalBudget" />
-                                                <label for="floatingInput">Total Budget</label>
-                                            </div>
-                                            
-                                            <form @submit.prevent="addItem(this.selectedCategoryKey, this.selectedCategoryValue)" method="post">
-                                                <div class="form-floating mb-3">
-                                                    <input type="number" class="form-control" id="floatingInput" v-model="expenses">
-                                                    <label for="floatingInput">Expenses in {{selectedCategoryValue}}</label>
-                                                </div>
-                                                <input class="form-control input-lg" type="text" id="category" placeholder="category" :value="selectedCategoryValue" readonly />
-                                            
-                                                <button class="btn btn-primary btn-lg btn-block">Add to table</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div v-if="isResultTableShow" class="col-sm-8">
-                                        <div class="results">
-                                            <h1 class="title">Results</h1>
-                                            <span class="emoji"></span>
-                                            <div class="results-data">
-                                                <table class="table table-striped table-bordered table-sm">
-                                                    <thead class="thead-light">
-                                                        <th>Category</th>
-                                                        <th>Expenses</th>
-                                                        <!-- <th>Edit/Del</th> -->
-                                                    </thead>
-                                                    
-                                                    <tr v-for="(item, index) in expensesDataInTable" :key="index">
-                                                        <td>
-                                                            <!-- <input v-if="item.edit" type="text" v-model="item.category"  v-on:keyup.enter="item.edit = !item.edit">
-                                                            <span v-else>{{item.category}}</span> -->
-
-                                                            <!-- <pre>
-                                                                Bappa {{ JSON.stringify(item.edit, null, 2) }}
-                                                            </pre> -->
-
-                                                            <input v-if="false" type="text" v-model="item.category">
-                                                            <span v-else>{{item.category}}</span>
-                                                        </td>
-                                                        <td>
-                                                        <input v-if="item.edit" type="text" v-model="item.expenses" v-on:keyup.enter="item.edit = !item.edit">
-                                                        <span v-else>{{item.expenses}} </span>
-                                                        </td>
-                                                        <td>
-                                                            <button @click="editItem(item)" class="btn btn-info">
-                                                                <i class="fas fa-edit">Edit</i>
-                                                            </button>
-                                                            <button @click="removeItem(item)" class="btn btn-danger">
-                                                                <i class="fas fa-times">Delete</i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="alert alert-info last-row" style="border: none; background: #ad98a5">
-                                                        <td></td>
-                                                        <td>total:
-                                                            <strong><span 
-                                                                :class="totalExpenses > this.totalBudget ? 'text-danger' : 'text-primary'"
-                                                                >{{totalExpenses}}/-</span></strong> 
-                                                            out of 
-                                                            <strong><span>{{this.totalBudget}}/-</span></strong></td>
-                                                        <td></td>       
-                                                    </tr> 
-                                                </table>
-
-                                                <div class="show-chart-btn">
-                                                    <button class="btn btn-primary" v-on:click="showChartSection">Show chart</button>&nbsp;&nbsp;
-                                                    <button class="btn btn-warning" v-on:click="clearTableChart">Clear data</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+            <div class="row mb-4">
+                <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-4 col-sm-3 col-12" v-if="editing">
+                    <form @submit.prevent="submitAddEditForm" name="contact-form" novalidate class="budget-add-edit" action="">
+                        <div class="add-category" style="display: table">
+                            <div class="element input-section">
+                                <div class="add-category-input">
+                                    <input type="text" v-model="addedNewCategory" ref="clearTextRef" placeholder="Enter here to add new category"/>
                                 </div>
                             </div>
-                        </div><br>
-                        <div 
-                            v-for="(item, index) in defaultCategories" 
-                            :key="item.id"
-                            class="bg-success" style="display: none;">
-                            {{index}}. {{item.key}}. {{item.value}}
+                            
+                            <div class="element add-category-submit-btn">
+                                <!-- <button type="button" class="btn btn-primary btn-sm">Small button</button> -->
+                                <button 
+                                    v-bind:disabled="addedNewCategory.length == 0"
+                                    @click="addCategory"
+                                    class="btn btn-outline-primary btn-sm">
+                                    Add Category
+                                </button>
+
+                                <button
+                                    class="btn btn-primary btn-sm toggle-text" style="height: 50px;">
+                                    Toggle Add category
+                                </button>
+                            </div>
+
+
+                            <div class="edit-section">
+                                <div class="element add-category input-section">
+                                    <div class="edit-category-input">
+                                        <input type="text" v-model="selectedCategoryValue"/>
+                                    </div>
+                                </div>
+                                
+                                <div class="element add-category-submit-btn">
+                                    <button
+                                        v-bind:disabled="selectedCategoryValue.length == 0"
+                                        @click="editCategory(this.selectedCategoryKey, this.selectedCategoryValue)"
+                                        class="btn btn-outline-warning btn-sm">
+                                        Edit Category
+                                    </button>
+
+                                    <button
+                                        class="btn btn-primary btn-sm toggle-text">
+                                        Toggle Edit category
+                                    </button>
+                                </div>
+                            </div>
+                            <label for="">Choose your expenses</label>
+                            <div class="drop-down-section">
+                            <select v-model="selectedCategoryValue" @change="changeCategory($event)">
+                                <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
+                                    {{ category.value }}
+                                </option>
+                            </select>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" v-if="editing">
+                    <div class="box-of-stuff" v-if="selectedCategoryValue">
+                        <p v-if="formErrors.length" class="text-danger">
+                            <b>Please correct the error</b>
+                            <ul style="list-style-type:none;">
+                                <li v-for="e in formErrors" v-bind:key="e.id">
+                                    {{e}}
+                                </li>
+                            </ul>
+                        </p>
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingInput" placeholder="Total Income" v-model="totalBudget" />
+                            <label for="floatingInput">Total Budget</label>
+                        </div>
+                        
+                        <form @submit.prevent="addItem(this.selectedCategoryKey, this.selectedCategoryValue)" method="post">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" id="floatingInput" v-model="expenses">
+                                <label for="floatingInput">Expenses in {{selectedCategoryValue}}</label>
+                            </div>
+                            <input class="form-control input-lg" type="text" id="category" placeholder="category" :value="selectedCategoryValue" readonly />
+                        
+                            <button class="btn btn-outline-success">Add to table</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-xxl-5 col-xl-4 col-lg-4 col-md-4 col-sm-5 col-12" v-if="editing">
+                    <div class="results" v-if="isResultTableShow">
+                        <h1 class="title">Results</h1>
+                        <span class="emoji"></span>
+                        <div class="results-data" v-if="expensesDataInTable">
+                            <table class="table table-striped table-bordered table-sm">
+                                <thead class="thead-light">
+                                    <th>Category</th>
+                                    <th>Expenses</th>
+                                </thead>
+                                
+                                <tr v-for="(item, index) in expensesDataInTable" :key="index">
+                                    <td>
+                                        <input v-if="false" type="text" v-model="item.category">
+                                        <span v-else>{{item.category}}</span>
+                                    </td>
+                                    <td>
+                                    <input v-if="item.edit" type="text" v-model="item.expenses" v-on:keyup.enter="item.edit = !item.edit">
+                                    <span v-else>{{item.expenses}} </span>
+                                    </td>
+                                    <td>
+                                        <button @click="editItem(item)" class="btn btn-secondary btn-sm" style="background: #5f9ea0;">
+                                            <i class="fas fa-edit">Edit</i>
+                                        </button>
+                                        <button @click="removeItem(item)" class="btn btn-warning btn-sm" style="background: #ffb49a">
+                                            <i class="fas fa-times">Delete</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="alert alert-info last-row" style="border: none; background: #ad98a5">
+                                    <td></td>
+                                    <td>total:
+                                        <strong><span 
+                                            :class="totalExpenses > this.totalBudget ? 'text-danger' : 'text-primary'"
+                                            >{{totalExpenses}}/-</span></strong> 
+                                        out of 
+                                        <strong><span>{{this.totalBudget}}/-</span></strong></td>
+                                    <td></td>       
+                                </tr> 
+                            </table>
+
+                            <div class="show-chart-btn">
+                                <button class="btn btn-outline-info btn-sm" v-on:click="showChartSection">Show chart</button>&nbsp;&nbsp;
+                                <button class="btn btn-outline-danger btn-sm" v-on:click="clearTableChart">Clear data</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <div v-if="isChartTableShow & expensesDataInTable.length > 0" class="budget-section" style="background-color: #86d393">
             <FusionChartData :selectedTableValueData="expensesDataInTable" :key="this.rerenderCount" />
         </div>
@@ -322,8 +289,12 @@ export default {
 
 <style scoped>
 /* Form Section start*/
+button.button.modern.border {
+    background: linear-gradient(to bottom, #fdfcff5e, rgb(58 183 222 / 75%));
+}
 input[type=text], select, textarea {
   width: 100%;
+  height: 34px;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;

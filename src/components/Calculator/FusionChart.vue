@@ -1,39 +1,40 @@
 <template>
     <div id="chart-container">
-        <div class="fusion-chart">
-            <div class="show-test-data">
-                <!-- <span>{{selectedTableValueData}}</span> -->
-            </div>
-            <fusioncharts
-                :type="type"
-                :dataFormat="dataFormat"
-                :dataSource="dataSource"
-                :dataEmptyMessage="message"
-                :events="events"
-                ref="fc"
-            ></fusioncharts>
-            <div v-html="displayValue"></div>
+        <div class="container">
+            <div class="row">
+                <div class="showChart">
+                    <fusioncharts
+                        :type="type"
+                        :dataFormat="dataFormat"
+                        :dataSource="dataSource"
+                        :dataEmptyMessage="message"
+                        :events="events"
+                        ref="fc"
+                    ></fusioncharts>
+                    <div v-html="displayValue"></div>
 
-            <div class="chart-type">
-                <div class="chart-type-Column2d">
-                    <input name='chartType' type="radio" @change="onChartTypeChange" value="Column2d" checked/>
-                    <label>Column 2D Chart</label>
-                </div>
-                <div class="chart-type-Bar2d">
-                    <input name='chartType' type="radio" @change="onChartTypeChange" value="Bar2d" />
-                    <label>Bar 2D Chart</label>
-                </div>
-                <div class="chart-type-Pie2d">
-                    <input name='chartType' type="radio" @change="onChartTypeChange" value="Pie2d" />
-                    <label>Pie 2D Chart</label>
-                </div>
-                <div class="chart-type-line">
-                    <input name='chartType' type="radio" @change="onChartTypeChange" value="line" />
-                    <label>Line</label>
-                </div>
-                <div class="chart-type-doughnut2d">
-                    <input name='chartType' type="radio" @change="onChartTypeChange" value="doughnut2d" />
-                    <label>Doughnut2d</label>
+                    <div class="chart-type">
+                        <div class="chart-type-Column2d">
+                            <input name='chartType' type="radio" @change="onChartTypeChange" value="Column2d" checked/>
+                            <label>Column 2D Chart</label>
+                        </div>
+                        <div class="chart-type-Bar2d">
+                            <input name='chartType' type="radio" @change="onChartTypeChange" value="Bar2d" />
+                            <label>Bar 2D Chart</label>
+                        </div>
+                        <div class="chart-type-Pie2d">
+                            <input name='chartType' type="radio" @change="onChartTypeChange" value="Pie2d" />
+                            <label>Pie 2D Chart</label>
+                        </div>
+                        <div class="chart-type-line">
+                            <input name='chartType' type="radio" @change="onChartTypeChange" value="line" />
+                            <label>Line</label>
+                        </div>
+                        <div class="chart-type-doughnut2d">
+                            <input name='chartType' type="radio" @change="onChartTypeChange" value="doughnut2d" />
+                            <label>Doughnut2d</label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
