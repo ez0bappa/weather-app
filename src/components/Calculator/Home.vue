@@ -179,7 +179,8 @@
 </template>
 
 <script>
-import FusionChartData from '../BudgetPlanner/FusionChartData.vue'
+import FusionChartData from './FusionChart.vue'
+import { useToast } from "vue-toastification";
 
 export default {
     name: 'BudgetPlanner',
@@ -207,6 +208,7 @@ export default {
             expensesDataInTable: [],
             rerenderCount: 0,
             formErrors: [],
+            toast: useToast()
         }
     },
     methods: {
@@ -261,12 +263,9 @@ export default {
 
                     if(isItemInTable === false) {
                         this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses})
-                        this.$toast.open({
-                            message: "Item Added Successfully",
-                            type: "success",
-                            duration: 5000,
-                            dismissible: true
-                        })
+                        this.toast.success('Added successfully...', {
+                            timeout: 3000
+                        });
                     } else {
                         this.expensesDataInTable.filter(item => {
                             if(item.key === checkItem[0].key) {
@@ -289,25 +288,18 @@ export default {
             // this.expensesDataInTable.splice(index, 1)            //only remove from DOM
             if (confirm('Sure to delete')) {
                 this.expensesDataInTable = this.expensesDataInTable.filter((item) => item.key != selData.key)
-                this.$toast.open({
-                    message: "Deleted Successfully",
-                    type: "warning",
-                    duration: 5000,
-                    dismissible: true
-                })
-                this.rerenderCount--
+                this.toast.warning('Deleted successfully...', {
+                    timeout: 6000
+                });
             }
         },
         showChartSection() {
             if(this.expensesDataInTable.length != 0) {
                 this.isChartTableShow = !this.isChartTableShow
             } else {
-                this.$toast.open({
-                    message: "Empty data",
-                    type: "success",
-                    duration: 5000,
-                    dismissible: true
-                })
+                this.toast.success('Empty data', {
+                    timeout: 6000
+                });
             }
         },
         clearTableChart() {
