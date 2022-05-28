@@ -66,12 +66,15 @@
                         <div class="time-info">
                             {{ todayFilter.time }}
                         </div>
-                        <nav>
-                            <!-- <button  type="button" class="celcius" id="unitBtn" data-units="c" @click="fToC(this.current.temp_f)">C</button> -->
+                        <!-- <nav>
+                            <button  type="button" class="celcius" id="unitBtn" data-units="c" @click="fToC(this.current.temp_f)">C</button>
                             <button type="button" class="fahrenheit" id="unitBtn" data-units="f" @click="cToF(this.current.temp_c)">F</button>
-                        </nav>
-                        <h1 class="location" v-if="this.apiResponseData">{{ this.location.name }}, {{ location.country }}</h1>
-                        <h2 class="date" v-if="this.apiResponseData">{{ todayFilter.todayIs }}, {{ todayFilter.time }}</h2>
+                        </nav> -->
+
+                        <!-- Transition design -->
+                        
+                        <h1 class="location text-white block" v-if="this.apiResponseData">{{ this.location.name }}, {{ location.country }}</h1>
+                        <h2 class="date text-white" v-if="this.apiResponseData">{{ todayFilter.todayIs }}, {{ todayFilter.time }}</h2>
                         <div class="weatherIcon">
                             <div class="sunny">
                                 <div class="inner" v-if="this.apiResponseData">
@@ -96,7 +99,7 @@
                             <span class="region">Longitude: {{ this.location.lon }}</span>
                         </div>
                         <div class="globe-right me-4">
-                            <span class="text-muted me-2">{{ this.apiResponseData ? this.location.region : '' }}</span>
+                            <span class="text-info me-2">{{ this.apiResponseData ? this.location.region : '' }}</span>
                             <span class="region" style="font-size: 15px;color: ivory;">{{ this.apiResponseData ? this.location.tz_id : '' }}</span>
                         </div>
                     </div>
@@ -116,6 +119,7 @@
         name: 'WeatherApp2',
         data() {
             return {
+                show: true,
                 apiResponseData: '',
                 current: '',
                 forecast: '',
@@ -196,7 +200,7 @@
 }
 
 
-:focus {
+/* :focus {
   outline: none;
 }
 html, body {
@@ -227,7 +231,7 @@ footer {
   line-height: 2;
   padding: 30px 0;
   width: 100%;
-}
+} */
 #lastUpdated {
   color: #e71212;
   padding: 5% 0;
@@ -242,11 +246,10 @@ footer {
 /*----------------
   Containers
 -----------------*/
-.wrapper {
+/* .wrapper {
   color: #04043888;
-  /* overflow: auto; */
   width: 100%;
-}
+} */
 
 /*----------------
   Status Bar
@@ -276,7 +279,6 @@ footer {
   top: 0;
   width: 40px;
 }
-/*** Error & Success Messages ***/
 #status.error {
   background-color: #EE9797;
 }
@@ -345,7 +347,8 @@ nav {
 -----------------*/
 #current {
     /* background-image: url(https://www.visualcrossing.com/images/weather-data/accurate_affordable.jpg); */
-  background: radial-gradient(circle at top, #ffa949, firebrick);
+  /* background: radial-gradient(circle at top, #ffa949, firebrick); */
+  background: linear-gradient(to bottom, #895acd, rgb(252 6 6 / 73%));
   padding: 10% 5% 20%;
   position: relative;
 }
@@ -611,7 +614,7 @@ span.celcius-fahrenheit {
   font-family: "Roboto", Helvetica;
   animation-play-state: paused;
 }
-#forcast-info b {
+/* #forcast-info b {
   font-weight: 300;
 }
 #forcast-info i {
@@ -619,7 +622,7 @@ span.celcius-fahrenheit {
 }
 #forcast-info .Name,
 #forcast-info .Label,
-#forcast-info .LastUpdated {
+#forcast-info {
   font-size: 0.7em;
   line-height: 1;
 }
@@ -632,87 +635,19 @@ span.celcius-fahrenheit {
 #forcast-info .Stat {
   color: #88bd0a;
 }
-/* ---------------------------------- */
-/* Animations */
-#forcast-info span {
-  animation: none;
-}
-#forcast-info.is-Visible span {
-  opacity: 0;
-  transform: translate(0, -1em) translateZ(0);
-  animation-name: slide-in;
-  animation-duration: 500ms;
-  animation-timing-function: ease-in-out;
-  animation-fill-mode: forwards;
-}
-#forcast-info.is-Loading.is-Visible span {
-  opacity: 1;
-  transform: translateZ(0);
-  animation-name: slide-out;
-  animation-fill-mode: forwards;
-}
-#forcast-info.is-Loaded.is-Visible span {
-  opacity: 0;
-  transform: translate(0, -1em);
-  animation-name: slide-in;
-  animation-fill-mode: forwards;
-}
-#forcast-info span:nth-child(10) {
-  animation-delay: 2000ms;
-}
-#forcast-info span:nth-child(9) {
-  animation-delay: 1800ms;
-}
-#forcast-info span:nth-child(8) {
-  animation-delay: 1600ms;
-}
-#forcast-info span:nth-child(7) {
-  animation-delay: 1400ms;
-}
-#forcast-info span:nth-child(6) {
-  animation-delay: 1200ms;
-}
-#forcast-info span:nth-child(5) {
-  animation-delay: 1000ms;
-}
-#forcast-info span:nth-child(4) {
-  animation-delay: 800ms;
-}
-#forcast-info span:nth-child(3) {
-  animation-delay: 600ms;
-}
-#forcast-info span:nth-child(2) {
-  animation-delay: 400ms;
-}
-#forcast-info span:nth-child(1) {
-  animation-delay: 200ms;
-}
-@keyframes slide-in {
-  0% {
-    opacity: 0;
-    transform: translate(0, -1em);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-}
-@keyframes slide-out {
-  0% {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(0, 1em);
-  }
-}
 .no-js #forcast-info {
   display: none;
-}
+} */
 /* Flip box design end */
 
 .globe-info-box.me-4 {
     font-family: fantasy;
 }
+
+.globe-right.me-4 {
+    font-family: -webkit-body;
+}
+
+/* Transition design */
+
 </style>

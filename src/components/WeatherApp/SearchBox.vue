@@ -31,6 +31,7 @@
 						if(result.status == 200) {
                             this.apiResponse = result.data
                             this.$emit('weatherApiData', [result.data])
+							e.target.value = ''
                         }
                     } catch(err) {
                         this.toast.warning('something went wrong, Please check and try again...', {
