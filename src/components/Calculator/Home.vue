@@ -73,7 +73,7 @@
                             </ul>
                         </p>
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="floatingInput" placeholder="Total Income" v-model="totalBudget" />
+                            <input type="number" class="form-control" id="floatingInput" placeholder="Total Income" v-model="totalBudget" min="1" />
                             <label for="floatingInput">Total Budget</label>
                         </div>
                         
