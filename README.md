@@ -15,7 +15,7 @@ To run project,
 
 > Step 3: npm run dev
 
-> NOTES: Weather API Official docs : http://api.weatherapi.com
+> NOTES: Weather API Official docs : https://www.weatherapi.com/docs/
 
 ## App description: 
 
