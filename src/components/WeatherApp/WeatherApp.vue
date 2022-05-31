@@ -161,8 +161,6 @@
                 this.current = this.apiResponseData.current
                 this.forecast = this.apiResponseData.forecast
                 this.location = this.apiResponseData.location
-
-                console.log(this.apiResponseData)
             },
 
             cToF(celciusTemp) {
