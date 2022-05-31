@@ -15,14 +15,12 @@ To run project,
 
 > Step 3: npm run dev
 
+> NOTES: Weather API Official docs : http://api.weatherapi.com
 
 ## App description: 
 
 1. Weather App:
      Weather App: We can simply check specific weather location. Search box helps to search weather data according to specific location entered in search box.
-
-## Weather API Official docs : http://api.weatherapi.com
-
 
 2. Budget calculator App: 
      Budget App, where we can simply have a budget like specification where we have a total amount and from that totam amount we put how much expenses we have and how much we have left amout. 
