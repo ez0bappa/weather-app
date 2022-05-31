@@ -225,7 +225,6 @@ p {
 /* Menu link hover underline effects start */
 a {
   position: relative;
-  /* display: block; */
   cursor: pointer;
   padding: 8px 0;
   color: #fff;

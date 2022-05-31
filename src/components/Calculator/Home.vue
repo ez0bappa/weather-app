@@ -251,7 +251,6 @@ export default {
             this.rerenderCount++
         },
         removeItem(selData) {
-            // this.expensesDataInTable.splice(index, 1)            //only remove from DOM
             if (confirm('Sure to delete')) {
                 this.expensesDataInTable = this.expensesDataInTable.filter((item) => item.key != selData.key)
                 this.toast.warning('Deleted successfully...', {
@@ -326,7 +325,6 @@ input[type=submit]:hover {
   display: inline-block;
 }
 
-/* Temporary have */
 .toggle-text {
     display: none;
 }
