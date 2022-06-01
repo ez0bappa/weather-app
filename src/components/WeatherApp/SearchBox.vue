@@ -1,7 +1,7 @@
 <template>
     <div class="search-box">
         <div class="main mb-3">
-            <input v-model="query" v-on:keyup.enter="fetchWeather" type="text" name="input" class="input" placeholder="Enter location or place.....">
+            <input v-model="query" v-on:keyup.enter="fetchWeather" autocomplete="false" type="text" name="input" class="input" placeholder="Enter location or place.....">
             <div class="icon">
                 <i class="fa fa-search" aria-hidden="true"></i>
             </div>

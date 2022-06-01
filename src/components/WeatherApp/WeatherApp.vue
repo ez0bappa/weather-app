@@ -36,10 +36,10 @@
                                         </div>
                                     </div>
                                     <div class="back">
-                                        <span class="Symbol">
+                                        <!-- <span class="Symbol">
                                             <b class="Stat">{{ data.date }}</b>
                                             <b class="Label"></b><br>
-                                        </span><br>
+                                        </span><br> -->
                                         <div class="row">
                                             <div class="col-6 text-start mt-2" style="font-size: 12px;">
                                                 <div class="d-flex justify-content-around funny-weather">
@@ -62,32 +62,35 @@
                         <p>Welcome</p>
                         <button class="close"><i class="fa fa-times" aria-hidden="true"></i></button>
                     </div>
-                    <div id="current" class="wrapper" v-if="this.apiResponseData">
-                        <div class="time-info">
+                    <!-- <div id="Testing">
+                      Images Dev: <img :src="this.backgroundImage" />
+                    </div> -->
+                    <div id="current" class="wrapper" v-if="this.apiResponseData" :style="{backgroundImage:`url(${this.backgroundImage})`}">
+                        <div class="time-info text-white">
                             {{ todayFilter.time }}
                         </div>
                         
                         <h1 class="location text-white block" v-if="this.apiResponseData">{{ this.location.name }}, {{ location.country }}</h1>
                         <h2 class="date text-white" v-if="this.apiResponseData">{{ todayFilter.todayIs }}, {{ todayFilter.time }}</h2>
-                        <div class="weatherIcon">
+                        <div class="weatherIcon text-white">
                             <div class="sunny">
                                 <div class="inner" v-if="this.apiResponseData">
                                     <img class="weather-condition w-100" :src="this.apiResponseData ? this.current.condition.icon : ''" alt="weather-pic">
                                 </div>
                             </div>
                         </div>
-                        <p class="temp">{{ this.current.temp_c ? this.current.temp_c : '' }}</p><span class="celcius-fahrenheit">C</span>
-                        <p class="conditions" v-if="this.apiResponseData">Weather condition: {{ this.apiResponseData ? this.current.condition.text : '' }}</p>
+                        <p class="temp text-white">{{ this.current.temp_c ? this.current.temp_c : '' }}</p><span class="celcius-fahrenheit text-white">C</span>
+                        <p class="conditions text-white" v-if="this.apiResponseData">Weather condition: {{ this.apiResponseData ? this.current.condition.text : '' }}</p>
                         <div class="globe-left me-4">
                             <div class="floating humidity" v-if="this.apiResponseData">
-                                <p>Humidity: {{ this.current.humidity }}</p>
+                                <p class="text-white">Humidity: {{ this.current.humidity }}</p>
                             </div>
 
-                            <div class="floating recipitation" v-if="this.apiResponseData">
+                            <div class="floating recipitation text-white" v-if="this.apiResponseData">
                                 <p>Wind Speed: {{ this.current.wind_kph }} KM.</p>
                             </div>
                         </div>
-                        <div class="globe-info-box me-4">
+                        <div class="globe-info-box me-4 text-white">
                             <span class="me-2">Latitude: {{ this.location.lat }}</span><b></b>
                             <span class="region">Longitude: {{ this.location.lon }}</span>
                         </div>
@@ -106,6 +109,7 @@
 </template>
 
 <script>
+    import { ref, watchEffect } from 'vue'
     import SearchBox from './SearchBox.vue'
     
     export default {
@@ -117,7 +121,13 @@
                 current: '',
                 forecast: '',
                 location: '',
-                currentTemp: ''
+                currentTemp: '',
+                images: [
+                  'https://picsum.photos/600/200',
+                  'https://picsum.photos/600/200',
+                  'https://picsum.photos/600/200'
+                ],
+                backgroundImage: ''
             }
         },
         components: {
@@ -156,25 +166,38 @@
             },
         },
         methods: {
-            gettingFromSearchBox(value) {
-                this.apiResponseData = value[0]
-                this.current = this.apiResponseData.current
-                this.forecast = this.apiResponseData.forecast
-                this.location = this.apiResponseData.location
-            },
+          randomItem (items) {
+            return items[Math.floor(Math.random()*items.length)];
+          },
+          async gettingFromSearchBox(value) {
+              this.apiResponseData = value[0]
+              
+              this.current = this.apiResponseData.current
+              this.forecast = this.apiResponseData.forecast
+              this.location = this.apiResponseData.location
 
-            cToF(celciusTemp) {
-              var cToFahr = celciusTemp * 9 / 5 + 32;
-              this.currentTemperature = cToFahr
+              // set Backgground image
+              if(this.current.condition.text === 'Sunny') {
+                this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/sunny1.jpg`)).default
+              } else if(this.current.condition.text === 'Mist') {
+                this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/mist2.jpeg`)).default
+              } else if(this.current.condition.text === 'Partly cloudy') {
+                this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/cloudy2.jpg`)).default
+              }
+          },
 
-              this.currentTemp = cToFahr
-            },
+          cToF(celciusTemp) {
+            var cToFahr = celciusTemp * 9 / 5 + 32;
+            this.currentTemperature = cToFahr
 
-            fToC(fahrenheitTemp) {
-              var fToCel = (fahrenheitTemp - 32) * 5 / 9;
+            this.currentTemp = cToFahr
+          },
 
-              this.currentTemp = fToCel
-            }
+          fToC(fahrenheitTemp) {
+            var fToCel = (fahrenheitTemp - 32) * 5 / 9;
+
+            this.currentTemp = fToCel
+          }
         },
     }
 </script>
@@ -292,9 +315,12 @@ nav {
   Current Weather
 -----------------*/
 #current {
-  background: linear-gradient(to bottom, #895acd, rgb(252 6 6 / 73%));
+  /* background: linear-gradient(to bottom, #895acd, rgb(252 6 6 / 73%)); */
   padding: 10% 5% 20%;
   position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .location {
   font-size: 2em;
