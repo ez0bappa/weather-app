@@ -1,6 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="row">
+            <SearchBox @weatherApiData="gettingFromSearchBox" />
             <div class="col-md-4 order-md-2 mb-4 p-0" v-if="this.apiResponseData">
                 <div class="container">
                     <div class="row">
@@ -57,7 +58,6 @@
             </div>
             <div class="col-md-8 order-md-1 p-0">
                 <div class="weather-app2">
-                    <SearchBox @weatherApiData="gettingFromSearchBox" />
                     <div id="status">
                         <p>Welcome</p>
                         <button class="close"><i class="fa fa-times" aria-hidden="true"></i></button>
@@ -122,11 +122,6 @@
                 forecast: '',
                 location: '',
                 currentTemp: '',
-                images: [
-                  'https://picsum.photos/600/200',
-                  'https://picsum.photos/600/200',
-                  'https://picsum.photos/600/200'
-                ],
                 backgroundImage: ''
             }
         },
@@ -181,7 +176,7 @@
                 this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/sunny1.jpg`)).default
               } else if(this.current.condition.text === 'Mist') {
                 this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/mist2.jpeg`)).default
-              } else if(this.current.condition.text === 'Partly cloudy') {
+              } else if(this.current.condition.text === 'Partly cloudy' || this.current.condition.text === 'Cloudy') {
                 this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/cloudy2.jpg`)).default
               }
           },
