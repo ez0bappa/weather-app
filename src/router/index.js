@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import WeatherAppVue from '../components/WeatherApp/WeatherApp.vue';
-import Calculator from '../components/Calculator/Home.vue';
+import ExpenseBudget from '../components/ExpenseBudget/Home.vue';
+import BudgetStepOne from '../components/ExpenseBudget/BudgetSteps/BudgetStepOne.vue';
 
 const routes = [
     {
@@ -10,8 +11,15 @@ const routes = [
     },
     {
         path: '/calculator',
-        name: Calculator,
-        component: Calculator,
+        name: ExpenseBudget,
+        component: ExpenseBudget,
+        children: [
+            {
+                path: '/budget-manager',
+                name: 'BudgetStepOne',
+                component: BudgetStepOne,
+            },
+        ]
     }
 ]
 

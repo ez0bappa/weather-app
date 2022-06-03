@@ -13,6 +13,7 @@
                             <div class="left card-container" v-for="(data, index) in this.forecast.forecastday" :key="index">
                                 <div class="flip-box">
                                     <div class="front">
+                                    <pre>{{ JSON.stringify(forecastBgImage, null, 2) }}</pre>
                                         <div id="forcast-info">
                                             <span class="Symbol">
                                                 <b class="Stat">{{ filterDate[index] }}</b>
@@ -109,7 +110,6 @@
 </template>
 
 <script>
-    import { ref, watchEffect } from 'vue'
     import SearchBox from './SearchBox.vue'
     
     export default {
@@ -159,6 +159,14 @@
                     })
                 }
             },
+            // forecastBgImage() {
+            //   if (this.apiResponseData) {
+            //         let bgImage = this.forecast.forecastday.map(item => {
+            //           return item.day.condition.text
+            //         })
+            //         return bgImage
+            //     }
+            // }
         },
         methods: {
           randomItem (items) {
@@ -166,18 +174,22 @@
           },
           async gettingFromSearchBox(value) {
               this.apiResponseData = value[0]
-              
+              console.log(this.apiResponseData)
               this.current = this.apiResponseData.current
               this.forecast = this.apiResponseData.forecast
               this.location = this.apiResponseData.location
 
               // set Backgground image
               if(this.current.condition.text === 'Sunny') {
-                this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/sunny1.jpg`)).default
+                this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/weatherBackground/sunny1.jpg`)).default
               } else if(this.current.condition.text === 'Mist') {
-                this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/mist2.jpeg`)).default
+                this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/weatherBackground/mist2.jpeg`)).default
               } else if(this.current.condition.text === 'Partly cloudy' || this.current.condition.text === 'Cloudy') {
-                this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/cloudy2.jpg`)).default
+                this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/weatherBackground/cloudy2.jpg`)).default
+              } else if(this.current.condition.text === 'Patchy rain possible') {
+                this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/weatherBackground/rain2.jpg`)).default
+              } else if(this.current.condition.text === 'Thundery outbreaks possible') {
+                this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/weatherBackground/thunder2.jpg`)).default
               }
           },
 
