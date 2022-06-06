@@ -124,24 +124,28 @@
                     <div class="gallery">
                       <div class="tile">
                         <div class="post">
+                          <DoughnutVue />
                           <!-- <PieChartVue :selectedTableValueData="this.expensesDataInTable" :monthlyIncome="this.monthlyIncome" :key="this.rerenderCount" /> -->
                         </div>
                       </div>
-                      <!-- <div class="tile">
+                      <div class="tile">
                         <div class="post">
-                          <PieChartVue :selectedTableValueData="this.expensesDataInTable" :key="this.rerenderCount" />
+                          <DoughnutVue />
+                          <!-- <PieChartVue :selectedTableValueData="this.expensesDataInTable" :key="this.rerenderCount" /> -->
                         </div>
                       </div>
                       <div class="tile">
                         <div class="post">
-                          <PieChartVue :selectedTableValueData="this.expensesDataInTable" :key="this.rerenderCount" />
+                          <DoughnutVue />
+                          <!-- <PieChartVue :selectedTableValueData="this.expensesDataInTable" :key="this.rerenderCount" /> -->
                         </div>
                       </div>
                       <div class="tile">
                         <div class="post">
-                          <PieChartVue :selectedTableValueData="this.expensesDataInTable" :key="this.rerenderCount" />
+                          <DoughnutVue />
+                          <!-- <PieChartVue :selectedTableValueData="this.expensesDataInTable" :key="this.rerenderCount" /> -->
                         </div>
-                      </div> -->
+                      </div>
                     </div>
                 </div>
 
@@ -185,6 +189,7 @@
 <script>
     import GenericChart from '../ChartGraphs/GenericChart.vue'
     import PieChartVue from '../ChartGraphs/PieChart.vue'
+    import DoughnutVue from '../ChartGraphs/Doughnut.vue'
 
     export default {
         name: 'BudgetStepOne',
@@ -208,7 +213,8 @@
         },
         components: {
           GenericChart,
-          PieChartVue
+          PieChartVue,
+          DoughnutVue
         },
         methods: {
             // addCategory: function() {

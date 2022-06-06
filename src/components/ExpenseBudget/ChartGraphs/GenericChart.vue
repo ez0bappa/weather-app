@@ -13,7 +13,7 @@
                     ></fusioncharts>
                     <div v-html="displayValue"></div>
 
-                    <div class="chart-type">
+                    <!-- <div class="chart-type">
                         <div class="chart-type-Column2d">
                             <input name='chartType' type="radio" @change="onChartTypeChange" value="Column2d" checked/>
                             <label>Column 2D Chart</label>
@@ -34,7 +34,7 @@
                             <input name='chartType' type="radio" @change="onChartTypeChange" value="doughnut2d" />
                             <label>Doughnut2d</label>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
