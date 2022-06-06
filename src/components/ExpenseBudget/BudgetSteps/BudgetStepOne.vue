@@ -124,7 +124,7 @@
                     <div class="gallery">
                       <div class="tile">
                         <div class="post">
-                          <PieChartVue :selectedTableValueData="this.expensesDataInTable" :monthlyIncome="this.monthlyIncome" :key="this.rerenderCount" />
+                          <!-- <PieChartVue :selectedTableValueData="this.expensesDataInTable" :monthlyIncome="this.monthlyIncome" :key="this.rerenderCount" /> -->
                         </div>
                       </div>
                       <!-- <div class="tile">
