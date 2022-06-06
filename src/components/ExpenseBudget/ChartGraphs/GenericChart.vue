@@ -56,7 +56,7 @@
         },
         data: function () {
             return {
-                type: "column2d",
+                type: "column2d",                   //pie2d
                 renderAt: 'chart-container',
                 id: 'myChart',
                 width: "6000",
@@ -66,7 +66,7 @@
                 dataSource: {
                     chart: {
                         theme: "fusion",
-                        caption: "Budget chart show",
+                        caption: "Overall expenses",
                         subCaption: "budget estimation",
                         xAxisName: "category",
                         yAxisName: "Amount spends (In Rs)",

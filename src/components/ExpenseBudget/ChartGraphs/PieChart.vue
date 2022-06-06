@@ -61,8 +61,8 @@
                 type: "pie2d",
                 renderAt: 'chart-container',
                 id: 'myChart',
-                width: "150%",
-                height: "30%",
+                width: '550',
+                height: '350',
                 message: "Chart does not has data to render...",
                 dataFormat: "json",
                 dataSource: {
@@ -75,7 +75,20 @@
                         numberPrefix: "Rs",
                         showBorder: "1",
                     },
-                    data: [],
+                    // data: [],
+                    "data": [{
+                            "label": "Food",
+                            "value": "285040"
+                        }, {
+                            "label": "Apparels",
+                            "value": "146330"
+                        }, {
+                            "label": "Electronics",
+                            "value": "105070"
+                        }, {
+                            "label": "Household",
+                            "value": "49100"
+                        }]
                 },
                 events: {
                     dataPlotRollOver: function (e) {

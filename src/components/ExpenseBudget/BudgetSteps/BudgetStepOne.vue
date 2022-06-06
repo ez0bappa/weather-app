@@ -1,9 +1,9 @@
 <template>
-    <div class="budget-step-one">
+    <div class="budget-step-one mt-5">
         <div class="container">
             <div class="row">
                 <!-- One column -->
-                <div class="col-xs-12 col-sm-12 shadow-box mb-4">
+                <div class="col-xs-12 col-sm-12 shadow-box mb-4 text-white category-section">
                     <div class="box">
                         <div class="row">
                             <div class="header">
@@ -54,12 +54,12 @@
                 </div>
 
                 <!-- Two column -->
-                <div class="col-xs-12 col-sm-6 shadow-box p-4">
+                <div class="col-xs-12 col-sm-6 shadow-box p-4 budget-log-section">
                     <form method="post">
                         <div class="box">
                             <div class="row">
                                 <div class="header">
-                                    <h4 class="text-uppercase">Budget Log</h4><hr>
+                                    <h4 class="text-uppercase text-white">Budget Log</h4><hr>
                                     <p v-if="formErrors.length" class="text-danger">
                                       <!-- <b>Please correct the error</b> -->
                                       <ul style="list-style-type:none;">
@@ -119,7 +119,7 @@
                     </form>
                 </div>
                     
-                <div class="col-xs-12 col-sm-6 shadow-box p-4">
+                <div class="col-xs-12 col-sm-6 shadow-box p-4 text-white chart-section">
                     <div class="box">
                         <div class="row">
                             <div class="header">
@@ -133,27 +133,26 @@
                 </div>
 
                 <!-- One column -->
-                <div class="col-xs-12 col-sm-12 shadow-box mt-4">
-                  <h4 class="text-uppercase">Pie graphs</h4>
-                  <div class="gallery">
-                    <div class="tile" v-for="(data, index) in this.expensesDataInTable" :key="index">
-                      <div class="post">
-                        <pre>{{ JSON.stringify(data, null, 2) }}</pre>
-                        1
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- One column -->
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4 d-none">
                   <main class="flex">
-                    <div class="flex-item" v-for="(data, index) in this.expensesDataInTable" :key="index">
-                      <pre>{{ JSON.stringify(data, null, 2) }}</pre>
-                      <!-- <VueChartJsVue /> -->
+                    <div class="flex-item">
+                      <div class="history">
+                        <h5>Last 5 Days Expenses: </h5>
+                        <div class="days-info">
+                          <span>Food:</span><br>
+                          <span>Travelling:</span><br>
+                          <span>Pocket Money:</span><br>
+                          <span>Food:</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex-item">
+                      1
                     </div>
                   </main>
                 </div>
+
+                
 
                 <!-- One column -->
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4">
@@ -294,6 +293,9 @@
 
               if(this.expensesDataInTable) {
                 let checkItemByKey = this.expensesDataInTable.filter(item => item.key === key)
+                let checkItemByDate = this.expensesDataInTable.filter(item => console.log(item))
+                // console.
+
                 let checkIsItemInTable = checkItemByKey.length > 0
                 
                 if(checkIsItemInTable === false) {
@@ -312,11 +314,12 @@
           },
           removeItem(selData) {
             if (confirm('Sure to delete')) {
-                this.expensesDataInTable = this.expensesDataInTable.filter((item) => item.key != selData.key)
-                this.toast.warning('Deleted successfully...', {
-                    timeout: 1000
-                });
+              this.expensesDataInTable = this.expensesDataInTable.filter((item) => item.key != selData.key)
+              this.toast.warning('Deleted successfully...', {
+                timeout: 1000
+              });
             }
+            this.rerenderCount++
           },
         },
         computed: {
@@ -325,21 +328,17 @@
               for(let p of this.expensesDataInTable) {
                 total += p.expenses;        // p.expenses * p.quantity   (if also quantity exists)
               }  
-              return total;
-            }
-
-          // totalExpenses() {
-          //   let total = 0
-          //   return this.expensesDataInTable.reduce((total, next) => {
-          //       console.log('total', total + next)
-          //       return total + (next.price * next.quantity)
-          //   }, 0) 
-          // }
+            return total;
+          }
         }
     }
 </script>
 
 <style scoped>
+
+* {
+  font-family: monospace;
+}
 
 .footer-data.text-end {
     padding-right: 9%;
@@ -379,6 +378,20 @@
 }
 
 /* General */
+th {
+  cursor:pointer;
+}
+.chart-section {
+    background: #5f9ea0d9;
+}
+
+.category-section {
+    background: #008b8be6;
+}
+
+.budget-log-section {
+    background: #a52a2a99;
+}
 .gallery {
   /* background: #1d88c2; */
 }
@@ -486,35 +499,35 @@ div{
 
 /* Flex design start */
 .flex {
-      display: flex;
-      flex-flow: row wrap;
-      /*justify-content: space-between;*/ /* space-around */
-      align-content: center;
-      align-items: baseline;
-    }
+  display: flex;
+  flex-flow: row wrap;
+  /*justify-content: space-between;*/ /* space-around */
+  align-content: center;
+  align-items: baseline;
+}
 
-    /* body */
-    .flex-item {
-      width: 100%;
-      height: 300px;
-    }
+/* body */
+.flex-item {
+  width: 100%;
+  height: 300px;
+}
 
-    .flex-item:nth-of-type(2n-1) {
-      background-color: #0eadca;
-    }
+.flex-item:nth-of-type(2n-1) {
+  background-color: #0eadca;
+}
 
-    .flex-item:nth-of-type(2n) {
-      background-color: #c5f7c5;
-    }
+.flex-item:nth-of-type(2n) {
+  background-color: #c5f7c5;
+}
 
-    @media (min-width: 768px) {
-      .flex-item {
-        /*margin: 15px;*/
-        flex: 1 1 0;
-        /* using flex-sizing above or width below produces the same results */
-        /*width: 33.3%;*/
-        height: 200px;
-      }
-    }
+@media (min-width: 768px) {
+  .flex-item {
+    /*margin: 15px;*/
+    flex: 1 1 0;
+    /* using flex-sizing above or width below produces the same results */
+    /*width: 33.3%;*/
+    height: 200px;
+  }
+}
 /* Flex design end */
 </style>
