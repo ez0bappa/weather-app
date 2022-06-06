@@ -16,7 +16,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <input type="number" class="form-control" v-model="monthlyIncome" placeholder="Total Income">
+                                                    <input type="number" class="form-control monthly-income" v-model="monthlyIncome" placeholder="Total Income">
                                                     <label for="floatingInput">Total Budget</label>
                                                 </div>
                                             </div>
@@ -27,8 +27,8 @@
                                             
                                             <div class="col-6">
                                                 <div class="form-floating mb-3">
-                                                    <input type="text" v-model="addedNewCategory" class="form-control" placeholder="Total Income">
-                                                    <label for="floatingInput" >Add category</label>
+                                                    <input type="text" v-model="addedNewCategory" class="form-control">
+                                                    <label for="floatingInput" >Add New category</label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
@@ -40,7 +40,7 @@
                                                     <button 
                                                         v-bind:disabled="addedNewCategory.length == 0"
                                                         @click="addCategory"
-                                                        class="btn btn-primary" 
+                                                        class="btn btn-outline-primary btn-sm" 
                                                         type="button">Add Category
                                                     </button>
                                                 </div>
@@ -60,6 +60,20 @@
                             <div class="row">
                                 <div class="header">
                                     <h4 class="text-uppercase">Budget Log</h4><hr>
+                                    <p v-if="formErrors.length" class="text-danger">
+                                      <!-- <b>Please correct the error</b> -->
+                                      <ul style="list-style-type:none;">
+                                        <li v-for="e in formErrors" v-bind:key="e.id">
+                                          <div class="form-error-message">
+                                            <!-- {{ e }} -->
+                                            <div class="generic" v-if="e.monthlyIncome">{{e.monthlyIncome}}</div>
+                                            <div class="generic" v-if="e.dateSelected">{{e.dateSelected}}</div>
+                                            <div class="generic" v-if="e.selectedCategoryValue">{{e.selectedCategoryValue}}</div>
+                                            <div class="generic" v-if="e.expenses">{{e.expenses}}</div>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </p>
                                 </div>
                                 <div class="py-0 ma-0 my-3 col-md-6 col-12">
                                     <div class="form-group input-material">
@@ -75,7 +89,7 @@
                                 </div>
                                 <div class="py-0 ma-0 my-3 col-md-6 col-12">
                                     <div class="form-floating mb-3">
-                                        <input type="date" class="form-control"  v-model="dateSelected">
+                                        <input type="date" id="date_picker" class="form-control"  v-model="dateSelected">
                                         <label for="floatingInput">Date</label>
                                     </div>
                                 </div>
@@ -84,21 +98,21 @@
                             <div class="row">
                                 <div class="py-0 ma-0 my-3 col-md-6 col-12">
                                     <div class="form-floating mb-3">
-                                        <input type="number" class="form-control"  placeholder="Total Income" v-model="expenses">
+                                        <input type="number" class="form-control" v-model="expenses">
                                         <label for="floatingInput">Expenditure</label>
                                     </div>
                                 </div>
-                                <div class="py-0 ma-0 my-3 col-md-6 col-12">
+                                <!-- <div class="py-0 ma-0 my-3 col-md-6 col-12">
                                     <div class="form-floating mb-3">
-                                        <input type="number" class="form-control"  placeholder="Total Income">
+                                        <input type="number" class="form-control">
                                         <label for="floatingInput">Amount spend</label>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             
                             <div class="row">
                                 <div class="d-grid gap-2">
-                                    <button class="btn btn-primary text-upercase" type="button" @click="addItem(this.selectedCategoryKey, this.selectedCategoryValue)">Add</button>
+                                    <button class="btn btn-outline-warning btn-sm text-upercase" type="button" @click="addItem(this.selectedCategoryKey, this.selectedCategoryValue)">Add</button>
                                 </div>
                             </div>
                         </div>
@@ -109,7 +123,7 @@
                     <div class="box">
                         <div class="row">
                             <div class="header">
-                                <h4 class="text-uppercase">Chart</h4><hr>
+                                <h4 class="text-uppercase">Data Chart</h4><hr>
                             </div>
                             <div class="py-0 ma-0 my-3 col-md-12 col-12">
                                 <GenericChart :selectedTableValueData="this.expensesDataInTable" :key="this.rerenderCount" />
@@ -120,55 +134,55 @@
 
                 <!-- One column -->
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4">
-                    <h4 class="text-uppercase">Pie graphs</h4>
-                    <div class="gallery">
-                      <div class="tile">
-                        <div class="post">
-                          <DoughnutVue />
-                          <!-- <PieChartVue :selectedTableValueData="this.expensesDataInTable" :monthlyIncome="this.monthlyIncome" :key="this.rerenderCount" /> -->
-                        </div>
-                      </div>
-                      <div class="tile">
-                        <div class="post">
-                          <DoughnutVue />
-                          <!-- <PieChartVue :selectedTableValueData="this.expensesDataInTable" :key="this.rerenderCount" /> -->
-                        </div>
-                      </div>
-                      <div class="tile">
-                        <div class="post">
-                          <DoughnutVue />
-                          <!-- <PieChartVue :selectedTableValueData="this.expensesDataInTable" :key="this.rerenderCount" /> -->
-                        </div>
-                      </div>
-                      <div class="tile">
-                        <div class="post">
-                          <DoughnutVue />
-                          <!-- <PieChartVue :selectedTableValueData="this.expensesDataInTable" :key="this.rerenderCount" /> -->
-                        </div>
+                  <h4 class="text-uppercase">Pie graphs</h4>
+                  <div class="gallery">
+                    <div class="tile" v-for="(data, index) in this.expensesDataInTable" :key="index">
+                      <div class="post">
+                        <pre>{{ JSON.stringify(data, null, 2) }}</pre>
+                        1
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                <!-- One column -->
+                <div class="col-xs-12 col-sm-12 shadow-box mt-4 d-none">
+                  <main class="flex">
+                    <div class="flex-item" v-for="(data, index) in this.expensesDataInTable" :key="index">
+                      <pre>{{ JSON.stringify(data, null, 2) }}</pre>
+                      <!-- <VueChartJsVue /> -->
+                    </div>
+                  </main>
                 </div>
 
                 <!-- One column -->
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4">
                     <h4 class="text-uppercase">Table section</h4>
                     <table class="table caption-top">
-                        <caption class="list-user-caption text-end">List of users</caption>
+                        <caption class="list-user-caption text-end">List of expenses</caption>
                         <thead>
                             <tr>
                               <th scope="col">#(ID)</th>
                               <th scope="col">category</th>
                               <th scope="col">Date</th>
                               <th scope="col">Expenditure</th>
+                              <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(item, index) in expensesDataInTable" :key="index">
-                            <!-- <pre>{{ JSON.stringify(item, null, 2) }}</pre> -->
                                 <th scope="row">{{ index + 1 }}</th>
                                 <td>{{ item.category }}</td>
                                 <td>{{ item.date }}</td>
                                 <td>{{ item.expenses }}</td>
+                                <td>
+                                  <button @click="editItem(item)" class="btn btn-secondary btn-sm me-1" style="background: #5f9ea0;">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                                    <button @click="removeItem(item)" class="btn btn-warning btn-sm ms-1" style="background: #ffb49a">
+                                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -187,9 +201,11 @@
 </template>
 
 <script>
+    import { useToast } from "vue-toastification";
     import GenericChart from '../ChartGraphs/GenericChart.vue'
     import PieChartVue from '../ChartGraphs/PieChart.vue'
     import DoughnutVue from '../ChartGraphs/Doughnut.vue'
+    import VueChartJsVue from '../ChartGraphs/VueChartJs.vue'
 
     export default {
         name: 'BudgetStepOne',
@@ -201,7 +217,7 @@
                 expensesDataInTable: [],
                 dateSelected: '',
                 formErrors: [],
-                expenses: 10000,
+                expenses: '',
                 rerenderCount: 0,
                 defaultCategories: [
                     { key: 'travelling', value: 'Travelling'},
@@ -209,42 +225,71 @@
                     { key: 'pocket-money', value: 'Pocket Money'},
                     { key: 'room-expenses', value: 'Room Expenses'},
                 ],
+                toast: useToast()
             }
         },
         components: {
           GenericChart,
           PieChartVue,
-          DoughnutVue
+          DoughnutVue,
+          VueChartJsVue
         },
         methods: {
-            // addCategory: function() {
-            //     // console.log('Key:', this.addedNewCategory.replace(/\s+/g, '-').toLowerCase())
-            //     // console.log('Value: ', this.addedNewCategory)
-            //     console.log('defaultCategories:', this.defaultCategories)
+          addCategory: function() {
+              // console.log('Key:', this.addedNewCategory.replace(/\s+/g, '-').toLowerCase())
+              // console.log('Value: ', this.addedNewCategory)
+              console.log('defaultCategories:', this.defaultCategories)
 
-            //     // var ifKeyExists = this.defaultCategories.some(key => key === this.addedNewCategory.replace(/\s+/g, '-').toLowerCase())
-            //     // console.log(ifKeyExists)
+              // var exists = this.addedNewCategory.filter(function (o) {
+              //   return o.hasOwnProperty(this.addedNewCategory.replace(/\s+/g, '-').toLowerCase());
+              // }).length > 0;
 
-            //     var arr = this.defaultCategories
-            //     var key = 'food'
-            //     var result = arr.some(o =>key in o)
-            //     console.log(result)
+              // if (exists) {
+              //     console.log('exists');
+              // } else {
+              //     console.log('does not exist');
+              // }
+
+              // var result = this.defaultCategories.some(o => this.addedNewCategory.replace(/\s+/g, '-').toLowerCase() in o)
+
+              const hasGrocery = this.defaultCategories.some(function(product) {
+                return product.category === 'grocery';
+              })
+
+              console.log(hasGrocery);
+              
+              const arr = this.defaultCategories;
+
+              var result = arr.some(e => e.hasOwnProperty('food'));
+              console.log("The array contains an object with a 'foo' property: " + result);
+              
+              console.log(result)
 
 
-            //     this.defaultCategories.push({key: this.addedNewCategory.replace(/\s+/g, '-').toLowerCase(), value: this.addedNewCategory})
-            //     this.addedNewCategory = ''
-            // },
-            changeCategory(event) {
-                this.selectedCategoryValue = event.target.options[event.target.options.selectedIndex].text
-                this.selectedCategoryKey = event.target.value
-            },
-            addItem(key, value) {
-
+              this.defaultCategories.push({key: this.addedNewCategory.replace(/\s+/g, '-').toLowerCase(), value: this.addedNewCategory})
+              this.addedNewCategory = ''
+          },
+          changeCategory(event) {
+              this.selectedCategoryValue = event.target.options[event.target.options.selectedIndex].text
+              this.selectedCategoryKey = event.target.value
+          },
+          addItem(key, value) {
+            console.log(this.expenses)
+            this.formErrors = [];
+            if(!this.monthlyIncome) {
+              this.formErrors.push({monthlyIncome: 'Please enter you Total budget'})
+            } else if(!this.dateSelected) {
+              this.formErrors.push({dateSelected: 'Please select date'})
+            } else if(!this.selectedCategoryValue || this.selectedCategoryValue == null || this.selectedCategoryValue == undefined) {
+              this.formErrors.push({selectedCategoryValue: 'Please select any category'})
+            } else if(!this.expenses) {
+              this.formErrors.push({expenses: 'Please enter your expences for this category'})
+            } else {
               let checkItem = [{
-                  key,
-                  category: value,
-                  date: this.dateSelected,
-                  expenses: this.expenses
+                key,
+                category: value,
+                date: this.dateSelected,
+                expenses: this.expenses
               }]
 
               if(this.expensesDataInTable) {
@@ -256,14 +301,23 @@
                   this.expenses = ''
                 } else {
                   this.expensesDataInTable.filter(item => {
-                      if(item.key === checkItem[0].key) {
-                          item.expenses += checkItem[0].expenses
-                      }
+                    if(item.key === checkItem[0].key) {
+                      item.expenses += checkItem[0].expenses
+                    }
                   })
                 }
               }
               this.rerenderCount++
             }
+          },
+          removeItem(selData) {
+            if (confirm('Sure to delete')) {
+                this.expensesDataInTable = this.expensesDataInTable.filter((item) => item.key != selData.key)
+                this.toast.warning('Deleted successfully...', {
+                    timeout: 1000
+                });
+            }
+          },
         },
         computed: {
           totalExpenses() {  
@@ -325,6 +379,16 @@
 }
 
 /* General */
+.gallery {
+  /* background: #1d88c2; */
+}
+
+.error-box {
+  border: 2px solid red;
+}
+.gallery .tile .post {
+  background: #1d88c2 !important;
+}
 .shadow-box{
     box-shadow: 1px 3px 5px rgb(0 0 0 / 33%);
 }
@@ -419,4 +483,38 @@ div{
   }
 }
 /* Pie graphs section end */
+
+/* Flex design start */
+.flex {
+      display: flex;
+      flex-flow: row wrap;
+      /*justify-content: space-between;*/ /* space-around */
+      align-content: center;
+      align-items: baseline;
+    }
+
+    /* body */
+    .flex-item {
+      width: 100%;
+      height: 300px;
+    }
+
+    .flex-item:nth-of-type(2n-1) {
+      background-color: #0eadca;
+    }
+
+    .flex-item:nth-of-type(2n) {
+      background-color: #c5f7c5;
+    }
+
+    @media (min-width: 768px) {
+      .flex-item {
+        /*margin: 15px;*/
+        flex: 1 1 0;
+        /* using flex-sizing above or width below produces the same results */
+        /*width: 33.3%;*/
+        height: 200px;
+      }
+    }
+/* Flex design end */
 </style>

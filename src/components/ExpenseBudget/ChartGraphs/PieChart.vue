@@ -5,9 +5,12 @@
                 <div class="showChart">
                     <fusioncharts
                         :type="type"
+                        :width="width"
+                        :height="height"
                         :dataFormat="dataFormat"
                         :dataSource="dataSource"
                         :dataEmptyMessage="message"
+                        :events="events"
                         ref="fc"
                     ></fusioncharts>
                     <div v-html="displayValue"></div>
@@ -52,21 +55,20 @@
         name: 'FusionchartData',
         props: {
             selectedTableValueData: Array,
-            monthlyIncome: String
         },
         data: function () {
             return {
                 type: "pie2d",
                 renderAt: 'chart-container',
                 id: 'myChart',
-                width: "10%",
-                height: "10%",
+                width: "150%",
+                height: "30%",
                 message: "Chart does not has data to render...",
                 dataFormat: "json",
                 dataSource: {
                     chart: {
                         theme: "fusion",
-                        caption: "category chart show",
+                        caption: "category",
                         subCaption: "budget estimation",
                         xAxisName: "category",
                         yAxisName: "Amount spends (In Rs)",
@@ -74,7 +76,13 @@
                         showBorder: "1",
                     },
                     data: [],
-                }
+                },
+                events: {
+                    dataPlotRollOver: function (e) {
+                        console.log(`You are currently hovering over <strong>${e.data.categoryLabel}</strong> whose value is <strong>${e.data.displayValue}</strong>`)
+                        this.displayValue = `You are currently hovering over <strong>${e.data.categoryLabel}</strong> whose value is <strong>${e.data.displayValue}</strong>`;
+                    },
+                },
             };
         },
         methods: {
@@ -91,10 +99,10 @@
         created: function() {
             if(this.selectedTableValueData) {
                 let itemArr = this.selectedTableValueData.map(item => {
-                    return {
-                            label: item.category,
-                            value: item.expenses,
-                        }
+                return {
+                    label: item.category,
+                    value: item.expenses,
+                    }
                 });
                 this.dataSource.data = itemArr
             }

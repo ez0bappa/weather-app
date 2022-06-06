@@ -12,10 +12,10 @@
                     <router-link to="/weather-app">Weather App</router-link>
                 </li>
                 <li>
-                    <router-link to="/calculator">Old Budget App</router-link>
+                    <router-link to="/calculator">Budget App(Depricated)</router-link>
                 </li>
                 <li>
-                    <router-link to="/budget-app">Budget App</router-link>
+                    <router-link to="/budget-app">Budget App(Beta)</router-link>
                 </li>
             </ul>
         </header>

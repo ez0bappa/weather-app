@@ -95,7 +95,6 @@
         //     }
         // },
         created: function() {
-            console.log('Graph')
             if(this.selectedTableValueData) {
                 let itemArr = this.selectedTableValueData.map(item => {
                 return {
