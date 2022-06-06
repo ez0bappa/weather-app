@@ -77,13 +77,21 @@
                                 </div>
                                 <div class="py-0 ma-0 my-3 col-md-6 col-12">
                                     <div class="form-group input-material">
-                                        <div class="form-floating mb-3" data-v-27795828="">
-                                            <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
-                                                <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
-                                                    {{ category.value }}
-                                                </option>
+                                        <div class="form-floating mb-3">
+                                          <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
+                                            <option v-for="option in defaultCategories" v-bind:key="option">
+                                              {{ option.value }}
+                                            </option>
                                             </select>
                                             <label for="">Choose your expenses</label>
+
+
+                                          <!-- <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
+                                            <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
+                                              {{ category.value }}
+                                            </option>
+                                          </select>
+                                          <label for="">Choose your expenses</label> -->
                                         </div>
                                     </div>
                                 </div>
@@ -157,7 +165,7 @@
                 <!-- One column -->
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4">
                     <h4 class="text-uppercase">Table section</h4>
-                    <table class="table caption-top">
+                    <!-- <table class="table caption-top">
                         <caption class="list-user-caption text-end">List of expenses</caption>
                         <thead>
                             <tr>
@@ -189,10 +197,10 @@
                       total:
                       <strong><span 
                           :class="totalExpenses > this.totalBudget ? 'text-danger' : 'text-primary'"
-                          >{{totalExpenses}}/-</span></strong> 
-                      <!-- out of 
-                      <strong><span>{{this.monthlyIncome}}/-</span></strong> -->
-                    </div>
+                          >{{totalExpenses}}/-</span></strong>
+                    </div> -->
+                
+
                 </div>
             </div>
         </div>

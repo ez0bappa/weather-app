@@ -42,6 +42,9 @@
                                 <li class="nav-item">
                                     <router-link to="/budget-dashboard" class="nav-link">Budget chart</router-link>
                                 </li>
+                                <li class="nav-item">
+                                    <router-link to="/budget-data" class="nav-link">Table</router-link>
+                                </li>
                             </ul>
                             <form class="d-flex ms-auto">
                                 <div class="input-group">

@@ -12,7 +12,9 @@ import VueFusionCharts from 'vue-fusioncharts';                                 
 // import FusionCharts modules and resolve dependency
 import FusionCharts from 'fusioncharts';                                        //Include the FusionCharts library
 import Charts from 'fusioncharts/fusioncharts.charts';                          //Include the chart type
-import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';        //import the theme   
+import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';        //import the theme
+
+// Sorting table
 
 
 createApp(App)
