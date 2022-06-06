@@ -120,7 +120,7 @@
                             
                             <div class="row">
                                 <div class="d-grid gap-2">
-                                    <button class="btn btn-outline-warning btn-sm text-upercase" type="button" @click="addItem(this.selectedCategoryKey, this.selectedCategoryValue)">Add</button>
+                                    <button class="btn btn-outline-success btn-sm text-upercase" type="button" @click="addItem(this.selectedCategoryKey, this.selectedCategoryValue)">Add</button>
                                 </div>
                             </div>
                         </div>
@@ -160,12 +160,14 @@
                   </main>
                 </div>
 
-                
+                <div class="col-xs-12 col-sm-12 shadow-box mt-4">
+                  <VueGoodTableVue />
+                </div>
 
                 <!-- One column -->
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4">
                     <h4 class="text-uppercase">Table section</h4>
-                    <!-- <table class="table caption-top">
+                    <table class="table caption-top">
                         <caption class="list-user-caption text-end">List of expenses</caption>
                         <thead>
                             <tr>
@@ -198,7 +200,7 @@
                       <strong><span 
                           :class="totalExpenses > this.totalBudget ? 'text-danger' : 'text-primary'"
                           >{{totalExpenses}}/-</span></strong>
-                    </div> -->
+                    </div>
                 
 
                 </div>
@@ -209,6 +211,7 @@
 
 <script>
     import { useToast } from "vue-toastification";
+    import VueGoodTableVue from "../BudgetTabledata/VueGoodTable.vue";
     import GenericChart from '../ChartGraphs/GenericChart.vue'
     import PieChartVue from '../ChartGraphs/PieChart.vue'
     import DoughnutVue from '../ChartGraphs/Doughnut.vue'
@@ -237,6 +240,7 @@
         },
         components: {
           GenericChart,
+          // VueGoodTableVue,
           PieChartVue,
           DoughnutVue,
           VueChartJsVue
@@ -398,7 +402,7 @@ th {
 }
 
 .budget-log-section {
-    background: #a52a2a99;
+    background: #8b45137a;
 }
 .gallery {
   /* background: #1d88c2; */
@@ -412,6 +416,10 @@ th {
 }
 .shadow-box{
     box-shadow: 1px 3px 5px rgb(0 0 0 / 33%);
+}
+
+.header {
+    background: linear-gradient(45deg, black, transparent);
 }
 
 /* Pie graphs section start */

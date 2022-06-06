@@ -56,7 +56,7 @@
         },
         data: function () {
             return {
-                type: "column2d",                   //pie2d
+                type: "doughnut2d",                   //pie2d, column2d, doughnut2d
                 renderAt: 'chart-container',
                 id: 'myChart',
                 width: "6000",
