@@ -3,7 +3,7 @@
         <div class="products">
             <div id="wrapper">
                 <!-- Sidebar -->
-                <div id="sidebar-wrapper">
+                <!-- <div id="sidebar-wrapper d-none">
                     <ul class="sidebar-nav">
                         <li class="sidebar-brand">
                             <a href="#">
@@ -17,10 +17,10 @@
                             <router-link to="/pinia-distribution" class="nav-link">Weather App</router-link>
                         </li>
                     </ul>
-                </div>
+                </div> -->
                 <!-- /#sidebar-wrapper -->
                 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
-                    <div class="container-fluid">
+                    <div class="container-fluid sub-header-menu">
                         <a class="navbar-brand" href="#">App version: <span class="badge bg-primary">v5.1.1</span></a>
                         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-content">
                             <div class="hamburger-toggle">
@@ -37,7 +37,10 @@
                                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <router-link to="/budget-manager" class="nav-link">Budget chart</router-link>
+                                    <router-link to="/budget-manager" class="nav-link">Dashboard</router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link to="/budget-dashboard" class="nav-link">Budget chart</router-link>
                                 </li>
                             </ul>
                             <form class="d-flex ms-auto">
@@ -51,13 +54,19 @@
                 </nav>
                 
                 <!-- Page Content -->
-                <div id="page-content-wrapper">
+                <!-- <div id="page-content-wrapper">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-12">
                                 <router-view />
                             </div>
                         </div>
+                    </div>
+                </div> -->
+
+                <div class="container">
+                    <div class="row">
+                        <router-view />
                     </div>
                 </div>
                 <!-- /#page-content-wrapper -->
@@ -75,6 +84,9 @@
 </script>
 
 <style scoped>
+.sub-header-menu{
+    padding: 0 12%;
+}
 
 #wrapper {
     padding-left: 0;
@@ -168,7 +180,7 @@
 
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 250px;
+        /* padding-left: 250px; */
     }
 
     #wrapper.toggled {
@@ -184,7 +196,8 @@
     }
 
     #page-content-wrapper {
-        padding: 20px;
+        /* padding: 20px; */
+        padding: 20px 9%;
         position: relative;
     }
 

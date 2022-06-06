@@ -28,4 +28,10 @@ To run project,
 ## Reference UI
 > https://www.youtube.com/watch?v=BCNxLtjeniE&ab_channel=CyberJunk
 
+> https://codepen.io/georgemejia/pen/bJvXpb
+
+> https://codepen.io/cch5ng/pen/owLLOv
+
+> https://vue-expense.herokuapp.com/dashboard
+
 

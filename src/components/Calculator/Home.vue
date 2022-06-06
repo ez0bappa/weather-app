@@ -11,7 +11,7 @@
                         <div class="add-category" style="display: table">
                             <div class="element input-section">
                                 <div class="add-category-input">
-                                    <input type="text" v-model="addedNewCategory" ref="clearTextRef" placeholder="Enter here to add new category"/>
+                                    <input type="text" :model="addedNewCategory" ref="clearTextRef" placeholder="Enter here to add new category"/>
                                 </div>
                             </div>
                             
@@ -53,12 +53,12 @@
                             </div>
                             <label for="">Choose your expenses</label>
                             <div class="drop-down-section">
-                            <select v-model="selectedCategoryValue" @change="changeCategory($event)">
-                                <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
-                                    {{ category.value }}
-                                </option>
-                            </select>
-                        </div>
+                                <select v-model="selectedCategoryValue" @change="changeCategory($event)">
+                                    <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
+                                        {{ category.value }}
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                     </form>
                 </div>
