@@ -185,6 +185,7 @@
 </template>
 
 <script>
+  import moment from 'moment'
   import { useToast } from "vue-toastification"
   import GenericChart from '../ChartGraphs/GenericChart.vue'
   import PieChartVue from '../ChartGraphs/PieChart.vue'
@@ -196,7 +197,7 @@
           addedNewCategory: '',
           selectedCategoryValue: '',
           expensesDataInTable: [],
-          dateSelected: '',
+          dateSelected: moment().format('YYYY-MM-DD'),
           formErrors: [],
           expenses: '',
           rerenderCount: 0,
