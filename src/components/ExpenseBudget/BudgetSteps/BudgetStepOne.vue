@@ -78,18 +78,19 @@
                         <div class="py-0 ma-0 my-3 col-md-6 col-12">
                             <div class="form-group input-material">
                                 <div class="form-floating mb-3">
-                                  <!-- <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
+                                  <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
                                       <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
                                           {{ category.value }}
                                       </option>
-                                  </select> -->
+                                  </select>
+                                  <span>You select - {{ this.selectedCategoryValue }}</span>
 
-                                  <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
+                                  <!-- <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
                                     <option v-for="option in defaultCategories" v-bind:key="option">
                                       {{ option.value }}
                                     </option>
                                     </select>
-                                    <label for="">Choose your expenses</label>
+                                    <label for="">Choose your expenses</label> -->
                                 </div>
                             </div>
                         </div>
@@ -144,9 +145,9 @@
                 <!-- One column -->
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4">
                   <h4 class="text-uppercase">Table section</h4>
-                  <table class="table caption-top">
+                  <table class="table caption-top" style="background: lightblue;">
                       <caption class="list-user-caption text-end">List of expenses</caption>
-                      <thead>
+                      <thead class="header text-white">
                           <tr>
                             <th scope="col">#(ID)</th>
                             <th scope="col">category</th>
