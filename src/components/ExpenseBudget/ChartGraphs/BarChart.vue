@@ -32,7 +32,7 @@ ChartJS.register(
   LinearScale
 );
 export default {
-  name: "PieChart",
+  name: "DoughnutChart",
   components: { Bar },
   props: {
     chartId: {
@@ -45,11 +45,11 @@ export default {
     },
     width: {
       type: Number,
-      default: 250,
+      default: 200,
     },
     height: {
       type: Number,
-      default: 250,
+      default: 400,
     },
     cssClasses: {
       default: "",
@@ -78,31 +78,37 @@ export default {
         type: String,
         default: "label",
     },
+
+    dates: {
+        type: String
+    },
+
+    data: {
+        type: Array
+    }
    
   },
   data() {
     return {
       chartData: {
-        labels: [
-            'Food'              
-        ],
+        labels: [this.dates],                                                       //['1/10/2022', '2/10/2022', '3/10/2022']
         //datasets: [ { data: this.incomes }, { data: this.expenses } ]
         datasets: [
           {
-            label: 'Food',
-            backgroundColor: "#41b883",
-            data: [10],
+            label: this.keyLabel,
+            backgroundColor: ['#f87979', '#fff', '#6610f2'],
+            data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
           }
         ],
       },
       chartOptions: {
-        responsive: false,
+        responsive: true,
         maintainAspectRatio: false
       },
     };
   },
   mounted() {
-      console.log(this.keyLabel)
+      console.log('Bar Chart: ', this.data)
   }
 };
 </script>

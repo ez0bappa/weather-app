@@ -139,6 +139,10 @@
                         </div>
                     </div>
                 </div>
+                
+                <div class="col-xs-12 col-sm-12 shadow-box mt-4">
+                  Test
+                </div>
 
                 <!-- One column -->
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4 d-none">
@@ -158,10 +162,6 @@
                       1
                     </div>
                   </main>
-                </div>
-
-                <div class="col-xs-12 col-sm-12 shadow-box mt-4">
-                  <VueGoodTableVue />
                 </div>
 
                 <!-- One column -->
@@ -211,12 +211,8 @@
 
 <script>
     import { useToast } from "vue-toastification";
-    import VueGoodTableVue from "../BudgetTabledata/VueGoodTable.vue";
     import GenericChart from '../ChartGraphs/GenericChart.vue'
     import PieChartVue from '../ChartGraphs/PieChart.vue'
-    import DoughnutVue from '../ChartGraphs/Doughnut.vue'
-    import VueChartJsVue from '../ChartGraphs/VueChartJs.vue'
-
     export default {
         name: 'BudgetStepOne',
         data() {
@@ -240,45 +236,22 @@
         },
         components: {
           GenericChart,
-          // VueGoodTableVue,
           PieChartVue,
-          DoughnutVue,
-          VueChartJsVue
         },
         methods: {
           addCategory: function() {
               // console.log('Key:', this.addedNewCategory.replace(/\s+/g, '-').toLowerCase())
               // console.log('Value: ', this.addedNewCategory)
-              console.log('defaultCategories:', this.defaultCategories)
-
+              // console.log('defaultCategories:', this.defaultCategories)
               // var exists = this.addedNewCategory.filter(function (o) {
               //   return o.hasOwnProperty(this.addedNewCategory.replace(/\s+/g, '-').toLowerCase());
               // }).length > 0;
-
               // if (exists) {
               //     console.log('exists');
               // } else {
               //     console.log('does not exist');
               // }
-
               // var result = this.defaultCategories.some(o => this.addedNewCategory.replace(/\s+/g, '-').toLowerCase() in o)
-
-              const hasGrocery = this.defaultCategories.some(function(product) {
-                return product.category === 'grocery';
-              })
-
-              console.log(hasGrocery);
-              
-              const arr = this.defaultCategories;
-
-              var result = arr.some(e => e.hasOwnProperty('food'));
-              console.log("The array contains an object with a 'foo' property: " + result);
-              
-              console.log(result)
-
-
-              this.defaultCategories.push({key: this.addedNewCategory.replace(/\s+/g, '-').toLowerCase(), value: this.addedNewCategory})
-              this.addedNewCategory = ''
           },
           changeCategory(event) {
               this.selectedCategoryValue = event.target.options[event.target.options.selectedIndex].text
@@ -302,12 +275,10 @@
                 date: this.dateSelected,
                 expenses: this.expenses
               }]
-
               if(this.expensesDataInTable) {
                 let checkItemByKey = this.expensesDataInTable.filter(item => item.key === key)
                 let checkItemByDate = this.expensesDataInTable.filter(item => console.log(item))
                 // console.
-
                 let checkIsItemInTable = checkItemByKey.length > 0
                 
                 if(checkIsItemInTable === false) {
@@ -347,18 +318,14 @@
 </script>
 
 <style scoped>
-
 * {
   font-family: monospace;
 }
-
 .footer-data.text-end {
     padding-right: 9%;
     border: none;
     background: rgb(173, 152, 165);
 }
-
-
 /* codepen1-flexbox */
 .leftside {
   background: #000599;
@@ -371,7 +338,6 @@
   padding: 2%;
   text-align: left;
 }
-
 @media ( min-width : 600px ){
   body {
     background: linear-gradient(90deg, #000599 50%, #006999 50%);
@@ -388,7 +354,6 @@
     background: none;
   }
 }
-
 /* General */
 th {
   cursor:pointer;
@@ -396,18 +361,15 @@ th {
 .chart-section {
     background: #5f9ea0d9;
 }
-
 .category-section {
     background: #008b8be6;
 }
-
 .budget-log-section {
     background: #8b45137a;
 }
 .gallery {
   /* background: #1d88c2; */
 }
-
 .error-box {
   border: 2px solid red;
 }
@@ -417,13 +379,10 @@ th {
 .shadow-box{
     box-shadow: 1px 3px 5px rgb(0 0 0 / 33%);
 }
-
 .header {
     background: linear-gradient(45deg, black, transparent);
 }
-
 /* Pie graphs section start */
-
 /* This is manually added */
 .gallery {
   max-width: 100% !important;        
@@ -433,13 +392,11 @@ th {
   -webkit-box-sizing:border-box;
   box-sizing:border-box;
 }
-
 div{
   font-family:Georgia,TimesNewRoman,'Times New Roman',Times,serif;
   font-size:14px;
   line-height:18px;
 }
-
 .gallery{
   display:block;
   width:100%;
@@ -447,13 +404,11 @@ div{
   overflow:hidden;
   max-width:960px;
 }
-
 .gallery .tile{
   display:block;
   width:100%;
   padding:0 0.5em 0.5em 0;
 }
-
 .gallery .tile .post{
   /* this is the content box; what follows is purely cosmetic */
   background-color:#003152;
@@ -461,7 +416,6 @@ div{
   text-align:center;
   /* padding:6em 2em; */
 }
-
 .gallery .tile.wide .post{
   /* as above this is just cosmetic */
     background-color:#08457e;
@@ -475,12 +429,10 @@ div{
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#08457e',endColorstr='#007cc2',GradientType=1);
     color:#fff;
 }
-
 .gallery .tile.full .post{
   /* as above this is just cosmetic */
   background-color:#059029;
 }
-
 @media screen and (min-width:480px){
   .gallery .tile{
     width:50%;
@@ -491,7 +443,6 @@ div{
     width:100%;
   }
 }
-
 @media screen and (min-width:720px){
   .gallery .tile{
     width:33.333%;
@@ -501,7 +452,6 @@ div{
     width:66.667%;
   }
 }
-
 @media screen and (min-width:960px){
   .gallery .tile{
     width:25%;
@@ -512,7 +462,6 @@ div{
   }
 }
 /* Pie graphs section end */
-
 /* Flex design start */
 .flex {
   display: flex;
@@ -521,21 +470,17 @@ div{
   align-content: center;
   align-items: baseline;
 }
-
 /* body */
 .flex-item {
   width: 100%;
   height: 300px;
 }
-
 .flex-item:nth-of-type(2n-1) {
   background-color: #0eadca;
 }
-
 .flex-item:nth-of-type(2n) {
   background-color: #c5f7c5;
 }
-
 @media (min-width: 768px) {
   .flex-item {
     /*margin: 15px;*/

@@ -38,5 +38,6 @@ To run project,
 
 <!-- Table -->
 <!-- Vue Good Table not working -->
+<!-- npm install vueye-table --save -->
 
 

@@ -1,12 +1,12 @@
 <template>
-    <div>
-        <h4>Budget table</h4>
+    <div class="bootstrap-table">
+        <h4>BootstrapTable</h4>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'TableData'
+        name: "BootstrapTable"
     }
 </script>
 
