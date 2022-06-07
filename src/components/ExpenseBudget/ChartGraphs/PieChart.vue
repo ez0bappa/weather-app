@@ -91,7 +91,7 @@ export default {
           {
             label: 'Food',
             backgroundColor: "#41b883",
-            data: [10],
+            data: [10, 20, 30, 40, 50],
           }
         ],
       },

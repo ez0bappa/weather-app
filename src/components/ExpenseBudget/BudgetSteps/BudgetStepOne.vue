@@ -79,48 +79,40 @@
                                     <div class="form-group input-material">
                                         <div class="form-floating mb-3">
                                           <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
+                                              <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
+                                                  {{ category.value }}
+                                              </option>
+                                          </select>
+
+                                          <!-- <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
                                             <option v-for="option in defaultCategories" v-bind:key="option">
                                               {{ option.value }}
                                             </option>
                                             </select>
-                                            <label for="">Choose your expenses</label>
-
-
-                                          <!-- <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
-                                            <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
-                                              {{ category.value }}
-                                            </option>
-                                          </select>
-                                          <label for="">Choose your expenses</label> -->
+                                            <label for="">Choose your expenses</label> -->
                                         </div>
                                     </div>
                                 </div>
                                 <div class="py-0 ma-0 my-3 col-md-6 col-12">
-                                    <div class="form-floating mb-3">
-                                        <input type="date" id="date_picker" class="form-control"  v-model="dateSelected">
-                                        <label for="floatingInput">Date</label>
-                                    </div>
+                                  <div class="form-floating mb-3">
+                                    <input type="date" id="date_picker" class="form-control"  v-model="dateSelected">
+                                    <label for="floatingInput">Date</label>
+                                  </div>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="py-0 ma-0 my-3 col-md-6 col-12">
-                                    <div class="form-floating mb-3">
-                                        <input type="number" class="form-control" v-model="expenses">
-                                        <label for="floatingInput">Expenditure</label>
-                                    </div>
+                              <div class="py-0 ma-0 my-3 col-md-6 col-12">
+                                <div class="form-floating mb-3">
+                                  <input type="number" class="form-control" v-model="expenses">
+                                  <label for="floatingInput">Expenditure</label>
                                 </div>
-                                <!-- <div class="py-0 ma-0 my-3 col-md-6 col-12">
-                                    <div class="form-floating mb-3">
-                                        <input type="number" class="form-control">
-                                        <label for="floatingInput">Amount spend</label>
-                                    </div>
-                                </div> -->
+                              </div>
                             </div>
                             
                             <div class="row">
                                 <div class="d-grid gap-2">
-                                    <button class="btn btn-outline-success btn-sm text-upercase" type="button" @click="addItem(this.selectedCategoryKey, this.selectedCategoryValue)">Add</button>
+                                  <button class="btn btn-outline-success btn-sm text-upercase" type="button" @click="addItem(this.selectedCategoryKey, this.selectedCategoryValue)">Add</button>
                                 </div>
                             </div>
                         </div>
@@ -128,38 +120,23 @@
                 </div>
                     
                 <div class="col-xs-12 col-sm-6 shadow-box p-4 text-white chart-section">
-                    <div class="box">
-                        <div class="row">
-                            <div class="header">
-                                <h4 class="text-uppercase">Data Chart</h4><hr>
-                            </div>
-                            <div class="py-0 ma-0 my-3 col-md-12 col-12">
-                                <GenericChart :selectedTableValueData="this.expensesDataInTable" :key="this.rerenderCount" />
-                            </div>
-                        </div>
+                  <div class="box">
+                    <div class="row">
+                      <div class="header">
+                        <h4 class="text-uppercase">Data Chart</h4><hr>
+                      </div>
+                      <div class="py-0 ma-0 my-3 col-md-12 col-12">
+                        <GenericChart :selectedTableValueData="this.expensesDataInTable" :key="this.rerenderCount" />
+                      </div>
                     </div>
-                </div>
-                
-                <div class="col-xs-12 col-sm-12 shadow-box mt-4">
-                  Test
+                  </div>
                 </div>
 
                 <!-- One column -->
-                <div class="col-xs-12 col-sm-12 shadow-box mt-4 d-none">
+                <div class="col-xs-12 col-sm-12 shadow-box mt-4">
                   <main class="flex">
                     <div class="flex-item">
-                      <div class="history">
-                        <h5>Last 5 Days Expenses: </h5>
-                        <div class="days-info">
-                          <span>Food:</span><br>
-                          <span>Travelling:</span><br>
-                          <span>Pocket Money:</span><br>
-                          <span>Food:</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="flex-item">
-                      1
+                      <PieChartVue />
                     </div>
                   </main>
                 </div>
@@ -186,7 +163,7 @@
                                 <td>{{ item.expenses }}</td>
                                 <td>
                                   <button @click="editItem(item)" class="btn btn-secondary btn-sm me-1" style="background: #5f9ea0;">
-                                        <i class="fa fa-pencil"></i>
+                                      <i class="fa fa-pencil"></i>
                                     </button>
                                     <button @click="removeItem(item)" class="btn btn-warning btn-sm ms-1" style="background: #ffb49a">
                                       <i class="fa fa-trash-o" aria-hidden="true"></i>
@@ -201,8 +178,6 @@
                           :class="totalExpenses > this.totalBudget ? 'text-danger' : 'text-primary'"
                           >{{totalExpenses}}/-</span></strong>
                     </div>
-                
-
                 </div>
             </div>
         </div>
@@ -212,7 +187,7 @@
 <script>
     import { useToast } from "vue-toastification";
     import GenericChart from '../ChartGraphs/GenericChart.vue'
-    import PieChartVue from '../ChartGraphs/PieChart.vue'
+    import PieChartVue from '../ChartGraphs/BarChart.vue'
     export default {
         name: 'BudgetStepOne',
         data() {
@@ -473,7 +448,7 @@ div{
 /* body */
 .flex-item {
   width: 100%;
-  height: 300px;
+  /* height: 300px; */
 }
 .flex-item:nth-of-type(2n-1) {
   background-color: #0eadca;
@@ -487,7 +462,7 @@ div{
     flex: 1 1 0;
     /* using flex-sizing above or width below produces the same results */
     /*width: 33.3%;*/
-    height: 200px;
+    /* height: 200px; */
   }
 }
 /* Flex design end */

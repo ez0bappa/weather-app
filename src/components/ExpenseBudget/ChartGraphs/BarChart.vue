@@ -91,18 +91,18 @@ export default {
   data() {
     return {
       chartData: {
-        labels: [this.dates],                                                       //['1/10/2022', '2/10/2022', '3/10/2022']
+        labels: ['Test'],                                                       //['1/10/2022', '2/10/2022', '3/10/2022']
         //datasets: [ { data: this.incomes }, { data: this.expenses } ]
         datasets: [
           {
-            label: this.keyLabel,
+            label: ['Bappa'],
             backgroundColor: ['#f87979', '#fff', '#6610f2'],
             data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
           }
         ],
       },
       chartOptions: {
-        responsive: true,
+        responsive: false,
         maintainAspectRatio: false
       },
     };
