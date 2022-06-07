@@ -253,33 +253,57 @@
           }]
           
           // Category wise pie chart data
-          this.categoryData.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
 
-          let checkItemByKey = this.expensesDataInTable.filter(item => {
-            if(item.date === this.dateSelected) {
-              console.log('12345', item)
-            }
-          })
+          // let checkItemByDateAndKey = this.expensesDataInTable.filter(item => {
+          //   item.date === this.dateSelected && item.key === key
+          // })
 
+          // let checkIsItemInTableByDateAndKey = checkItemByDateAndKey.length > 0
 
+          // this.categoryData.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
 
-          // console.log(this.categoryData)
+          // console.log(checkIsItemInTableByDateAndKey)
 
           // Insert data into the base table
           if(this.expensesDataInTable) {
-            let checkItemByKey = this.expensesDataInTable.filter(item => item.key === key && item.date === this.dateSelected)
-            let checkIsItemInTable = checkItemByKey.length > 0
+            let checkItemByKey = this.expensesDataInTable.filter(item => item.key === key)
+            let checkItemByDate = this.expensesDataInTable.filter(item => item.date === this.dateSelected)
             
-            if(checkIsItemInTable === false) {
+            
+            let checkIsItemByKeyInTable = checkItemByKey.length > 0
+            let checkIsItemByDateInTable = checkItemByDate.length > 0
+
+
+            // console.log('Same key exists', checkIsItemByKeyInTable)
+            // console.log('Same date exists', checkIsItemByDateInTable)
+
+            if(checkIsItemByKeyInTable === false && checkIsItemByDateInTable === false) {
               this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
               this.expenses = ''
-            } else {
+            } else if(checkIsItemByKeyInTable === true && checkIsItemByDateInTable === false) {
+              this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
+              this.expenses = ''
+            } else if(checkIsItemByKeyInTable === false && checkIsItemByDateInTable === true) {
+              this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
+              this.expenses = ''
+            } else if(checkIsItemByKeyInTable === true && checkIsItemByDateInTable === true) {
               this.expensesDataInTable.filter(item => {
                 if(item.key === checkItem[0].key) {
                   item.expenses += checkItem[0].expenses
                 }
               })
             }
+            
+            // if(checkIsItemByKeyInTable === false) {
+            //   this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
+            //   this.expenses = ''
+            // } else {
+            //   this.expensesDataInTable.filter(item => {
+            //     if(item.key === checkItem[0].key) {
+            //       item.expenses += checkItem[0].expenses
+            //     }
+            //   })
+            // }
           }
 
           this.rerenderCount++
