@@ -185,9 +185,9 @@
 </template>
 
 <script>
-    import { useToast } from "vue-toastification";
+    import { useToast } from "vue-toastification"
     import GenericChart from '../ChartGraphs/GenericChart.vue'
-    import PieChartVue from '../ChartGraphs/BarChart.vue'
+    import PieChartVue from '../ChartGraphs/PieChart.vue'
     export default {
         name: 'BudgetStepOne',
         data() {
@@ -201,10 +201,10 @@
                 expenses: '',
                 rerenderCount: 0,
                 defaultCategories: [
-                    { key: 'travelling', value: 'Travelling'},
-                    { key: 'food', value: 'Food'},
-                    { key: 'pocket-money', value: 'Pocket Money'},
-                    { key: 'room-expenses', value: 'Room Expenses'},
+                  { key: 'travelling', value: 'Travelling'},
+                  { key: 'food', value: 'Food'},
+                  { key: 'pocket-money', value: 'Pocket Money'},
+                  { key: 'room-expenses', value: 'Room Expenses'},
                 ],
                 toast: useToast()
             }
@@ -229,8 +229,8 @@
               // var result = this.defaultCategories.some(o => this.addedNewCategory.replace(/\s+/g, '-').toLowerCase() in o)
           },
           changeCategory(event) {
-              this.selectedCategoryValue = event.target.options[event.target.options.selectedIndex].text
-              this.selectedCategoryKey = event.target.value
+            this.selectedCategoryValue = event.target.options[event.target.options.selectedIndex].text
+            this.selectedCategoryKey = event.target.value
           },
           addItem(key, value) {
             console.log(this.expenses)

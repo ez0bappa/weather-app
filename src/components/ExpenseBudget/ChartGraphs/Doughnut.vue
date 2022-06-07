@@ -39,11 +39,11 @@ export default {
     },
     width: {
       type: Number,
-      default: 120
+      default: 300
     },
     height: {
       type: Number,
-      default: 120
+      default: 300
     },
     cssClasses: {
       default: '',
@@ -82,8 +82,8 @@ export default {
         ]
       },
       chartOptions: {
-        responsive: true,
-        maintainAspectRatio: true
+        responsive: false,
+        maintainAspectRatio: false
       }
     }
   }

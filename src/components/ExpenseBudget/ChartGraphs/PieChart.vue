@@ -83,15 +83,13 @@ export default {
   data() {
     return {
       chartData: {
-        labels: [
-            'Food'              
-        ],
+        labels: ['Food', 'Travel', 'Pocket Money', 'Room expenses'],
         //datasets: [ { data: this.incomes }, { data: this.expenses } ]
         datasets: [
           {
-            label: 'Food',
-            backgroundColor: "#41b883",
-            data: [10, 20, 30, 40, 50],
+            label: ['BAPPA'],
+            backgroundColor: ["#495057", "#ffc107", '#198754', '#dc3545'],
+            data: [50, 20, 80, 40],
           }
         ],
       },

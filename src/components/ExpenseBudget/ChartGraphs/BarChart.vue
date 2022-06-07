@@ -49,7 +49,7 @@ export default {
     },
     height: {
       type: Number,
-      default: 400,
+      default: 250,
     },
     cssClasses: {
       default: "",
@@ -91,18 +91,18 @@ export default {
   data() {
     return {
       chartData: {
-        labels: ['Test'],                                                       //['1/10/2022', '2/10/2022', '3/10/2022']
+        labels: ['1/10/2022', '2/10/2022', '3/10/2022'],                       //['1/10/2022', '2/10/2022', '3/10/2022']
         //datasets: [ { data: this.incomes }, { data: this.expenses } ]
         datasets: [
           {
-            label: ['Bappa'],
+            label: 'qwerty',
             backgroundColor: ['#f87979', '#fff', '#6610f2'],
-            data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
-          }
+            data: [40, 20, 12]
+          },
         ],
       },
       chartOptions: {
-        responsive: false,
+        responsive: true,
         maintainAspectRatio: false
       },
     };
