@@ -55,68 +55,68 @@
 
                 <!-- Two column -->
                 <div class="col-xs-12 col-sm-6 shadow-box p-4 budget-log-section">
-                    <form method="post">
-                        <div class="box">
-                            <div class="row">
-                                <div class="header">
-                                    <h4 class="text-uppercase text-white">Budget Log</h4><hr>
-                                    <p v-if="formErrors.length" class="text-danger">
-                                      <!-- <b>Please correct the error</b> -->
-                                      <ul style="list-style-type:none;">
-                                        <li v-for="e in formErrors" v-bind:key="e.id">
-                                          <div class="form-error-message">
-                                            <!-- {{ e }} -->
-                                            <div class="generic" v-if="e.monthlyIncome">{{e.monthlyIncome}}</div>
-                                            <div class="generic" v-if="e.dateSelected">{{e.dateSelected}}</div>
-                                            <div class="generic" v-if="e.selectedCategoryValue">{{e.selectedCategoryValue}}</div>
-                                            <div class="generic" v-if="e.expenses">{{e.expenses}}</div>
-                                          </div>
-                                        </li>
-                                      </ul>
-                                    </p>
-                                </div>
-                                <div class="py-0 ma-0 my-3 col-md-6 col-12">
-                                    <div class="form-group input-material">
-                                        <div class="form-floating mb-3">
-                                          <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
-                                              <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
-                                                  {{ category.value }}
-                                              </option>
-                                          </select>
-
-                                          <!-- <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
-                                            <option v-for="option in defaultCategories" v-bind:key="option">
-                                              {{ option.value }}
-                                            </option>
-                                            </select>
-                                            <label for="">Choose your expenses</label> -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="py-0 ma-0 my-3 col-md-6 col-12">
-                                  <div class="form-floating mb-3">
-                                    <input type="date" id="date_picker" class="form-control"  v-model="dateSelected">
-                                    <label for="floatingInput">Date</label>
+                  <form method="post">
+                    <div class="box">
+                      <div class="row">
+                        <div class="header">
+                            <h4 class="text-uppercase text-white">Budget Log</h4><hr>
+                            <p v-if="formErrors.length" class="text-danger">
+                              <!-- <b>Please correct the error</b> -->
+                              <ul style="list-style-type:none;">
+                                <li v-for="e in formErrors" v-bind:key="e.id">
+                                  <div class="form-error-message">
+                                    <!-- {{ e }} -->
+                                    <div class="generic" v-if="e.monthlyIncome">{{e.monthlyIncome}}</div>
+                                    <div class="generic" v-if="e.dateSelected">{{e.dateSelected}}</div>
+                                    <div class="generic" v-if="e.selectedCategoryValue">{{e.selectedCategoryValue}}</div>
+                                    <div class="generic" v-if="e.expenses">{{e.expenses}}</div>
                                   </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                              <div class="py-0 ma-0 my-3 col-md-6 col-12">
+                                </li>
+                              </ul>
+                            </p>
+                        </div>
+                        <div class="py-0 ma-0 my-3 col-md-6 col-12">
+                            <div class="form-group input-material">
                                 <div class="form-floating mb-3">
-                                  <input type="number" class="form-control" v-model="expenses">
-                                  <label for="floatingInput">Expenditure</label>
-                                </div>
-                              </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="d-grid gap-2">
-                                  <button class="btn btn-outline-success btn-sm text-upercase" type="button" @click="addItem(this.selectedCategoryKey, this.selectedCategoryValue)">Add</button>
+                                  <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
+                                      <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
+                                          {{ category.value }}
+                                      </option>
+                                  </select>
+
+                                  <!-- <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
+                                    <option v-for="option in defaultCategories" v-bind:key="option">
+                                      {{ option.value }}
+                                    </option>
+                                    </select>
+                                    <label for="">Choose your expenses</label> -->
                                 </div>
                             </div>
                         </div>
-                    </form>
+                        <div class="py-0 ma-0 my-3 col-md-6 col-12">
+                          <div class="form-floating mb-3">
+                            <input type="date" id="date_picker" class="form-control"  v-model="dateSelected">
+                            <label for="floatingInput">Date</label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="py-0 ma-0 my-3 col-md-6 col-12">
+                          <div class="form-floating mb-3">
+                            <input type="number" class="form-control" v-model="expenses">
+                            <label for="floatingInput">Expenditure</label>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="d-grid gap-2">
+                          <button class="btn btn-outline-success btn-sm text-upercase" type="button" @click="addItem(this.selectedCategoryKey, this.selectedCategoryValue)">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
                 </div>
                     
                 <div class="col-xs-12 col-sm-6 shadow-box p-4 text-white chart-section">
@@ -133,51 +133,52 @@
                 </div>
 
                 <!-- One column -->
-                <div class="col-xs-12 col-sm-12 shadow-box mt-4">
+                <PieChartVue :data="this.categoryData" :key="this.rerenderCount" />
+
+                <!-- <div class="col-xs-12 col-sm-12 shadow-box mt-4 d-none">
                   <main class="flex">
                     <div class="flex-item">
-                      <PieChartVue />
                     </div>
                   </main>
-                </div>
+                </div> -->
 
                 <!-- One column -->
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4">
-                    <h4 class="text-uppercase">Table section</h4>
-                    <table class="table caption-top">
-                        <caption class="list-user-caption text-end">List of expenses</caption>
-                        <thead>
-                            <tr>
-                              <th scope="col">#(ID)</th>
-                              <th scope="col">category</th>
-                              <th scope="col">Date</th>
-                              <th scope="col">Expenditure</th>
-                              <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(item, index) in expensesDataInTable" :key="index">
-                                <th scope="row">{{ index + 1 }}</th>
-                                <td>{{ item.category }}</td>
-                                <td>{{ item.date }}</td>
-                                <td>{{ item.expenses }}</td>
-                                <td>
-                                  <button @click="editItem(item)" class="btn btn-secondary btn-sm me-1" style="background: #5f9ea0;">
-                                      <i class="fa fa-pencil"></i>
-                                    </button>
-                                    <button @click="removeItem(item)" class="btn btn-warning btn-sm ms-1" style="background: #ffb49a">
-                                      <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="footer-data text-end">
-                      total:
-                      <strong><span 
-                          :class="totalExpenses > this.totalBudget ? 'text-danger' : 'text-primary'"
-                          >{{totalExpenses}}/-</span></strong>
-                    </div>
+                  <h4 class="text-uppercase">Table section</h4>
+                  <table class="table caption-top">
+                      <caption class="list-user-caption text-end">List of expenses</caption>
+                      <thead>
+                          <tr>
+                            <th scope="col">#(ID)</th>
+                            <th scope="col">category</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Expenditure</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr v-for="(item, index) in expensesDataInTable" :key="index">
+                              <th scope="row">{{ index + 1 }}</th>
+                              <td>{{ item.category }}</td>
+                              <td>{{ item.date }}</td>
+                              <td>{{ item.expenses }}</td>
+                              <td>
+                                <button @click="editItem(item)" class="btn btn-secondary btn-sm me-1" style="background: #5f9ea0;">
+                                    <i class="fa fa-pencil"></i>
+                                  </button>
+                                  <button @click="removeItem(item)" class="btn btn-warning btn-sm ms-1" style="background: #ffb49a">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                  </button>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+                  <div class="footer-data text-end">
+                    total:
+                    <strong><span 
+                        :class="totalExpenses > this.totalBudget ? 'text-danger' : 'text-primary'"
+                        >{{totalExpenses}}/-</span></strong>
+                  </div>
                 </div>
             </div>
         </div>
@@ -185,111 +186,124 @@
 </template>
 
 <script>
-    import { useToast } from "vue-toastification"
-    import GenericChart from '../ChartGraphs/GenericChart.vue'
-    import PieChartVue from '../ChartGraphs/PieChart.vue'
-    export default {
-        name: 'BudgetStepOne',
-        data() {
-            return {
-                monthlyIncome: 2000,
-                addedNewCategory: '',
-                selectedCategoryValue: '',
-                expensesDataInTable: [],
-                dateSelected: '',
-                formErrors: [],
-                expenses: '',
-                rerenderCount: 0,
-                defaultCategories: [
-                  { key: 'travelling', value: 'Travelling'},
-                  { key: 'food', value: 'Food'},
-                  { key: 'pocket-money', value: 'Pocket Money'},
-                  { key: 'room-expenses', value: 'Room Expenses'},
-                ],
-                toast: useToast()
+  import { useToast } from "vue-toastification"
+  import GenericChart from '../ChartGraphs/GenericChart.vue'
+  import PieChartVue from '../ChartGraphs/PieChart.vue'
+  export default {
+    name: 'BudgetStepOne',
+    data() {
+      return {
+          monthlyIncome: 2000,
+          addedNewCategory: '',
+          selectedCategoryValue: '',
+          expensesDataInTable: [],
+          dateSelected: '',
+          formErrors: [],
+          expenses: '',
+          rerenderCount: 0,
+          categoryData: [],
+          defaultCategories: [
+            { key: 'travelling', value: 'Travelling'},
+            { key: 'food', value: 'Food'},
+            { key: 'pocket-money', value: 'Pocket Money'},
+            { key: 'room-expenses', value: 'Room Expenses'},
+          ],
+          toast: useToast()
+      }
+    },
+    components: {
+      GenericChart,
+      PieChartVue,
+    },
+    methods: {
+      addCategory: function() {
+          // console.log('Key:', this.addedNewCategory.replace(/\s+/g, '-').toLowerCase())
+          // console.log('Value: ', this.addedNewCategory)
+          // console.log('defaultCategories:', this.defaultCategories)
+          // var exists = this.addedNewCategory.filter(function (o) {
+          //   return o.hasOwnProperty(this.addedNewCategory.replace(/\s+/g, '-').toLowerCase());
+          // }).length > 0;
+          // if (exists) {
+          //     console.log('exists');
+          // } else {
+          //     console.log('does not exist');
+          // }
+          // var result = this.defaultCategories.some(o => this.addedNewCategory.replace(/\s+/g, '-').toLowerCase() in o)
+      },
+      changeCategory(event) {
+        this.selectedCategoryValue = event.target.options[event.target.options.selectedIndex].text
+        this.selectedCategoryKey = event.target.value
+      },
+      addItem(key, value) {
+        this.formErrors = [];
+        if(!this.monthlyIncome) {
+          this.formErrors.push({monthlyIncome: 'Please enter you Total budget'})
+        } else if(!this.dateSelected) {
+          this.formErrors.push({dateSelected: 'Please select date'})
+        } else if(!this.selectedCategoryValue || this.selectedCategoryValue == null || this.selectedCategoryValue == undefined) {
+          this.formErrors.push({selectedCategoryValue: 'Please select any category'})
+        } else if(!this.expenses) {
+          this.formErrors.push({expenses: 'Please enter your expences for this category'})
+        } else {
+          let checkItem = [{
+            key,
+            category: value,
+            date: this.dateSelected,
+            expenses: this.expenses
+          }]
+          
+          // Category wise pie chart data
+          this.categoryData.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
+
+          let checkItemByKey = this.expensesDataInTable.filter(item => {
+            if(item.date === this.dateSelected) {
+              console.log('12345', item)
             }
-        },
-        components: {
-          GenericChart,
-          PieChartVue,
-        },
-        methods: {
-          addCategory: function() {
-              // console.log('Key:', this.addedNewCategory.replace(/\s+/g, '-').toLowerCase())
-              // console.log('Value: ', this.addedNewCategory)
-              // console.log('defaultCategories:', this.defaultCategories)
-              // var exists = this.addedNewCategory.filter(function (o) {
-              //   return o.hasOwnProperty(this.addedNewCategory.replace(/\s+/g, '-').toLowerCase());
-              // }).length > 0;
-              // if (exists) {
-              //     console.log('exists');
-              // } else {
-              //     console.log('does not exist');
-              // }
-              // var result = this.defaultCategories.some(o => this.addedNewCategory.replace(/\s+/g, '-').toLowerCase() in o)
-          },
-          changeCategory(event) {
-            this.selectedCategoryValue = event.target.options[event.target.options.selectedIndex].text
-            this.selectedCategoryKey = event.target.value
-          },
-          addItem(key, value) {
-            console.log(this.expenses)
-            this.formErrors = [];
-            if(!this.monthlyIncome) {
-              this.formErrors.push({monthlyIncome: 'Please enter you Total budget'})
-            } else if(!this.dateSelected) {
-              this.formErrors.push({dateSelected: 'Please select date'})
-            } else if(!this.selectedCategoryValue || this.selectedCategoryValue == null || this.selectedCategoryValue == undefined) {
-              this.formErrors.push({selectedCategoryValue: 'Please select any category'})
-            } else if(!this.expenses) {
-              this.formErrors.push({expenses: 'Please enter your expences for this category'})
+          })
+
+
+
+          // console.log(this.categoryData)
+
+          // Insert data into the base table
+          if(this.expensesDataInTable) {
+            let checkItemByKey = this.expensesDataInTable.filter(item => item.key === key && item.date === this.dateSelected)
+            let checkIsItemInTable = checkItemByKey.length > 0
+            
+            if(checkIsItemInTable === false) {
+              this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
+              this.expenses = ''
             } else {
-              let checkItem = [{
-                key,
-                category: value,
-                date: this.dateSelected,
-                expenses: this.expenses
-              }]
-              if(this.expensesDataInTable) {
-                let checkItemByKey = this.expensesDataInTable.filter(item => item.key === key)
-                let checkItemByDate = this.expensesDataInTable.filter(item => console.log(item))
-                // console.
-                let checkIsItemInTable = checkItemByKey.length > 0
-                
-                if(checkIsItemInTable === false) {
-                  this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
-                  this.expenses = ''
-                } else {
-                  this.expensesDataInTable.filter(item => {
-                    if(item.key === checkItem[0].key) {
-                      item.expenses += checkItem[0].expenses
-                    }
-                  })
+              this.expensesDataInTable.filter(item => {
+                if(item.key === checkItem[0].key) {
+                  item.expenses += checkItem[0].expenses
                 }
-              }
-              this.rerenderCount++
+              })
             }
-          },
-          removeItem(selData) {
-            if (confirm('Sure to delete')) {
-              this.expensesDataInTable = this.expensesDataInTable.filter((item) => item.key != selData.key)
-              this.toast.warning('Deleted successfully...', {
-                timeout: 1000
-              });
-            }
-            this.rerenderCount++
-          },
-        },
-        computed: {
-          totalExpenses() {  
-            let total = 0;  
-              for(let p of this.expensesDataInTable) {
-                total += p.expenses;        // p.expenses * p.quantity   (if also quantity exists)
-              }  
-            return total;
           }
+
+          this.rerenderCount++
         }
+        
+      },
+      removeItem(selData) {
+        if (confirm('Sure to delete')) {
+          this.expensesDataInTable = this.expensesDataInTable.filter((item) => item.key != selData.key)
+          alert('Deleted successfully...')
+        }
+        this.rerenderCount++
+      },
+    },
+    computed: {
+      totalExpenses() {  
+        let total = 0;  
+          for(let p of this.expensesDataInTable) {
+            total += p.expenses;                          // p.expenses * p.quantity   (if also quantity exists)
+          }  
+        return total;
+      }
     }
+  }
 </script>
 
 <style scoped>
@@ -462,7 +476,7 @@ div{
     flex: 1 1 0;
     /* using flex-sizing above or width below produces the same results */
     /*width: 33.3%;*/
-    /* height: 200px; */
+    height: 275px;
   }
 }
 /* Flex design end */

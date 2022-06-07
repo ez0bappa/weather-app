@@ -78,18 +78,22 @@ export default {
         type: String,
         default: "label",
     },
-   
+
+    data: {
+      type: Array,
+      default: "label"
+    }
   },
   data() {
     return {
       chartData: {
-        labels: ['Food', 'Travel', 'Pocket Money', 'Room expenses'],
+        labels: ['1/10/2022', '2/10/2022', '3/10/2022'],          //['1/10/2022', '2/10/2022', '3/10/2022'], ['Food', 'Travel', 'Pocket Money', 'Room expenses']
         //datasets: [ { data: this.incomes }, { data: this.expenses } ]
         datasets: [
           {
-            label: ['BAPPA'],
-            backgroundColor: ["#495057", "#ffc107", '#198754', '#dc3545'],
-            data: [50, 20, 80, 40],
+            label: ['Food'],
+            backgroundColor: ["#495057", "#ffc107", '#198754'],
+            data: [50, 20, 80],
           }
         ],
       },
@@ -100,7 +104,8 @@ export default {
     };
   },
   mounted() {
-      console.log(this.keyLabel)
+    // console.log('Bappa')
+    // console.log(this.data)
   }
 };
 </script>
