@@ -78,18 +78,18 @@
                         <div class="py-0 ma-0 my-3 col-md-6 col-12">
                             <div class="form-group input-material">
                                 <div class="form-floating mb-3">
-                                  <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
+                                  <!-- <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
                                       <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
                                           {{ category.value }}
                                       </option>
-                                  </select>
+                                  </select> -->
 
-                                  <!-- <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
+                                  <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
                                     <option v-for="option in defaultCategories" v-bind:key="option">
                                       {{ option.value }}
                                     </option>
                                     </select>
-                                    <label for="">Choose your expenses</label> -->
+                                    <label for="">Choose your expenses</label>
                                 </div>
                             </div>
                         </div>
@@ -133,14 +133,13 @@
                 </div>
 
                 <!-- One column -->
-                <PieChartVue :data="this.categoryData" :key="this.rerenderCount" />
-
-                <!-- <div class="col-xs-12 col-sm-12 shadow-box mt-4 d-none">
+                <div class="col-xs-12 col-sm-12 shadow-box mt-4 d-none">
                   <main class="flex">
                     <div class="flex-item">
+                      <PieChartVue :data="this.categoryData" :key="this.rerenderCount" />
                     </div>
                   </main>
-                </div> -->
+                </div>
 
                 <!-- One column -->
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4">
@@ -176,7 +175,7 @@
                   <div class="footer-data text-end">
                     total:
                     <strong><span 
-                        :class="totalExpenses > this.totalBudget ? 'text-danger' : 'text-primary'"
+                        :class="totalExpenses > this.totalBudget ? 'text-danger' : 'text-white'"
                         >{{totalExpenses}}/-</span></strong>
                   </div>
                 </div>
@@ -274,17 +273,21 @@
             let checkIsItemByDateInTable = checkItemByDate.length > 0
 
             if(checkIsItemByKeyInTable === false && checkIsItemByDateInTable === false) {
+              // console.log('new Entry')
               this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
               this.expenses = ''
             } else if(checkIsItemByKeyInTable === true && checkIsItemByDateInTable === false) {
+              console.log('new Entry')
               this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
               this.expenses = ''
             } else if(checkIsItemByKeyInTable === false && checkIsItemByDateInTable === true) {
+              // console.log('new Entry')
               this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
               this.expenses = ''
             } else if(checkIsItemByKeyInTable === true && checkIsItemByDateInTable === true) {
               this.expensesDataInTable.filter(item => {
-                if(item.key === checkItem[0].key && item.date === this.dateSelected) {
+                console.log('Update')
+                if(item.key === checkItem[0].key && item.date === this.dateSelected) {  
                   item.expenses += checkItem[0].expenses
                 }
               })
@@ -308,7 +311,9 @@
       },
       removeItem(selData) {
         if (confirm('Sure to delete')) {
-          this.expensesDataInTable = this.expensesDataInTable.filter((item) => item.key != selData.key)
+          this.expensesDataInTable = this.expensesDataInTable.filter((item) => {
+            console.log(item.key != selData.key)
+          })
           alert('Deleted successfully...')
         }
         this.rerenderCount++
@@ -389,7 +394,7 @@ th {
     box-shadow: 1px 3px 5px rgb(0 0 0 / 33%);
 }
 .header {
-    background: linear-gradient(45deg, black, transparent);
+    background: linear-gradient(180deg, #e11515d6, transparent);
 }
 /* Pie graphs section start */
 /* This is manually added */
