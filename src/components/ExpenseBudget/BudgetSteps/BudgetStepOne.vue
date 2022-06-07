@@ -273,10 +273,6 @@
             let checkIsItemByKeyInTable = checkItemByKey.length > 0
             let checkIsItemByDateInTable = checkItemByDate.length > 0
 
-
-            // console.log('Same key exists', checkIsItemByKeyInTable)
-            // console.log('Same date exists', checkIsItemByDateInTable)
-
             if(checkIsItemByKeyInTable === false && checkIsItemByDateInTable === false) {
               this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
               this.expenses = ''
@@ -288,7 +284,7 @@
               this.expenses = ''
             } else if(checkIsItemByKeyInTable === true && checkIsItemByDateInTable === true) {
               this.expensesDataInTable.filter(item => {
-                if(item.key === checkItem[0].key) {
+                if(item.key === checkItem[0].key && item.date === this.dateSelected) {
                   item.expenses += checkItem[0].expenses
                 }
               })
