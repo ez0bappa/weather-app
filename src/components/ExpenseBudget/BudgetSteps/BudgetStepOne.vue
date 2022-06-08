@@ -80,10 +80,11 @@
                                 <div class="form-floating mb-3">
                                   <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
                                       <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
-                                          {{ category.value }}
+                                          {{ category.key }}
                                       </option>
                                   </select>
-                                  <span>You select - {{ this.selectedCategoryValue }}</span>
+                                  <label for="floatingInput" >select category</label>
+                                  <!-- <span>You select - {{ this.selectedCategoryValue }}</span> -->
 
                                   <!-- <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
                                     <option v-for="option in defaultCategories" v-bind:key="option">
@@ -134,10 +135,11 @@
                 </div>
 
                 <!-- One column -->
-                <div class="col-xs-12 col-sm-12 shadow-box mt-4 d-none">
+                <div class="col-xs-12 col-sm-12 shadow-box mt-4">
                   <main class="flex">
                     <div class="flex-item">
-                      <PieChartVue :data="this.categoryData" :key="this.rerenderCount" />
+                      <PieChartVue :budgetFormData="foodChartData" :key="this.rerenderCount" />
+                      <!-- <pre>{{ JSON.stringify(typeof foodChartData, null, 2) }}</pre> -->
                     </div>
                   </main>
                 </div>
@@ -328,6 +330,18 @@
             total += p.expenses;                          // p.expenses * p.quantity   (if also quantity exists)
           }  
         return total;
+      },
+      foodChartData() {
+        var obj = this.expensesDataInTable.reduce(function(r, e) {
+          // console.log(r, "::" ,e)
+          if (!r[e.key]) r[e.key] = e
+          else r[e.key] = Array.isArray(r[e.key]) ? r[e.key].concat(e) : [r[e.key]].concat(e)
+          return r;
+        }, {})
+
+        var result = Object.keys(obj).map(e => obj[e])
+
+        return result.flat()
       }
     }
   }

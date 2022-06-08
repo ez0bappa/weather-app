@@ -79,8 +79,8 @@ export default {
         default: "label",
     },
 
-    data: {
-      type: Array,
+    budgetFormData: {
+      type: Object,
       default: "label"
     }
   },
@@ -105,7 +105,7 @@ export default {
   },
   mounted() {
     // console.log('Bappa')
-    // console.log(this.data)
+    console.log(this.budgetFormData)
   }
 };
 </script>

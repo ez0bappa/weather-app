@@ -56,7 +56,7 @@
         },
         data: function () {
             return {
-                type: "doughnut2d",                   //pie2d, column2d, doughnut2d
+                type: "column2d",                   //pie2d, column2d, doughnut2d
                 renderAt: 'chart-container',
                 id: 'myChart',
                 width: "6000",
@@ -97,9 +97,9 @@
         created: function() {
             if(this.selectedTableValueData) {
                 let itemArr = this.selectedTableValueData.map(item => {
-                return {
-                    label: item.category,
-                    value: item.expenses,
+                    return {
+                        label: item.category,
+                        value: item.expenses,
                     }
                 });
                 this.dataSource.data = itemArr
