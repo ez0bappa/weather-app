@@ -1,7 +1,7 @@
 <template>
     <div class="header-menu">
         <header>
-            <router-link class="logo text-white" to="/">Bappa</router-link>
+            <router-link class="logo text-white" to="/"><img class="img-thumbnail" src="../../../assets/images/logo3.png"/></router-link>
             
             <div class="hamburger-on"></div>
             <ul class="nav-links">
@@ -32,7 +32,6 @@
 
             let hambugerOpen = false;
             hamburger.addEventListener("click", function() {
-                console.log('test')
                 if(!hambugerOpen) {
                     navLinks.classList.toggle("show-navlinks")
                     hamburger.classList.toggle('hamburger-off')
@@ -67,6 +66,12 @@ header{
     transition: 250ms;
     background: linear-gradient(180deg, #b483aa, transparent);
     background-color: #000000b5;
+}
+
+img.img-thumbnail {
+    width: 47px;
+    background: transparent;
+    border: none;
 }
 
 .nav-links{

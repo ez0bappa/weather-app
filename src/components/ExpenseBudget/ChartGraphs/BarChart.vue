@@ -14,6 +14,7 @@
 
 <script>
 import { Bar } from "vue-chartjs";
+import moment from 'moment'
 import {
   Chart as ChartJS,
   Title,
@@ -85,18 +86,28 @@ export default {
 
     data: {
         type: Array
+    },
+
+
+    budgetFormData: {
+      type: Object,
+      default: "label"
     }
    
   },
   data() {
     return {
       chartData: {
-        labels: ['1/10/2022', '2/10/2022', '3/10/2022'],                       //['1/10/2022', '2/10/2022', '3/10/2022']
+        labels: ['1/10/2022', '2/10/2022', '3/10/2022'],                       //['1/10/2022', '2/10/2022', '3/10/2022']      Bar label
+        // labels:  this.budgetFormData.map(function (c) {
+        //   return moment(c.date).format("DD MMM");
+        // }),
+        
         //datasets: [ { data: this.incomes }, { data: this.expenses } ]
         datasets: [
           {
-            label: 'qwerty',
-            backgroundColor: ['#f87979', '#fff', '#6610f2'],
+            label: [this.budgetFormData.category],                                                    //Main Top label
+            backgroundColor: ['#f87979', '#ffc107', '#6610f2'],
             data: [40, 20, 12]
           },
         ],
@@ -108,7 +119,7 @@ export default {
     };
   },
   mounted() {
-      console.log('Bar Chart: ', this.data)
+      console.log('Bar Chart: ', this.budgetFormData)
   }
 };
 </script>

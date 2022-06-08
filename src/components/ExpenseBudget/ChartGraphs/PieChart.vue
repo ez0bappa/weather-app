@@ -101,17 +101,17 @@ export default {
             // backgroundColor: ["#495057", "#ffc107", '#198754'],
             // data: [50, 20, 80],
 
-            label: this.budgetFormData.key,                              //Main Label
-            backgroundColor: ["#495057", "#ffc107", '#198754'],
-            data: this.budgetFormData.date,
-
-            // label: this.budgetFormData.map(function (c) {
-            //   return c.key;
-            // }),
+            // label: this.budgetFormData.key,                              //Main Label
             // backgroundColor: ["#495057", "#ffc107", '#198754'],
-            // data: this.budgetFormData.map(function (r) {
-            //   return r.expenses;
-            // }),
+            // data: this.budgetFormData.date,
+
+            label: this.budgetFormData.map(function (c) {
+              return c.key;
+            }),
+            backgroundColor: ["#495057", "#ffc107", '#198754'],
+            data: this.budgetFormData.map(function (r) {
+              return r.expenses;
+            }),
           }
         ],
       },

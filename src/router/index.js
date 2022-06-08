@@ -8,8 +8,7 @@ import BudgetStepOne from '../components/ExpenseBudget/BudgetSteps/BudgetStepOne
 const routes = [
     {
         path: '/',
-        name: Home,
-        component: Home,
+        redirect: "/budget-manager",
     },
     {
         path: '/weather-app',

@@ -138,8 +138,7 @@
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4 d-none">
                   <main class="flex">
                     <div class="flex-item" v-for="data in foodChartData" :key="data">
-                      <PieChartVue :budgetFormData="data" :key="this.rerenderCount" />
-                      <!-- <pre>{{ JSON.stringify(typeof foodChartData, null, 2) }}</pre> -->
+                      <!-- <PieChartVue :budgetFormData="data" :key="this.rerenderCount" /> -->
                     </div>
                   </main>
                 </div>
@@ -148,7 +147,7 @@
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4">
                   <h4 class="text-uppercase">Table section</h4>
                   <table class="table caption-top" style="background: #449a9deb;">
-                      <caption class="list-user-caption text-end">List of expenses</caption>
+                      <!-- <caption class="list-user-caption text-end">List of expenses</caption> -->
                       <thead class="header text-white">
                           <tr>
                             <th scope="col">#(ID)</th>
@@ -182,6 +181,10 @@
                         >{{totalExpenses}}/-</span></strong>
                   </div>
                 </div>
+
+                <div class="col-xs-12 col-sm-12 shadow-box mt-4">
+                  <pre>{{ JSON.stringify(lastFiveDaysRecord, null, 2) }}</pre>
+                </div>
             </div>
         </div>
     </div>
@@ -191,7 +194,7 @@
   import moment from 'moment'
   import { useToast } from "vue-toastification"
   import GenericChart from '../ChartGraphs/GenericChart.vue'
-  import PieChartVue from '../ChartGraphs/PieChart.vue'
+  import PieChartVue from '../ChartGraphs/BarChart.vue'
   export default {
     name: 'BudgetStepOne',
     data() {
@@ -254,59 +257,53 @@
             date: this.dateSelected,
             expenses: this.expenses
           }]
-          
-          // Category wise pie chart data
-
-          // let checkItemByDateAndKey = this.expensesDataInTable.filter(item => {
-          //   item.date === this.dateSelected && item.key === key
-          // })
-
-          // let checkIsItemInTableByDateAndKey = checkItemByDateAndKey.length > 0
-
-          // this.categoryData.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
-
-          // console.log(checkIsItemInTableByDateAndKey)
 
           // Insert data into the base table
           if(this.expensesDataInTable) {
-            let checkItemByKey = this.expensesDataInTable.filter(item => item.key === key)
-            let checkItemByDate = this.expensesDataInTable.filter(item => item.date === this.dateSelected)
+            // let checkItemByKey = this.expensesDataInTable.filter(item => item.key === key)
+            // let checkItemByDate = this.expensesDataInTable.filter(item => item.date === this.dateSelected)
             
             
-            let checkIsItemByKeyInTable = checkItemByKey.length > 0
-            let checkIsItemByDateInTable = checkItemByDate.length > 0
+            // let checkIsItemByKeyInTable = checkItemByKey.length > 0
+            // let checkIsItemByDateInTable = checkItemByDate.length > 0
 
-            if(checkIsItemByKeyInTable === false && checkIsItemByDateInTable === false) {
-              // console.log('new Entry')
-              this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
-              this.expenses = ''
-            } else if(checkIsItemByKeyInTable === true && checkIsItemByDateInTable === false) {
-              console.log('new Entry')
-              this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
-              this.expenses = ''
-            } else if(checkIsItemByKeyInTable === false && checkIsItemByDateInTable === true) {
-              // console.log('new Entry')
-              this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
-              this.expenses = ''
-            } else if(checkIsItemByKeyInTable === true && checkIsItemByDateInTable === true) {
-              this.expensesDataInTable.filter(item => {
-                console.log('Update')
-                if(item.key === checkItem[0].key && item.date === this.dateSelected) {  
-                  item.expenses += checkItem[0].expenses
-                }
-              })
-            }
-            
-            // if(checkIsItemByKeyInTable === false) {
+            // if(checkIsItemByKeyInTable === false && checkIsItemByDateInTable === false) {
+            //   // console.log('new Entry')
             //   this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
             //   this.expenses = ''
-            // } else {
+            // } else if(checkIsItemByKeyInTable === true && checkIsItemByDateInTable === false) {
+            //   console.log('new Entry')
+            //   this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
+            //   this.expenses = ''
+            // } else if(checkIsItemByKeyInTable === false && checkIsItemByDateInTable === true) {
+            //   // console.log('new Entry')
+            //   this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
+            //   this.expenses = ''
+            // } else if(checkIsItemByKeyInTable === true && checkIsItemByDateInTable === true) {
             //   this.expensesDataInTable.filter(item => {
-            //     if(item.key === checkItem[0].key) {
+            //     console.log('Update')
+            //     if(item.key === checkItem[0].key && item.date === this.dateSelected) {  
             //       item.expenses += checkItem[0].expenses
             //     }
             //   })
             // }
+
+            
+
+            let result = this.expensesDataInTable.filter(item => {
+              return item.date === this.dateSelected && item.category === this.selectedCategoryValue
+            })
+
+            if(result.length == 0) {
+              this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'date': this.dateSelected, 'category': this.selectedCategoryValue, 'expenses': this.expenses})
+            } else {
+              let index = this.expensesDataInTable.findIndex((removeItem) => {
+                return removeItem.date === result[0].date && removeItem.category === result[0].category;
+              });
+              this.expensesDataInTable.splice(index, 1)
+              this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'date': this.dateSelected, 'category': this.selectedCategoryValue, 'expenses': Number(this.expenses) + Number(result[0].expenses) })
+            }
+            console.log(this.expensesDataInTable)
           }
 
           this.rerenderCount++
@@ -324,7 +321,8 @@
       },
     },
     computed: {
-      totalExpenses() {  
+      totalExpenses() { 
+        // console.log(this.expensesDataInTable) 
         let total = 0;  
           for(let p of this.expensesDataInTable) {
             total += p.expenses;                          // p.expenses * p.quantity   (if also quantity exists)
@@ -342,6 +340,32 @@
         var result = Object.keys(obj).map(e => obj[e])
 
         return result.flat()
+      },
+      lastFiveDaysRecord() {
+        // let array = [
+        //   {name:"Name1",date:"2018-08-01", optimalValue:"33", realValue:"55"},
+        //   {name:"Name2",date:"2018-08-03", optimalValue:"17", realValue:"23"},
+        //   {name:"Name3",date:"2018-08-01", optimalValue:"23", realValue:"12"},
+        //   {name:"Name4",date:"2018-08-04", optimalValue:"12", realValue:"11"},
+        // ]
+
+        // let array = this.expensesDataInTable
+
+        // let array = [
+        //   {key: 'travelling', category: 'travelling', expenses: 10, date: '2022-06-08'},
+        //   {key: 'food', category: 'food', expenses: 2, date: '2022-06-08'},
+        //   {key: 'pocket-money', category: 'pocket-money', expenses: 1, date: '2022-06-10'},
+        //   {key: 'food', category: 'food', expenses: 15, date: '2022-06-09'}
+        // ]
+        
+        // let result = Object.values(array.reduce((a, {key, date, expenses}) => {
+        //   // console.log(a)
+        //   a[date] = (a[date] || {key, date, expenses: 0});
+        //   a[date].expenses = String(Number(a[date].expenses) + Number(expenses));
+        //   return a;
+        // }, {}));
+            
+        // console.log(result);
       }
     }
   }
