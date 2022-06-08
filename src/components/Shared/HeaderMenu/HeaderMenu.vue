@@ -1,21 +1,21 @@
 <template>
     <div class="header-menu">
         <header>
-            <router-link class="logo" to="/">Bappa</router-link>
+            <router-link class="logo text-white" to="/">Bappa</router-link>
             
             <div class="hamburger-on"></div>
             <ul class="nav-links">
                 <li>
-                    <router-link to="/">Home</router-link>
+                    <router-link to="/" class="menu-link text-white">Home</router-link>
                 </li>
                 <li>
-                    <router-link to="/weather-app">Weather App</router-link>
+                    <router-link to="/weather-app" class="menu-link text-white">Weather App</router-link>
                 </li>
                 <li>
-                    <router-link to="/calculator">Budget App(Depricated)</router-link>
+                    <router-link to="/calculator" class="menu-link text-white">Budget App(Depricated)</router-link>
                 </li>
                 <li>
-                    <router-link to="/budget-app">Budget App(Beta)</router-link>
+                    <router-link to="/budget-app" class="menu-link text-white">Budget App(Beta)</router-link>
                 </li>
             </ul>
         </header>
@@ -65,7 +65,8 @@ header{
     height: 60px;
     top: 0;
     transition: 250ms;
-    background-color: black;
+    background: linear-gradient(180deg, #b483aa, transparent);
+    background-color: #000000b5;
 }
 
 .nav-links{

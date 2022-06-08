@@ -7,7 +7,7 @@
                     <div class="box">
                         <div class="row">
                             <div class="header">
-                                <h4 class="text-uppercase">category</h4><hr>
+                                <h4 class="text-uppercase mt-2">category</h4><hr class="m-0">
                             </div>
 
                             <div class="codepen1-flexbox">
@@ -54,12 +54,12 @@
                 </div>
 
                 <!-- Two column -->
-                <div class="col-xs-12 col-sm-6 shadow-box p-4 budget-log-section">
+                <div class="col-xs-12 col-sm-6 shadow-box budget-log-section">
                   <form method="post">
                     <div class="box">
                       <div class="row">
                         <div class="header">
-                            <h4 class="text-uppercase text-white">Budget Log</h4><hr>
+                            <h4 class="text-uppercase text-white mt-2">Budget Log</h4><hr class="m-0">
                             <p v-if="formErrors.length" class="text-danger">
                               <!-- <b>Please correct the error</b> -->
                               <ul style="list-style-type:none;">
@@ -121,11 +121,11 @@
                   </form>
                 </div>
                     
-                <div class="col-xs-12 col-sm-6 shadow-box p-4 text-white chart-section">
+                <div class="col-xs-12 col-sm-6 shadow-box text-white chart-section">
                   <div class="box">
                     <div class="row">
                       <div class="header">
-                        <h4 class="text-uppercase">Data Chart</h4><hr>
+                        <h4 class="text-uppercase mt-2">Data Chart</h4><hr class="m-0">
                       </div>
                       <div class="py-0 ma-0 my-3 col-md-12 col-12">
                         <GenericChart :selectedTableValueData="this.expensesDataInTable" :key="this.rerenderCount" />
@@ -135,10 +135,10 @@
                 </div>
 
                 <!-- One column -->
-                <div class="col-xs-12 col-sm-12 shadow-box mt-4">
+                <div class="col-xs-12 col-sm-12 shadow-box mt-4 d-none">
                   <main class="flex">
-                    <div class="flex-item">
-                      <PieChartVue :budgetFormData="foodChartData" :key="this.rerenderCount" />
+                    <div class="flex-item" v-for="data in foodChartData" :key="data">
+                      <PieChartVue :budgetFormData="data" :key="this.rerenderCount" />
                       <!-- <pre>{{ JSON.stringify(typeof foodChartData, null, 2) }}</pre> -->
                     </div>
                   </main>
@@ -147,7 +147,7 @@
                 <!-- One column -->
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4">
                   <h4 class="text-uppercase">Table section</h4>
-                  <table class="table caption-top" style="background: lightblue;">
+                  <table class="table caption-top" style="background: #449a9deb;">
                       <caption class="list-user-caption text-end">List of expenses</caption>
                       <thead class="header text-white">
                           <tr>
@@ -155,23 +155,23 @@
                             <th scope="col">category</th>
                             <th scope="col">Date</th>
                             <th scope="col">Expenditure</th>
-                            <th scope="col">Actions</th>
+                            <!-- <th scope="col">Actions</th> -->
                           </tr>
                       </thead>
-                      <tbody>
+                      <tbody style="font-size: 17px;">
                           <tr v-for="(item, index) in expensesDataInTable" :key="index">
                               <th scope="row">{{ index + 1 }}</th>
                               <td>{{ item.category }}</td>
                               <td>{{ item.date }}</td>
                               <td>{{ item.expenses }}</td>
-                              <td>
+                              <!-- <td>
                                 <button @click="editItem(item)" class="btn btn-secondary btn-sm me-1" style="background: #5f9ea0;">
                                     <i class="fa fa-pencil"></i>
                                   </button>
                                   <button @click="removeItem(item)" class="btn btn-warning btn-sm ms-1" style="background: #ffb49a">
                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                   </button>
-                              </td>
+                              </td> -->
                           </tr>
                       </tbody>
                   </table>
@@ -352,9 +352,10 @@
   font-family: monospace;
 }
 .footer-data.text-end {
-    padding-right: 9%;
-    border: none;
-    background: rgb(173, 152, 165);
+  font-size: 17px;
+  padding-right: 9%;
+  border: none;
+  background: rgb(173, 152, 165);
 }
 /* codepen1-flexbox */
 .leftside {
@@ -410,7 +411,9 @@ th {
     box-shadow: 1px 3px 5px rgb(0 0 0 / 33%);
 }
 .header {
-    background: linear-gradient(180deg, #e11515d6, transparent);
+  /* background: linear-gradient(180deg, #e11515d6, transparent); */
+  /* background: linear-gradient(180deg, #b483aa, transparent);
+  background-color: #000000b5; */
 }
 /* Pie graphs section start */
 /* This is manually added */
