@@ -14,6 +14,7 @@
 
 <script>
 import { Bar } from "vue-chartjs";
+import moment from 'moment'
 import {
   Chart as ChartJS,
   Title,
@@ -87,13 +88,23 @@ export default {
   data() {
     return {
       chartData: {
-        labels: ['1/10/2022', '2/10/2022', '3/10/2022'],          //['1/10/2022', '2/10/2022', '3/10/2022'], ['Food', 'Travel', 'Pocket Money', 'Room expenses']
-        //datasets: [ { data: this.incomes }, { data: this.expenses } ]
+        // labels: ['1/10/2022', '2/10/2022', '3/10/2022'],          //['1/10/2022', '2/10/2022', '3/10/2022'], ['Food', 'Travel', 'Pocket Money', 'Room expenses']
+        labels:  this.budgetFormData.map(function (c) {
+          return moment(c.date).format("DD MMM");
+        }),
         datasets: [
           {
-            label: ['Food'],
+            // label: ['Food'],
+            // backgroundColor: ["#495057", "#ffc107", '#198754'],
+            // data: [50, 20, 80],
+
+            label: this.budgetFormData.map(function (c) {
+              return c.key;
+            }),
             backgroundColor: ["#495057", "#ffc107", '#198754'],
-            data: [50, 20, 80],
+            data: this.budgetFormData.map(function (r) {
+              return r.expenses;
+            }),
           }
         ],
       },
@@ -103,9 +114,33 @@ export default {
       },
     };
   },
+  created: function() {
+    if(this.budgetFormData) {   
+      let datasets = this.budgetFormData.map(item => {
+        console.log(item)
+        return {
+            label: item.category,
+            backgroundColor: ["#495057", "#ffc107", '#198754'],
+            data: item.date,
+        }
+      });
+      this.datasets = datasets
+    }
+  },
   mounted() {
     // console.log('Bappa')
-    console.log(this.budgetFormData)
+    // console.log(this.budgetFormData)
+
+    // if(this.budgetFormData) {
+    //   let datasets = this.budgetFormData.map(item => {
+    //     return {
+    //         label: item.category,
+    //         backgroundColor: ["#495057", "#ffc107", '#198754'],
+    //         data: item.date,
+    //     }
+    //   });
+    //   this.datasets = datasets
+    // }
   }
 };
 </script>
