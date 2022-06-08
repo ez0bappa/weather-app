@@ -134,6 +134,11 @@
                   </div>
                 </div>
 
+                
+                <div class="category-date-wise-data mt-3">
+                  <CategoryDateWiseData :dateWiseExpenses="dateWiseExpenses" :categoryWiseExpenses="categoryWiseExpenses" :key="this.rerenderCount" />
+                </div>
+
                 <!-- One column -->
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4 d-none">
                   <main class="flex">
@@ -146,15 +151,14 @@
                 <!-- One column -->
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4">
                   <h4 class="text-uppercase">Table section</h4>
+
                   <table class="table caption-top" style="background: #449a9deb;">
-                      <!-- <caption class="list-user-caption text-end">List of expenses</caption> -->
                       <thead class="header text-white">
                           <tr>
                             <th scope="col">#(ID)</th>
                             <th scope="col">category</th>
                             <th scope="col">Date</th>
                             <th scope="col">Expenditure</th>
-                            <!-- <th scope="col">Actions</th> -->
                           </tr>
                       </thead>
                       <tbody style="font-size: 17px;">
@@ -163,14 +167,6 @@
                               <td>{{ item.category }}</td>
                               <td>{{ item.date }}</td>
                               <td>{{ item.expenses }}</td>
-                              <!-- <td>
-                                <button @click="editItem(item)" class="btn btn-secondary btn-sm me-1" style="background: #5f9ea0;">
-                                    <i class="fa fa-pencil"></i>
-                                  </button>
-                                  <button @click="removeItem(item)" class="btn btn-warning btn-sm ms-1" style="background: #ffb49a">
-                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                  </button>
-                              </td> -->
                           </tr>
                       </tbody>
                   </table>
@@ -180,10 +176,7 @@
                         :class="totalExpenses > this.totalBudget ? 'text-danger' : 'text-white'"
                         >{{totalExpenses}}/-</span></strong>
                   </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-12 shadow-box mt-4">
-                  <pre>{{ JSON.stringify(lastFiveDaysRecord, null, 2) }}</pre>
+                  <!-- <Vue3EasyDataTable :Vue3EasyDataTable="this.expensesDataInTable" :key="this.rerenderCount" /> -->
                 </div>
             </div>
         </div>
@@ -193,6 +186,8 @@
 <script>
   import moment from 'moment'
   import { useToast } from "vue-toastification"
+  import CategoryDateWiseData from '../../ExpenseBudget/BudgetTabledata/CategoryDateWiseData.vue'
+  import Vue3EasyDataTable from '../BudgetTabledata/Vue3EasyDataTable.vue'
   import GenericChart from '../ChartGraphs/GenericChart.vue'
   import PieChartVue from '../ChartGraphs/BarChart.vue'
   export default {
@@ -220,6 +215,8 @@
     components: {
       GenericChart,
       PieChartVue,
+      Vue3EasyDataTable,
+      CategoryDateWiseData
     },
     methods: {
       addCategory: function() {
@@ -260,36 +257,6 @@
 
           // Insert data into the base table
           if(this.expensesDataInTable) {
-            // let checkItemByKey = this.expensesDataInTable.filter(item => item.key === key)
-            // let checkItemByDate = this.expensesDataInTable.filter(item => item.date === this.dateSelected)
-            
-            
-            // let checkIsItemByKeyInTable = checkItemByKey.length > 0
-            // let checkIsItemByDateInTable = checkItemByDate.length > 0
-
-            // if(checkIsItemByKeyInTable === false && checkIsItemByDateInTable === false) {
-            //   // console.log('new Entry')
-            //   this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
-            //   this.expenses = ''
-            // } else if(checkIsItemByKeyInTable === true && checkIsItemByDateInTable === false) {
-            //   console.log('new Entry')
-            //   this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
-            //   this.expenses = ''
-            // } else if(checkIsItemByKeyInTable === false && checkIsItemByDateInTable === true) {
-            //   // console.log('new Entry')
-            //   this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'category': this.selectedCategoryValue, 'expenses': this.expenses, 'date': this.dateSelected})
-            //   this.expenses = ''
-            // } else if(checkIsItemByKeyInTable === true && checkIsItemByDateInTable === true) {
-            //   this.expensesDataInTable.filter(item => {
-            //     console.log('Update')
-            //     if(item.key === checkItem[0].key && item.date === this.dateSelected) {  
-            //       item.expenses += checkItem[0].expenses
-            //     }
-            //   })
-            // }
-
-            
-
             let result = this.expensesDataInTable.filter(item => {
               return item.date === this.dateSelected && item.category === this.selectedCategoryValue
             })
@@ -303,7 +270,6 @@
               this.expensesDataInTable.splice(index, 1)
               this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'date': this.dateSelected, 'category': this.selectedCategoryValue, 'expenses': Number(this.expenses) + Number(result[0].expenses) })
             }
-            console.log(this.expensesDataInTable)
           }
 
           this.rerenderCount++
@@ -341,31 +307,13 @@
 
         return result.flat()
       },
-      lastFiveDaysRecord() {
-        // let array = [
-        //   {name:"Name1",date:"2018-08-01", optimalValue:"33", realValue:"55"},
-        //   {name:"Name2",date:"2018-08-03", optimalValue:"17", realValue:"23"},
-        //   {name:"Name3",date:"2018-08-01", optimalValue:"23", realValue:"12"},
-        //   {name:"Name4",date:"2018-08-04", optimalValue:"12", realValue:"11"},
-        // ]
-
-        // let array = this.expensesDataInTable
-
-        // let array = [
-        //   {key: 'travelling', category: 'travelling', expenses: 10, date: '2022-06-08'},
-        //   {key: 'food', category: 'food', expenses: 2, date: '2022-06-08'},
-        //   {key: 'pocket-money', category: 'pocket-money', expenses: 1, date: '2022-06-10'},
-        //   {key: 'food', category: 'food', expenses: 15, date: '2022-06-09'}
-        // ]
-        
-        // let result = Object.values(array.reduce((a, {key, date, expenses}) => {
-        //   // console.log(a)
-        //   a[date] = (a[date] || {key, date, expenses: 0});
-        //   a[date].expenses = String(Number(a[date].expenses) + Number(expenses));
-        //   return a;
-        // }, {}));
-            
-        // console.log(result);
+      dateWiseExpenses() {
+        const res = Array.from(this.expensesDataInTable.reduce((m, {date, expenses}) => m.set(date, (m.get(date) || 0) + expenses), new Map), ([date, expenses]) => ({date, expenses}));
+        return res
+      },
+      categoryWiseExpenses() {
+        const res = Array.from(this.expensesDataInTable.reduce((m, {category, expenses}) => m.set(category, (m.get(category) || 0) + expenses), new Map), ([category, expenses]) => ({category, expenses}));
+        return res
       }
     }
   }

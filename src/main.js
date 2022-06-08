@@ -15,6 +15,8 @@ import Charts from 'fusioncharts/fusioncharts.charts';                          
 import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';        //import the theme
 
 // Sorting table
+import Vue3EasyDataTable from 'vue3-easy-data-table';
+import 'vue3-easy-data-table/dist/style.css';
 
 
 createApp(App)
@@ -22,4 +24,5 @@ createApp(App)
     .use(createPinia)
     .use(VueFusionCharts, FusionCharts, Charts, FusionTheme)                      // Register VueFusionCharts component
     .use(router)
+    .component('EasyDataTable', Vue3EasyDataTable)
     .mount('#app')
