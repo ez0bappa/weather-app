@@ -152,7 +152,7 @@
                 <div class="col-xs-12 col-sm-12 shadow-box ">
                   <div class="col-12">
                     <pre>You have {{ JSON.stringify(dateWiseExpenses, null, 2) }}</pre>
-                    <PieChartVue :date="dateWiseExpenses" :category="categoryWiseExpenses" :key="this.rerenderCount" />
+                    <PieChartVue :dateWiseExpenses="dateWiseExpenses" :categoryWiseExpenses="categoryWiseExpenses" :key="this.rerenderCount" />
                   </div>
                 </div>
 

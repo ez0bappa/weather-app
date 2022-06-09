@@ -82,8 +82,8 @@ export default {
     },
 
     props: {
-      date: Array,
-      category: Array,
+      dateWiseExpenses: Array,
+      categoryWiseExpenses: Array,
     },
   },
   data() {
@@ -136,7 +136,7 @@ export default {
   //   }
   // },
   mounted() {
-    console.log(this.date)
+    console.log(this.categoryWiseExpenses)
 
     // if(this.budgetFormData) {
     //   let datasets = this.budgetFormData.map(item => {
