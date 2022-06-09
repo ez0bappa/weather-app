@@ -24,4 +24,8 @@
   color: #2c3e50;
   margin-top: 60px;
 }
+
+body{
+  background: linear-gradient(180deg, #e94b83bf, transparent);
+}
 </style>

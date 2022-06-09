@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div class="container p-0">
         <div class="row">
-            <div class="col-6">
-                <div class="container table-responsive py-5">
+            <div class="col-6 category-table">
+                <div class="table-responsive py-5">
                     <h4>Category Wise Expenses</h4>
                     <table class="table table-bordered table-hover">
                         <thead class="thead-dark">
@@ -22,8 +22,8 @@
                     </table>
                 </div>
             </div>
-            <div class="col-6">
-                <div class="container table-responsive py-5">
+            <div class="col-6 date-table">
+                <div class="table-responsive py-5">
                     <h4>Days Wie Expenses</h4>
                     <table class="table table-bordered table-hover">
                         <thead class="thead-dark">
@@ -55,12 +55,14 @@
             categoryWiseExpenses: Array,
         },
         mounted() {
-            console.log('date wise:', this.dateWiseExpenses)
-            console.log('category wise:', this.categoryWiseExpenses)
+            // console.log('date wise:', this.dateWiseExpenses)
+            // console.log('category wise:', this.categoryWiseExpenses)
         }
     }
 </script>
 
 <style scoped>
-
+.category-table, .date-table {
+    background: #f4acc54d;
+}
 </style>

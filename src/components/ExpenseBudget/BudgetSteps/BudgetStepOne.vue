@@ -1,9 +1,13 @@
 <template>
     <div class="budget-step-one mt-5">
         <div class="container">
+            <div class="top-card">
+              <CardInfo :monthlyExpenses="this.monthlyIncome" :totalExpenses="this.totalExpenses" />
+              <PercentageBar :percentage="percentage" />
+            </div>
             <div class="row">
                 <!-- One column -->
-                <div class="col-xs-12 col-sm-12 shadow-box mb-4 text-white category-section">
+                <div class="col-xs-12 col-sm-12 shadow-box mb-4 text-white category-section mt-4">
                     <div class="box">
                         <div class="row">
                             <div class="header">
@@ -151,6 +155,7 @@
                 <!-- One column -->
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4">
                   <h4 class="text-uppercase">Table section</h4>
+                  <!-- <h5><pre>You have {{ JSON.stringify(percentage, null, 2) }}% savings</pre></h5> -->
 
                   <table class="table caption-top" style="background: #449a9deb;">
                       <thead class="header text-white">
@@ -187,6 +192,8 @@
   import moment from 'moment'
   import { useToast } from "vue-toastification"
   import CategoryDateWiseData from '../../ExpenseBudget/BudgetTabledata/CategoryDateWiseData.vue'
+  import CardInfo from '../BudgetSteps/CardInfo.vue'
+  import PercentageBar from '../BudgetSteps/PercentageBar.vue'
   import Vue3EasyDataTable from '../BudgetTabledata/Vue3EasyDataTable.vue'
   import GenericChart from '../ChartGraphs/GenericChart.vue'
   import PieChartVue from '../ChartGraphs/BarChart.vue'
@@ -194,7 +201,7 @@
     name: 'BudgetStepOne',
     data() {
       return {
-          monthlyIncome: 2000,
+          monthlyIncome: '',
           addedNewCategory: '',
           selectedCategoryValue: '',
           expensesDataInTable: [],
@@ -216,22 +223,28 @@
       GenericChart,
       PieChartVue,
       Vue3EasyDataTable,
-      CategoryDateWiseData
+      CategoryDateWiseData,
+      CardInfo,
+      PercentageBar
     },
     methods: {
       addCategory: function() {
-          // console.log('Key:', this.addedNewCategory.replace(/\s+/g, '-').toLowerCase())
-          // console.log('Value: ', this.addedNewCategory)
-          // console.log('defaultCategories:', this.defaultCategories)
-          // var exists = this.addedNewCategory.filter(function (o) {
-          //   return o.hasOwnProperty(this.addedNewCategory.replace(/\s+/g, '-').toLowerCase());
-          // }).length > 0;
-          // if (exists) {
-          //     console.log('exists');
-          // } else {
-          //     console.log('does not exist');
-          // }
-          // var result = this.defaultCategories.some(o => this.addedNewCategory.replace(/\s+/g, '-').toLowerCase() in o)
+        let result = this.defaultCategories.filter(item => {
+          return item.key === this.addedNewCategory.replace(/\s+/g, '-').toLowerCase()
+        })
+
+        if(result.length == 0) {
+          this.defaultCategories.push({key: this.addedNewCategory.replace(/\s+/g, '-').toLowerCase(), value: this.addedNewCategory})
+          this.toast.success('Category Added successfully...', {
+              timeout: 2000
+          });
+          this.addedNewCategory = ''
+        } else {
+          this.toast.warning('Category Already exists!', {
+              timeout: 2000
+          });
+        }
+        
       },
       changeCategory(event) {
         this.selectedCategoryValue = event.target.options[event.target.options.selectedIndex].text
@@ -309,11 +322,17 @@
       },
       dateWiseExpenses() {
         const res = Array.from(this.expensesDataInTable.reduce((m, {date, expenses}) => m.set(date, (m.get(date) || 0) + expenses), new Map), ([date, expenses]) => ({date, expenses}));
+        // let totalExpenses = res.reduce((a, {expenses}) => a + expenses, 0);
+        // console.log(totalExpenses)
         return res
       },
       categoryWiseExpenses() {
         const res = Array.from(this.expensesDataInTable.reduce((m, {category, expenses}) => m.set(category, (m.get(category) || 0) + expenses), new Map), ([category, expenses]) => ({category, expenses}));
         return res
+      },
+      percentage() {
+        const result = 100 - Math.round((this.totalExpenses / this.monthlyIncome) * 100)
+        return result
       }
     }
   }
@@ -362,13 +381,13 @@ th {
   cursor:pointer;
 }
 .chart-section {
-    background: #5f9ea0d9;
+    background: #22b8b833;
 }
 .category-section {
-    background: #008b8be6;
+    background: #18b7b733;;
 }
 .budget-log-section {
-    background: #8b45137a;
+    background: #72767633;
 }
 .gallery {
   /* background: #1d88c2; */

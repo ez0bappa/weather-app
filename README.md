@@ -41,3 +41,7 @@ To run project,
 <!-- npm install vueye-table --save -->
 
 
+<!-- Responsive design -->
+<!-- https://codepen.io/cachewebsites/pen/bZQOPw -->
+
+

@@ -19,7 +19,7 @@
                     </ul>
                 </div> -->
                 <!-- /#sidebar-wrapper -->
-                <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light shadow d-none">
                     <div class="container-fluid sub-header-menu">
                         <a class="navbar-brand" href="#">App version: <span class="badge bg-primary">v5.1.1</span></a>
                         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-content">
@@ -67,11 +67,7 @@
                     </div>
                 </div> -->
 
-                <div class="container">
-                    <div class="row">
-                        <router-view />
-                    </div>
-                </div>
+                <router-view />
                 <!-- /#page-content-wrapper -->
 
             </div>
