@@ -1,4 +1,5 @@
 <template>
+  Test
   <Bar
     :chart-options="chartOptions"
     :chart-data="chartData"
@@ -46,11 +47,11 @@ export default {
     },
     width: {
       type: Number,
-      default: 250,
+      default: 500,
     },
     height: {
       type: Number,
-      default: 250,
+      default: 500,
     },
     cssClasses: {
       default: "",
@@ -80,10 +81,10 @@ export default {
         default: "label",
     },
 
-    budgetFormData: {
-      type: Object,
-      default: "label"
-    }
+    props: {
+      date: Array,
+      category: Array,
+    },
   },
   data() {
     return {
@@ -94,24 +95,24 @@ export default {
         //   return moment(c.date).format("DD MMM");
         // }),
         
-        labels: [this.budgetFormData.key],                                //Bar Label
+        labels: ['Bappa'],                                //Bar Label
         datasets: [
           {
-            // label: ['Food'],
-            // backgroundColor: ["#495057", "#ffc107", '#198754'],
-            // data: [50, 20, 80],
+            label: ['Food'],
+            backgroundColor: ["#495057", "#ffc107", '#198754'],
+            data: [50, 20, 80],
 
             // label: this.budgetFormData.key,                              //Main Label
             // backgroundColor: ["#495057", "#ffc107", '#198754'],
             // data: this.budgetFormData.date,
 
-            label: this.budgetFormData.map(function (c) {
-              return c.key;
-            }),
-            backgroundColor: ["#495057", "#ffc107", '#198754'],
-            data: this.budgetFormData.map(function (r) {
-              return r.expenses;
-            }),
+            // label: this.budgetFormData.map(function (c) {
+            //   return c.key;
+            // }),
+            // backgroundColor: ["#495057", "#ffc107", '#198754'],
+            // data: this.budgetFormData.map(function (r) {
+            //   return r.expenses;
+            // }),
           }
         ],
       },
@@ -135,7 +136,7 @@ export default {
   //   }
   // },
   mounted() {
-    console.log(this.budgetFormData)
+    console.log(this.date)
 
     // if(this.budgetFormData) {
     //   let datasets = this.budgetFormData.map(item => {

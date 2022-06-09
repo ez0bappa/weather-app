@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container pt-4">
+        <div class="container">
             <!-- <h1 class="pen-title">
                 You have <br />
                 Progress
@@ -8,13 +8,14 @@
             <div class="progress-wrapper">
                 <div class="progress-details">
                 <p class="percentage">
-                    {{ this.percentage > 0 ? this.percentage : '100' }}%
+                    {{ this.percentage }}%
+                    <!-- {{ this.percentage > 0 ? this.percentage : '100' }}% -->
                 </p>
                 <span class='description mt-2'>
                     Savings
                 </span>
                 </div>
-                <svg class="progress">
+                <svg class="progress" :style="{'background-color': bgColor ? bgColor : '#3bea077a'}">
                 <circle class="base-circle" />
                 <circle class="progress-circle" />
                 </svg>
@@ -31,7 +32,23 @@
         name: 'PercentageBar',
         props: {
             percentage: Number,
+            perValue: Array
         },
+        data() {
+            return{
+                bgColor: '#13c61394'
+            }
+        },
+        created() {
+          console.log(this.perValue)
+            if(this.percentage == 100) {
+                this.bgColor = 'green'
+            } else if(this.percentage < 100 && this.percentage > 50) {
+                this.bgColor = '#ebeb27b0'
+            } else if(this.percentage < 50) {
+                this.bgColor = '#ef071cb0'
+            }
+        }
     }
 </script>
 

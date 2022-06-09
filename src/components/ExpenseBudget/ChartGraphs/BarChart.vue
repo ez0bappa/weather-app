@@ -89,10 +89,10 @@ export default {
     },
 
 
-    budgetFormData: {
-      type: Object,
-      default: "label"
-    }
+    props: {
+      dateWiseExpenses: Array,
+      categoryWiseExpenses: Array,
+    },
    
   },
   data() {
@@ -106,7 +106,7 @@ export default {
         //datasets: [ { data: this.incomes }, { data: this.expenses } ]
         datasets: [
           {
-            label: [this.budgetFormData.category],                                                    //Main Top label
+            label: ['Bappa'],                                                    //Main Top label
             backgroundColor: ['#f87979', '#ffc107', '#6610f2'],
             data: [40, 20, 12]
           },
@@ -118,8 +118,9 @@ export default {
       },
     };
   },
-  mounted() {
-      console.log('Bar Chart: ', this.budgetFormData)
+  created() {
+      console.log('Bar Chart: ', this.dateWiseExpenses)
+      console.log('Category Chart: ', this.categoryWiseExpenses)
   }
 };
 </script>

@@ -1,9 +1,9 @@
 <template>
-    <div class="container p-0">
+    <div class="container p-0 category-date-table">
         <div class="row">
             <div class="col-6 category-table">
                 <div class="table-responsive py-5">
-                    <h4>Category Wise Expenses</h4>
+                    <h4 class="text-white">Category Wise Expenses</h4><hr>
                     <table class="table table-bordered table-hover">
                         <thead class="thead-dark">
                             <tr>
@@ -24,7 +24,7 @@
             </div>
             <div class="col-6 date-table">
                 <div class="table-responsive py-5">
-                    <h4>Days Wie Expenses</h4>
+                    <h4 class="text-white">Days Wie Expenses</h4><hr>
                     <table class="table table-bordered table-hover">
                         <thead class="thead-dark">
                             <tr>
@@ -62,6 +62,11 @@
 </script>
 
 <style scoped>
+.category-date-table {
+    box-shadow: 5px 5px 5px 0px rgb(0 0 0 / 30%);
+    filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.3));
+}
+
 .category-table, .date-table {
     background: #f4acc54d;
 }

@@ -2,8 +2,7 @@
     <div class="budget-step-one mt-5">
         <div class="container">
             <div class="top-card">
-              <CardInfo :monthlyExpenses="this.monthlyIncome" :totalExpenses="this.totalExpenses" />
-              <PercentageBar :percentage="percentage" />
+              <CardInfo :monthlyExpenses="this.monthlyIncome" :totalExpenses="this.totalExpenses" :categoryLength="this.categoryWiseExpenses.length" />
             </div>
             <div class="row">
                 <!-- One column -->
@@ -11,134 +10,156 @@
                     <div class="box">
                         <div class="row">
                             <div class="header">
-                                <h4 class="text-uppercase mt-2">category</h4><hr class="m-0">
+                              <h4 class="text-uppercase mt-2">Budget App</h4><hr class="m-0">
                             </div>
 
                             <div class="codepen1-flexbox">
-                                <div class="flexbox">
-                                    <div class="leftside">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-floating mb-3">
-                                                    <input type="number" class="form-control monthly-income" v-model="monthlyIncome" placeholder="Total Income">
-                                                    <label for="floatingInput">Total Budget</label>
-                                                </div>
+                              <div class="flexbox">
+                                  <div class="leftside">
+                                      <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="number" class="form-control monthly-income" v-model="monthlyIncome" placeholder="Total Income">
+                                                <label for="floatingInput">Total Budget</label>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="rightside">
-                                        <div class="row">
+
+                                            <div class="form-group input-material">
+                                              <div class="form-floating mb-3">
+                                                <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
+                                                    <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
+                                                        {{ category.key }}
+                                                    </option>
+                                                </select>
+                                                <label for="floatingInput" >select category</label>
+                                                <!-- <span>You select - {{ this.selectedCategoryValue }}</span> -->
+
+                                                <!-- <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
+                                                  <option v-for="option in defaultCategories" v-bind:key="option">
+                                                    {{ option.value }}
+                                                  </option>
+                                                  </select>
+                                                  <label for="">Choose your expenses</label> -->
+                                              </div>
+
+                                              <div class="form-floating mb-3">
+                                                <input type="text" v-model="addedNewCategory" class="form-control">
+                                                <label for="floatingInput" >Add New category</label>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          <div class="col-6">
+                                            <!-- <div class="form-floating mb-3">
+                                                <input class="form-control input-lg" type="text" id="category" placeholder="category" :value="selectedCategoryValue" readonly />
+                                                <label for="floatingInput" >your selected category</label>
+                                            </div> -->
+
+                                            <div class="form-floating mb-3">
+                                              <input type="number" class="form-control" v-model="expenses">
+                                              <label for="floatingInput">Expenditure</label>
+                                            </div>
+
+                                            <div class="form-floating mb-3">
+                                              <input type="date" id="date_picker" class="form-control"  v-model="dateSelected">
+                                              <label for="floatingInput">Date</label>
+                                            </div>
+
+                                            <div class="form-floating mb-3" v-if="addedNewCategory">
+                                              <button 
+                                                v-bind:disabled="addedNewCategory.length == 0"
+                                                @click="addCategory"
+                                                class="btn btn-outline-primary" 
+                                                type="button">Add Category
+                                            </button>
+                                            </div>
                                             
-                                            <div class="col-6">
-                                                <div class="form-floating mb-3">
-                                                    <input type="text" v-model="addedNewCategory" class="form-control">
-                                                    <label for="floatingInput" >Add New category</label>
-                                                </div>
+                                          </div>
+
+                                          <div class="col-12">
+                                            <div class="d-grid gap-2">
+                                              <button class="btn btn-outline-success btn-sm text-upercase" type="button" @click="addItem(this.selectedCategoryKey, this.selectedCategoryValue)">Add</button>
                                             </div>
-                                            <div class="col-6">
-                                                <div class="form-floating mb-3">
-                                                    <input class="form-control input-lg" type="text" id="category" placeholder="category" :value="selectedCategoryValue" readonly />
-                                                    <label for="floatingInput" >your selected category</label>
-                                                </div>
-                                                <div class="d-grid gap-2 col-6 mx-auto" v-if="addedNewCategory.length > 0">
-                                                    <button 
-                                                        v-bind:disabled="addedNewCategory.length == 0"
-                                                        @click="addCategory"
-                                                        class="btn btn-outline-primary btn-sm" 
-                                                        type="button">Add Category
-                                                    </button>
-                                                </div>
+                                          </div>
+
+                                          <div class="col-12">
+                                            <p v-if="formErrors.length" class="text-danger">
+                                                <!-- <b>Please correct the error</b> -->
+                                                <ul style="list-style-type:none;">
+                                                  <li v-for="e in formErrors" v-bind:key="e.id">
+                                                    <div class="form-error-message text-center">
+                                                      <!-- {{ e }} -->
+                                                      <div class="generic" v-if="e.monthlyIncome">{{e.monthlyIncome}}</div>
+                                                      <div class="generic" v-if="e.dateSelected">{{e.dateSelected}}</div>
+                                                      <div class="generic" v-if="e.selectedCategoryValue">{{e.selectedCategoryValue}}</div>
+                                                      <div class="generic" v-if="e.expenses">{{e.expenses}}</div>
+                                                    </div>
+                                                  </li>
+                                                </ul>
+                                              </p>
+                                            <div class="d-grid gap-2 col-6 mx-auto" v-if="addedNewCategory.length > 0">
+                                                
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                            
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="rightside">
+                                      <div class="row">
+                                          <div class="col-12">
+                                            <PercentageBar :percentage="percentage" :perValue="this.CategoryDateWiseData" :key="this.rerenderCount" />
+                                          </div>
+                                          <div class="col-6">
+                                              <!-- Bappa -->
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Two column -->
-                <div class="col-xs-12 col-sm-6 shadow-box budget-log-section">
-                  <form method="post">
+                <div class="col-xs-12 col-sm-12 shadow-box budget-log-section">
+                  <GenericChart :selectedTableValueData="this.expensesDataInTable" :key="this.rerenderCount" />
+                  <!-- <form method="post">
                     <div class="box">
                       <div class="row">
                         <div class="header">
                             <h4 class="text-uppercase text-white mt-2">Budget Log</h4><hr class="m-0">
-                            <p v-if="formErrors.length" class="text-danger">
-                              <!-- <b>Please correct the error</b> -->
-                              <ul style="list-style-type:none;">
-                                <li v-for="e in formErrors" v-bind:key="e.id">
-                                  <div class="form-error-message">
-                                    <!-- {{ e }} -->
-                                    <div class="generic" v-if="e.monthlyIncome">{{e.monthlyIncome}}</div>
-                                    <div class="generic" v-if="e.dateSelected">{{e.dateSelected}}</div>
-                                    <div class="generic" v-if="e.selectedCategoryValue">{{e.selectedCategoryValue}}</div>
-                                    <div class="generic" v-if="e.expenses">{{e.expenses}}</div>
-                                  </div>
-                                </li>
-                              </ul>
-                            </p>
+                            
                         </div>
                         <div class="py-0 ma-0 my-3 col-md-6 col-12">
-                            <div class="form-group input-material">
-                                <div class="form-floating mb-3">
-                                  <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
-                                      <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
-                                          {{ category.key }}
-                                      </option>
-                                  </select>
-                                  <label for="floatingInput" >select category</label>
-                                  <!-- <span>You select - {{ this.selectedCategoryValue }}</span> -->
-
-                                  <!-- <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
-                                    <option v-for="option in defaultCategories" v-bind:key="option">
-                                      {{ option.value }}
-                                    </option>
-                                    </select>
-                                    <label for="">Choose your expenses</label> -->
-                                </div>
-                            </div>
+                            
                         </div>
                         <div class="py-0 ma-0 my-3 col-md-6 col-12">
-                          <div class="form-floating mb-3">
-                            <input type="date" id="date_picker" class="form-control"  v-model="dateSelected">
-                            <label for="floatingInput">Date</label>
-                          </div>
+                          
                         </div>
                       </div>
 
                       <div class="row">
                         <div class="py-0 ma-0 my-3 col-md-6 col-12">
-                          <div class="form-floating mb-3">
-                            <input type="number" class="form-control" v-model="expenses">
-                            <label for="floatingInput">Expenditure</label>
-                          </div>
+                          
                         </div>
                       </div>
                       
                       <div class="row">
-                        <div class="d-grid gap-2">
-                          <button class="btn btn-outline-success btn-sm text-upercase" type="button" @click="addItem(this.selectedCategoryKey, this.selectedCategoryValue)">Add</button>
-                        </div>
+                        
                       </div>
                     </div>
-                  </form>
+                  </form> -->
                 </div>
-                    
-                <div class="col-xs-12 col-sm-6 shadow-box text-white chart-section">
-                  <div class="box">
-                    <div class="row">
-                      <div class="header">
-                        <h4 class="text-uppercase mt-2">Data Chart</h4><hr class="m-0">
-                      </div>
-                      <div class="py-0 ma-0 my-3 col-md-12 col-12">
-                        <GenericChart :selectedTableValueData="this.expensesDataInTable" :key="this.rerenderCount" />
-                      </div>
-                    </div>
+
+                <div class="col-xs-12 col-sm-12 shadow-box ">
+                  <div class="col-12">
+                    <pre>You have {{ JSON.stringify(dateWiseExpenses, null, 2) }}</pre>
+                    <PieChartVue :date="dateWiseExpenses" :category="categoryWiseExpenses" :key="this.rerenderCount" />
                   </div>
                 </div>
 
-                
+                <div class="pie-chart-sect mt-3">
+                  
+                </div>
+
                 <div class="category-date-wise-data mt-3">
                   <CategoryDateWiseData :dateWiseExpenses="dateWiseExpenses" :categoryWiseExpenses="categoryWiseExpenses" :key="this.rerenderCount" />
                 </div>
@@ -147,17 +168,16 @@
                 <div class="col-xs-12 col-sm-12 shadow-box mt-4 d-none">
                   <main class="flex">
                     <div class="flex-item" v-for="data in foodChartData" :key="data">
-                      <!-- <PieChartVue :budgetFormData="data" :key="this.rerenderCount" /> -->
                     </div>
                   </main>
                 </div>
 
                 <!-- One column -->
-                <div class="col-xs-12 col-sm-12 shadow-box mt-4">
-                  <h4 class="text-uppercase">Table section</h4>
+                <div class="col-xs-12 col-sm-12 shadow-box mt-4 generic-table">
+                  <h4 class="text-uppercase mt-3">Table section</h4><hr>
                   <!-- <h5><pre>You have {{ JSON.stringify(percentage, null, 2) }}% savings</pre></h5> -->
 
-                  <table class="table caption-top" style="background: #449a9deb;">
+                  <table class="table caption-top">
                       <thead class="header text-white">
                           <tr>
                             <th scope="col">#(ID)</th>
@@ -196,27 +216,27 @@
   import PercentageBar from '../BudgetSteps/PercentageBar.vue'
   import Vue3EasyDataTable from '../BudgetTabledata/Vue3EasyDataTable.vue'
   import GenericChart from '../ChartGraphs/GenericChart.vue'
-  import PieChartVue from '../ChartGraphs/BarChart.vue'
+  import PieChartVue from '../ChartGraphs/PieChart.vue'
   export default {
     name: 'BudgetStepOne',
     data() {
       return {
-          monthlyIncome: '',
-          addedNewCategory: '',
-          selectedCategoryValue: '',
-          expensesDataInTable: [],
-          dateSelected: moment().format('YYYY-MM-DD'),
-          formErrors: [],
-          expenses: '',
-          rerenderCount: 0,
-          categoryData: [],
-          defaultCategories: [
-            { key: 'travelling', value: 'Travelling'},
-            { key: 'food', value: 'Food'},
-            { key: 'pocket-money', value: 'Pocket Money'},
-            { key: 'room-expenses', value: 'Room Expenses'},
-          ],
-          toast: useToast()
+        monthlyIncome: 100,
+        addedNewCategory: '',
+        selectedCategoryValue: '',
+        expensesDataInTable: [],
+        dateSelected: moment().format('YYYY-MM-DD'),
+        formErrors: [],
+        expenses: 20,
+        rerenderCount: 0,
+        categoryData: [],
+        defaultCategories: [
+          { key: 'travelling', value: 'Travelling'},
+          { key: 'food', value: 'Food'},
+          { key: 'pocket-money', value: 'Pocket Money'},
+          { key: 'room-expenses', value: 'Room Expenses'},
+        ],
+        toast: useToast()
       }
     },
     components: {
@@ -261,13 +281,6 @@
         } else if(!this.expenses) {
           this.formErrors.push({expenses: 'Please enter your expences for this category'})
         } else {
-          let checkItem = [{
-            key,
-            category: value,
-            date: this.dateSelected,
-            expenses: this.expenses
-          }]
-
           // Insert data into the base table
           if(this.expensesDataInTable) {
             let result = this.expensesDataInTable.filter(item => {
@@ -331,8 +344,10 @@
         return res
       },
       percentage() {
-        const result = 100 - Math.round((this.totalExpenses / this.monthlyIncome) * 100)
-        return result
+        // const result = 100 - Math.round((this.totalExpenses / this.monthlyIncome) * 100)
+        // return result
+
+        return (this.monthlyIncome - this.totalExpenses)
       }
     }
   }
@@ -377,6 +392,12 @@
   }
 }
 /* General */
+
+.generic-table {
+    /* background: #449a9deb; */
+    background: #e9c7d2;
+}
+
 th {
   cursor:pointer;
 }
