@@ -3,49 +3,37 @@
         <div id="root">
             <div class="container pt-2">
                 <div class="row align-items-stretch">
-                    <div class="c-dashboardInfo col-lg-3 col-md-6">
+                    <div class="c-dashboardInfo col-lg-3 col-md-6" style="animation: fadeInLeft 2s backwards;">
                         <div class="wrap">
-                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Monthly Income<svg
-                            class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
-                            <path fill="none" d="M0 0h24v24H0z"></path>
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
-                            </path>
-                            </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">₹ {{ this.monthlyExpenses }}</span>
+                          <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Monthly Income (*)
+                            <!-- <svg class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                              <path fill="none" d="M0 0h24v24H0z"></path>
+                              <path
+                                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                              </path>
+                            </svg> -->
+                          </h4>
+                            <span class="hind-font caption-12 c-dashboardInfo__count" style="animation: fadeInLeft 0.7s backwards;">
+                              ₹ {{ this.monthlyExpenses }}
+                            </span>
                         </div>
                     </div>
-                    <div class="c-dashboardInfo col-lg-3 col-md-6">
+                    <div class="c-dashboardInfo col-lg-3 col-md-6" style="animation: fadeInLeft 2s backwards;">
                         <div class="wrap">
-                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Total expenses<svg
-                            class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
-                            <path fill="none" d="M0 0h24v24H0z"></path>
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
-                            </path>
-                            </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">₹ {{ this.totalExpenses }}</span>
-                            <!-- <span class="hind-font caption-12 c-dashboardInfo__subInfo">Last month: ₹ 30</span> -->
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Total Expenses (*)
+                        </h4><span class="hind-font caption-12 c-dashboardInfo__count" style="animation: fadeInLeft 0.7s backwards;">₹ {{ this.totalExpenses }}</span>
                         </div>
                     </div>
-                    <div class="c-dashboardInfo col-lg-3 col-md-6">
-                        <div class="wrap">
-                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Overall Saving<svg
-                            class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
-                            <path fill="none" d="M0 0h24v24H0z"></path>
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
-                            </path>
-                            </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">₹ {{ this.monthlyExpenses - this.totalExpenses  }}</span>
+                    <div class="c-dashboardInfo col-lg-3 col-md-6" style="animation: fadeInRight 2s backwards;">
+                        <div class="wrap" :style="{'background-color': checkOverAllSavingTextColor ? '#f74848c7' : 'white'}"> 
+                          <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Overall savings (*)
+                          </h4><span class="hind-font caption-12 c-dashboardInfo__count" :style="{'color': checkOverAllSavingTextColor ? '#f1e9e9c7' : '#212529'}" style="animation: fadeInLeft 0.7s backwards;">₹ {{ this.monthlyExpenses - this.totalExpenses  }}</span>
                         </div>
                     </div>
-                    <div class="c-dashboardInfo col-lg-3 col-md-6">
+                    <div class="c-dashboardInfo col-lg-3 col-md-6" style="animation: fadeInRight 2s backwards;">
                         <div class="wrap">
-                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Categories Selected<svg
-                            class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
-                            <path fill="none" d="M0 0h24v24H0z"></path>
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
-                            </path>
-                            </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">{{ categoryLength }}</span>
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Categories selected (*)
+                        </h4><span class="hind-font caption-12 c-dashboardInfo__count" style="animation: fadeInLeft 0.7s backwards;">{{ categoryLength }}</span>
                         </div>
                     </div>
                 </div>
@@ -62,6 +50,12 @@
             totalExpenses: Number,
             categoryLength: Number
         },
+        computed: {
+          checkOverAllSavingTextColor() {
+            let result = (this.monthlyExpenses - this.totalExpenses) < 0
+            return result
+          }
+        }
     }
 </script>
 

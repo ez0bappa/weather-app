@@ -8,14 +8,14 @@
                 <li>
                     <router-link to="/" class="menu-link text-white">Home</router-link>
                 </li>
-                <li>
+                <!-- <li>
                     <router-link to="/weather-app" class="menu-link text-white">Weather App</router-link>
                 </li>
                 <li>
                     <router-link to="/calculator" class="menu-link text-white">Budget App(Depricated)</router-link>
-                </li>
+                </li> -->
                 <li>
-                    <router-link to="/budget-app" class="menu-link text-white">Budget App(Beta)</router-link>
+                    <router-link to="/budget-manager" class="menu-link text-white">Budget App(Beta)</router-link>
                 </li>
             </ul>
         </header>
@@ -32,6 +32,7 @@
 
             let hambugerOpen = false;
             hamburger.addEventListener("click", function() {
+                console.log('test')
                 if(!hambugerOpen) {
                     navLinks.classList.toggle("show-navlinks")
                     hamburger.classList.toggle('hamburger-off')
@@ -87,7 +88,7 @@ img.img-thumbnail {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    animation: menu_animation 500ms ease-in-out;
+    animation: menu_animation 2s ease-in-out;
 }
 
 /* We will make nav-links appear only if hamburg menus is clicked */

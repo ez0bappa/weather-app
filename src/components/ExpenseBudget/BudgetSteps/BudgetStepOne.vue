@@ -9,98 +9,83 @@
                 <div class="col-xs-12 col-sm-12 shadow-box mb-4 text-white category-section mt-4">
                     <div class="box">
                         <div class="row">
-                            <div class="header">
-                              <h4 class="text-uppercase mt-2">Budget App</h4><hr class="m-0">
+                            <div class="header category-header">
+                              <h4 class="text-uppercase mt-2" style="animation: fadeInLeft 3s backwards;">Budget App</h4><hr class="m-0">
+                              <span class="add-new-category  mt-2">
+                                <span v-on:click="enabledAddCategoryField = !enabledAddCategoryField" class="btn-shine">New Category</span>
+                              </span>
                             </div>
 
-                            <div class="codepen1-flexbox">
+                            <div class="codeblock-flexbox">
                               <div class="flexbox">
                                   <div class="leftside">
                                       <div class="row">
                                         <div class="col-6">
+                                          <div class="form-floating mb-3">
+                                              <input type="number" class="form-control monthly-income" v-model="monthlyIncome" placeholder="Total Income">
+                                              <label for="floatingInput">Total Budget</label>
+                                          </div>
+
+                                          <div class="form-group">
                                             <div class="form-floating mb-3">
-                                                <input type="number" class="form-control monthly-income" v-model="monthlyIncome" placeholder="Total Income">
-                                                <label for="floatingInput">Total Budget</label>
-                                            </div>
-
-                                            <div class="form-group input-material">
-                                              <div class="form-floating mb-3">
-                                                <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
-                                                    <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
-                                                        {{ category.key }}
-                                                    </option>
-                                                </select>
-                                                <label for="floatingInput" >select category</label>
-                                                <!-- <span>You select - {{ this.selectedCategoryValue }}</span> -->
-
-                                                <!-- <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
-                                                  <option v-for="option in defaultCategories" v-bind:key="option">
-                                                    {{ option.value }}
+                                              <select class="form-control" v-model="selectedCategoryValue" @change="changeCategory($event)">
+                                                  <option v-for="category in defaultCategories" v-bind:value="category.key" :key="category.key">
+                                                      {{ category.key }}
                                                   </option>
-                                                  </select>
-                                                  <label for="">Choose your expenses</label> -->
-                                              </div>
+                                              </select>
+                                              <label for="floatingInput" >select category</label>
+                                            </div>
 
-                                              <div class="form-floating mb-3">
-                                                <input type="text" v-model="addedNewCategory" class="form-control">
-                                                <label for="floatingInput" >Add New category</label>
-                                              </div>
+                                            <div class="form-floating mb-3" v-if="enabledAddCategoryField" style="animation: fadeInRight 2s backwards;">
+                                              <input type="text" v-model="addedNewCategory" class="form-control">
+                                              <label for="floatingInput" >Add New category</label>
                                             </div>
                                           </div>
+                                        </div>
 
-                                          <div class="col-6">
-                                            <!-- <div class="form-floating mb-3">
-                                                <input class="form-control input-lg" type="text" id="category" placeholder="category" :value="selectedCategoryValue" readonly />
-                                                <label for="floatingInput" >your selected category</label>
-                                            </div> -->
+                                        <div class="col-6">
+                                          <div class="form-floating mb-3">
+                                            <input type="number" class="form-control" v-model="expenses">
+                                            <label for="floatingInput">Expenditure</label>
+                                          </div>
 
-                                            <div class="form-floating mb-3">
-                                              <input type="number" class="form-control" v-model="expenses">
-                                              <label for="floatingInput">Expenditure</label>
-                                            </div>
+                                          <div class="form-floating mb-3">
+                                            <input type="date" id="date_picker" class="form-control"  v-model="dateSelected">
+                                            <label for="floatingInput">Date</label>
+                                          </div>
 
-                                            <div class="form-floating mb-3">
-                                              <input type="date" id="date_picker" class="form-control"  v-model="dateSelected">
-                                              <label for="floatingInput">Date</label>
-                                            </div>
-
-                                            <div class="form-floating mb-3" v-if="addedNewCategory">
-                                              <button 
-                                                v-bind:disabled="addedNewCategory.length == 0"
-                                                @click="addCategory"
-                                                class="btn btn-outline-primary" 
-                                                type="button">Add Category
+                                          <div class="form-floating mb-3" v-if="addedNewCategory">
+                                            <button 
+                                              v-bind:disabled="addedNewCategory.length == 0"
+                                              @click="addCategory"
+                                              class="btn btn-outline-primary" 
+                                              type="button">Add Category
                                             </button>
-                                            </div>
-                                            
                                           </div>
+                                        </div>
 
-                                          <div class="col-12">
-                                            <div class="d-grid gap-2">
-                                              <button class="btn btn-outline-success btn-sm text-upercase" type="button" @click="addItem(this.selectedCategoryKey, this.selectedCategoryValue)">Add</button>
-                                            </div>
+                                        <div class="col-12">
+                                          <div class="d-grid gap-2">
+                                            <button class="btn btn-outline-success btn-sm text-upercase" type="button" @click="addItem(this.selectedCategoryKey, this.selectedCategoryValue)">Add</button>
                                           </div>
+                                        </div>
 
-                                          <div class="col-12">
-                                            <p v-if="formErrors.length" class="text-danger">
-                                                <!-- <b>Please correct the error</b> -->
-                                                <ul style="list-style-type:none;">
-                                                  <li v-for="e in formErrors" v-bind:key="e.id">
-                                                    <div class="form-error-message text-center">
-                                                      <!-- {{ e }} -->
-                                                      <div class="generic" v-if="e.monthlyIncome">{{e.monthlyIncome}}</div>
-                                                      <div class="generic" v-if="e.dateSelected">{{e.dateSelected}}</div>
-                                                      <div class="generic" v-if="e.selectedCategoryValue">{{e.selectedCategoryValue}}</div>
-                                                      <div class="generic" v-if="e.expenses">{{e.expenses}}</div>
-                                                    </div>
-                                                  </li>
-                                                </ul>
-                                              </p>
-                                            <div class="d-grid gap-2 col-6 mx-auto" v-if="addedNewCategory.length > 0">
-                                                
-                                            </div>
-                                            
+                                        <div class="col-12">
+                                          <p v-if="formErrors.length" class="text-danger">
+                                            <ul style="list-style-type:none;">
+                                              <li v-for="e in formErrors" v-bind:key="e.id">
+                                                <div class="form-error-message text-center">
+                                                  <div class="generic" v-if="e.monthlyIncome">{{e.monthlyIncome}}</div>
+                                                  <div class="generic" v-if="e.dateSelected">{{e.dateSelected}}</div>
+                                                  <div class="generic" v-if="e.selectedCategoryValue">{{e.selectedCategoryValue}}</div>
+                                                  <div class="generic" v-if="e.expenses">{{e.expenses}}</div>
+                                                </div>
+                                              </li>
+                                            </ul>
+                                          </p>
+                                          <div class="d-grid gap-2 col-6 mx-auto" v-if="addedNewCategory.length > 0">
                                           </div>
+                                        </div>
                                       </div>
                                   </div>
                                   <div class="rightside">
@@ -149,16 +134,12 @@
                   </form> -->
                 </div>
 
-                <div class="col-xs-12 col-sm-12 shadow-box ">
+                <!-- <div class="col-xs-12 col-sm-12 shadow-box ">
                   <div class="col-12">
                     <pre>You have {{ JSON.stringify(dateWiseExpenses, null, 2) }}</pre>
                     <PieChartVue :dateWiseExpenses="dateWiseExpenses" :categoryWiseExpenses="categoryWiseExpenses" :key="this.rerenderCount" />
                   </div>
-                </div>
-
-                <div class="pie-chart-sect mt-3">
-                  
-                </div>
+                </div> -->
 
                 <div class="category-date-wise-data mt-3">
                   <CategoryDateWiseData :dateWiseExpenses="dateWiseExpenses" :categoryWiseExpenses="categoryWiseExpenses" :key="this.rerenderCount" />
@@ -173,12 +154,12 @@
                 </div>
 
                 <!-- One column -->
-                <div class="col-xs-12 col-sm-12 shadow-box mt-4 generic-table">
+                <div class="col-xs-12 col-sm-12 shadow-box mt-4 generic-table pb-3">
                   <h4 class="text-uppercase mt-3">Table section</h4><hr>
                   <!-- <h5><pre>You have {{ JSON.stringify(percentage, null, 2) }}% savings</pre></h5> -->
 
                   <table class="table caption-top">
-                      <thead class="header text-white">
+                      <thead class="header">
                           <tr>
                             <th scope="col">#(ID)</th>
                             <th scope="col">category</th>
@@ -221,13 +202,13 @@
     name: 'BudgetStepOne',
     data() {
       return {
-        monthlyIncome: 100,
+        monthlyIncome: '',
         addedNewCategory: '',
         selectedCategoryValue: '',
         expensesDataInTable: [],
         dateSelected: moment().format('YYYY-MM-DD'),
         formErrors: [],
-        expenses: 20,
+        expenses: '',
         rerenderCount: 0,
         categoryData: [],
         defaultCategories: [
@@ -236,7 +217,8 @@
           { key: 'pocket-money', value: 'Pocket Money'},
           { key: 'room-expenses', value: 'Room Expenses'},
         ],
-        toast: useToast()
+        toast: useToast(),
+        enabledAddCategoryField: false
       }
     },
     components: {
@@ -264,7 +246,7 @@
               timeout: 2000
           });
         }
-        
+        this.enabledAddCategoryField = false
       },
       changeCategory(event) {
         this.selectedCategoryValue = event.target.options[event.target.options.selectedIndex].text
@@ -344,18 +326,21 @@
         return res
       },
       percentage() {
-        // const result = 100 - Math.round((this.totalExpenses / this.monthlyIncome) * 100)
-        // return result
+        const result = Math.round((this.monthlyIncome - this.totalExpenses)/this.monthlyIncome * 100)
+        return (isNaN(result) || !result)  ? '0' : result
 
-        return (this.monthlyIncome - this.totalExpenses)
+        // return (this.monthlyIncome - this.totalExpenses)
       }
     }
   }
 </script>
 
 <style scoped>
-* {
+/* * {
   font-family: monospace;
+} */
+.codeblock-flexbox {
+  filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.3));
 }
 .footer-data.text-end {
   font-size: 17px;
@@ -363,7 +348,7 @@
   border: none;
   background: rgb(173, 152, 165);
 }
-/* codepen1-flexbox */
+/* codeblock-flexbox */
 .leftside {
   background: #000599;
 }
@@ -394,8 +379,9 @@
 /* General */
 
 .generic-table {
-    /* background: #449a9deb; */
-    background: #e9c7d2;
+    /* background: #e9c7d2; */
+    box-shadow: 5px 5px 5px 0px rgb(0 0 0 / 30%);
+    filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.3));
 }
 
 th {
@@ -422,11 +408,14 @@ th {
 .shadow-box{
     box-shadow: 1px 3px 5px rgb(0 0 0 / 33%);
 }
-.header {
-  /* background: linear-gradient(180deg, #e11515d6, transparent); */
-  /* background: linear-gradient(180deg, #b483aa, transparent);
-  background-color: #000000b5; */
+.header.category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #9c8888;
+  padding: 10px 30px;
 }
+
 /* Pie graphs section start */
 /* This is manually added */
 .gallery {
@@ -536,4 +525,69 @@ div{
   }
 }
 /* Flex design end */
+
+/* Shine button design start */
+.btn-shine {
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  padding: 12px 48px;
+  color: #fff;
+  background: linear-gradient(to right, #4d4d4d 0, #fff 10%, #4d4d4d 20%);
+  background-position: 0;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s infinite linear;
+  animation-fill-mode: forwards;
+  -webkit-text-size-adjust: none;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+@-moz-keyframes shine {
+  0% {
+    background-position: 0;
+  }
+  60% {
+    background-position: 180px;
+  }
+  100% {
+    background-position: 180px;
+  }
+}
+@-webkit-keyframes shine {
+  0% {
+    background-position: 0;
+  }
+  60% {
+    background-position: 180px;
+  }
+  100% {
+    background-position: 180px;
+  }
+}
+@-o-keyframes shine {
+  0% {
+    background-position: 0;
+  }
+  60% {
+    background-position: 180px;
+  }
+  100% {
+    background-position: 180px;
+  }
+}
+@keyframes shine {
+  0% {
+    background-position: 0;
+  }
+  60% {
+    background-position: 180px;
+  }
+  100% {
+    background-position: 180px;
+  }
+}
+
+/* Shine button design end */
 </style>

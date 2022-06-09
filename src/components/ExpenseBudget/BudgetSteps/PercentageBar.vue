@@ -39,16 +39,15 @@
                 bgColor: '#13c61394'
             }
         },
-        created() {
-          console.log(this.perValue)
-            if(this.percentage == 100) {
-                this.bgColor = 'green'
-            } else if(this.percentage < 100 && this.percentage > 50) {
-                this.bgColor = '#ebeb27b0'
-            } else if(this.percentage < 50) {
-                this.bgColor = '#ef071cb0'
-            }
-        }
+        mounted() {
+          if(this.percentage == 100) {
+            this.bgColor = 'green'
+          } else if(this.percentage < 100 && this.percentage > 50) {
+            this.bgColor = '#ebeb27b0'
+          } else if(this.percentage < 50) {
+            this.bgColor = '#ef071cb0'
+          }
+        },
     }
 </script>
 
@@ -136,5 +135,10 @@ body {
   stroke-dashoffset: 310.38935382;
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
+}
+
+p.percentage {
+  color: white;
+  margin-bottom: 10px;
 }
 </style>
