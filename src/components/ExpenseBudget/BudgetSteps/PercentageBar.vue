@@ -5,7 +5,7 @@
                 You have <br />
                 Progress
             </h1> -->
-            <div class="progress-wrapper">
+            <div class="progress-wrapper" style="animation: 3s ease 0s 1 normal backwards running fadeInRight;">
                 <div class="progress-details">
                 <p class="percentage">
                     {{ this.percentage }}%
