@@ -25,15 +25,17 @@
                         </div>
                     </div>
                     <div class="c-dashboardInfo col-lg-3 col-md-6" style="animation: fadeInRight 2s backwards;">
-                        <div class="wrap" :style="{'background-color': checkOverAllSavingTextColor ? '#f74848c7' : 'white'}"> 
-                          <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Overall savings (*)
-                          </h4><span class="hind-font caption-12 c-dashboardInfo__count" :style="{'color': checkOverAllSavingTextColor ? '#f1e9e9c7' : '#212529'}" style="animation: fadeInLeft 0.7s backwards;">₹ {{ this.monthlyExpenses - this.totalExpenses  }}</span>
-                        </div>
-                    </div>
-                    <div class="c-dashboardInfo col-lg-3 col-md-6" style="animation: fadeInRight 2s backwards;">
                         <div class="wrap">
                         <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Categories selected (*)
                         </h4><span class="hind-font caption-12 c-dashboardInfo__count" style="animation: fadeInLeft 0.7s backwards;">{{ categoryLength }}</span>
+                        </div>
+                    </div>
+                    <div class="c-dashboardInfo col-lg-3 col-md-6" style="animation: fadeInRight 2s backwards;">
+                        <div class="wrap" :style="{'background-color': checkOverAllSavingTextColor ? this.cardBgColor : 'white'}"> 
+                          <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title" :style="{'color': checkOverAllSavingTextColor ? '#f5f0f0' : '#6c6c6c'}">
+                            {{ checkOverAllSavingTextColor ? `You'r run out of` : 'Overall savings (*)' }}
+                          </h4>
+                          <span class="hind-font caption-12 c-dashboardInfo__count" :style="{'color': checkOverAllSavingTextColor ? '#f1e9e9c7' : '#212529'}" style="animation: fadeInLeft 0.7s backwards;">₹ {{ this.monthlyExpenses - this.totalExpenses  }}</span>
                         </div>
                     </div>
                 </div>
@@ -50,9 +52,26 @@
             totalExpenses: Number,
             categoryLength: Number
         },
+        data() {
+          return {
+            cardBgColor: '#ffffff'
+          }
+        },
         computed: {
           checkOverAllSavingTextColor() {
             let result = (this.monthlyExpenses - this.totalExpenses) < 0
+
+            if((this.monthlyExpenses - this.totalExpenses) < 0 || (this.monthlyExpenses - this.totalExpenses) == 0) {
+              console.log('red')
+              this.cardBgColor = 'red'
+            } else if((this.monthlyExpenses - this.totalExpenses) > 0 && (this.monthlyExpenses - this.totalExpenses) < 50) {
+              console.log('yellow')
+              this.cardBgColor = 'yellow'
+            } else if((this.monthlyExpenses - this.totalExpenses) > 50 && (this.monthlyExpenses - this.totalExpenses) < 100) {
+              console.log('green')
+              this.cardBgColor = 'green'
+            }
+
             return result
           }
         }
@@ -65,7 +84,7 @@
 }
 .c-dashboardInfo .wrap {
   background: #ffffff;
-  box-shadow: 2px 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 15px 20px rgb(0 0 0 / 29%);
   border-radius: 7px;
   text-align: center;
   position: relative;

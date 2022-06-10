@@ -6,7 +6,7 @@
             </div>
             <div class="row">
                 <!-- One column -->
-                <div class="col-xs-12 col-sm-12 shadow-box mb-4 text-white category-section mt-4">
+                <div class="col-xs-12 col-sm-12 shadow-box mb-4 category-section mt-4 budget-app">
                     <div class="box">
                         <div class="row">
                             <div class="header category-header">
@@ -18,7 +18,7 @@
 
                             <div class="codeblock-flexbox">
                               <div class="flexbox">
-                                  <div class="leftside">
+                                  <div class="leftside mt-4">
                                       <div class="row">
                                         <div class="col-6">
                                           <div class="form-floating mb-3">
@@ -45,7 +45,7 @@
 
                                         <div class="col-6">
                                           <div class="form-floating mb-3">
-                                            <input type="number" class="form-control" v-model="expenses">
+                                            <input type="number" class="form-control" v-model="expenses" min="0">
                                             <label for="floatingInput">Expenditure</label>
                                           </div>
 
@@ -65,8 +65,8 @@
                                         </div>
 
                                         <div class="col-12">
-                                          <div class="d-grid gap-2">
-                                            <button class="btn btn-outline-success btn-sm text-upercase" type="button" @click="addItem(this.selectedCategoryKey, this.selectedCategoryValue)">Add</button>
+                                          <div class="d-grid gap-2 mt-4">
+                                            <button class="btn btn-success btn-sm text-upercase border-0" type="button" @click="addItem(this.selectedCategoryKey, this.selectedCategoryValue)" style="font-weight: 700;">Add the expense</button>
                                           </div>
                                         </div>
 
@@ -75,10 +75,10 @@
                                             <ul style="list-style-type:none;">
                                               <li v-for="e in formErrors" v-bind:key="e.id">
                                                 <div class="form-error-message text-center">
-                                                  <div class="generic" v-if="e.monthlyIncome">{{e.monthlyIncome}}</div>
-                                                  <div class="generic" v-if="e.dateSelected">{{e.dateSelected}}</div>
-                                                  <div class="generic" v-if="e.selectedCategoryValue">{{e.selectedCategoryValue}}</div>
-                                                  <div class="generic" v-if="e.expenses">{{e.expenses}}</div>
+                                                  <div class="generic mt-4" v-if="e.monthlyIncome">{{e.monthlyIncome}}</div>
+                                                  <div class="generic mt-4" v-if="e.dateSelected">{{e.dateSelected}}</div>
+                                                  <div class="generic mt-4" v-if="e.selectedCategoryValue">{{e.selectedCategoryValue}}</div>
+                                                  <div class="generic mt-4" v-if="e.expenses">{{e.expenses}}</div>
                                                 </div>
                                               </li>
                                             </ul>
@@ -265,18 +265,23 @@
         } else {
           // Insert data into the base table
           if(this.expensesDataInTable) {
-            let result = this.expensesDataInTable.filter(item => {
-              return item.date === this.dateSelected && item.category === this.selectedCategoryValue
-            })
-
-            if(result.length == 0) {
-              this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'date': this.dateSelected, 'category': this.selectedCategoryValue, 'expenses': this.expenses})
+            
+            if(this.monthlyIncome <= 0){
+              this.formErrors.push({expenses:  `Income can't be less than zero`})
             } else {
-              let index = this.expensesDataInTable.findIndex((removeItem) => {
-                return removeItem.date === result[0].date && removeItem.category === result[0].category;
-              });
-              this.expensesDataInTable.splice(index, 1)
-              this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'date': this.dateSelected, 'category': this.selectedCategoryValue, 'expenses': Number(this.expenses) + Number(result[0].expenses) })
+              let result = this.expensesDataInTable.filter(item => {
+                return item.date === this.dateSelected && item.category === this.selectedCategoryValue
+              })
+
+              if(result.length == 0) {
+                this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'date': this.dateSelected, 'category': this.selectedCategoryValue, 'expenses': this.expenses})
+              } else {
+                let index = this.expensesDataInTable.findIndex((removeItem) => {
+                  return removeItem.date === result[0].date && removeItem.category === result[0].category;
+                });
+                this.expensesDataInTable.splice(index, 1)
+                this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'date': this.dateSelected, 'category': this.selectedCategoryValue, 'expenses': Number(this.expenses) + Number(result[0].expenses) })
+              }
             }
           }
 
@@ -326,8 +331,19 @@
         return res
       },
       percentage() {
-        const result = Math.round((this.monthlyIncome - this.totalExpenses)/this.monthlyIncome * 100)
-        return (isNaN(result) || !result)  ? '0' : result
+        if(this.totalExpenses < 0) {
+          console.log(this.totalExpenses)
+          return 0
+        } 
+        // else if(this.expenses < 0){
+        //   console.log(this.expenses)
+        //   return 0
+        // } 
+        else {
+          const result = Math.round((this.monthlyIncome - this.totalExpenses)/this.monthlyIncome * 100)
+          return (isNaN(result) || !result)  ? '0' : result
+        }
+        
 
         // return (this.monthlyIncome - this.totalExpenses)
       }
@@ -336,16 +352,21 @@
 </script>
 
 <style scoped>
-
+* {
+  font-family: 'Rubik', sans-serif ;
+}
 /* codeblock-flexbox */
 .codeblock-flexbox {
   filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.3));
 }
 .footer-data.text-end {
   font-size: 17px;
+  font-weight: 700;
+  padding: 16px;
   padding-right: 9%;
   border: none;
-  background: rgb(173, 152, 165);
+  color: white;
+  background: #2f4f4f;
 }
 .leftside {
   background: #000599;
@@ -389,7 +410,7 @@ th {
     background: #22b8b833;
 }
 .category-section {
-    background: #18b7b733;;
+    /* background: #18b7b733;; */
 }
 .budget-log-section {
     background: #72767633;
@@ -405,6 +426,7 @@ th {
 }
 .shadow-box{
     box-shadow: 1px 3px 5px rgb(0 0 0 / 33%);
+    border-radius: 15px;
 }
 .header.category-header {
   display: flex;
@@ -425,7 +447,6 @@ th {
   box-sizing:border-box;
 }
 div{
-  font-family:Georgia,TimesNewRoman,'Times New Roman',Times,serif;
   font-size:14px;
   line-height:18px;
 }
@@ -588,4 +609,17 @@ div{
 }
 
 /* Shine button design end */
+
+button.btn.btn-sm.text-upercase {
+  word-spacing: 4px;
+  background: #e67e22;
+  border-radius: 15px;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.budget-app, .budget-log-section{
+  border-radius: 15px;
+}
 </style>

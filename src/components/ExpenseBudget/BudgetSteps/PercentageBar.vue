@@ -67,7 +67,6 @@ html {
 
 body {
   padding: 0 1.5rem;
-  font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f1f1f1;
@@ -101,7 +100,6 @@ body {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  font-family: Helvetica, Arial, sans-serif;
 }
 .progress-wrapper .progress-details .percentage {
   font-size: 40px;

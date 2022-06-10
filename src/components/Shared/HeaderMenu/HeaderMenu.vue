@@ -15,7 +15,7 @@
                     <router-link to="/calculator" class="menu-link text-white">Budget App(Depricated)</router-link>
                 </li> -->
                 <li>
-                    <router-link to="/budget-manager" class="menu-link text-white">Budget App(Beta)</router-link>
+                    <router-link to="/budget-manager" class="menu-link text-white">Budget App</router-link>
                 </li>
             </ul>
         </header>
@@ -51,7 +51,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: cursive;
 }
 
 header{
@@ -65,7 +64,7 @@ header{
     height: 60px;
     top: 0;
     transition: 250ms;
-    background: linear-gradient(180deg, #b483aa, transparent);
+    /* background: linear-gradient(180deg, #b483aa, transparent); */
     background-color: #000000b5;
 }
 
@@ -166,6 +165,10 @@ header ul li a:hover{
     transition: 250ms ease-in-out;
 }
 
+a.menu-link.text-white{
+    font-weight: 700;
+}
+
 /* Now lets do it for bigger screen 
 This code will run only if the screen width is 700px or larger
 */
@@ -190,7 +193,7 @@ This code will run only if the screen width is 700px or larger
     header ul li a{
         padding: 0;
         margin: 5px 25px;
-        font-size: 16px;
+        font-size: 18px;
     }
 
     .hamburger-on{

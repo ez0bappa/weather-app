@@ -72,7 +72,6 @@ html {
 body {
   height: 100%;
   max-height: 100%;
-  font-family: Droid Serif, Georgia, serif;
   font-size: 1.8rem;
   line-height: 1.5em;
   color: #3A4145;
@@ -89,7 +88,6 @@ h2, h3, h4 {
   text-rendering: optimizeLegibility;
   line-height: 1;
   margin-top: 0;
-  font-family: 'Droid Sans', Arial, sans-serif;
   font-weight: 400;
   color: #566160; }
 
@@ -209,7 +207,6 @@ nav a:hover {
   text-decoration: none; }
 
 h3, h4 {
-  font-family: Montserrat, Arial, sans-serif;
   text-transform: uppercase;
   font-weight: 700; }
 
@@ -241,7 +238,6 @@ h2 {
   font-size: 7.4rem;
   font-weight: 700;
   text-transform: uppercase;
-  font-family: Montserrat, Arial, sans-serif;
   text-align: center;
   opacity: 0.95;
   padding: 0 11.4%;

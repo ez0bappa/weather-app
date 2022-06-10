@@ -90,7 +90,6 @@ body{
 	border-radius: var(--border-radius);
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
-	font-family: 'Poppins', sans-serif;
 	text-shadow: 0 0 10px #3498db;
 	background: transparent;
 }

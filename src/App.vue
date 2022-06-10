@@ -17,7 +17,7 @@
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Rubik', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -26,6 +26,6 @@
 }
 
 body{
-  background: linear-gradient(180deg, #e94b83bf, transparent);
+  /* background: linear-gradient(180deg, #e94b83bf, transparent); */
 }
 </style>

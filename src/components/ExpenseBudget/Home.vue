@@ -208,10 +208,6 @@
 /* Sidebar End */
 
 
-
-* {
-  font-family: "Source Sans Pro", "Roboto", Arial, sans-serif;
-}
 @keyframes fadeIn {
   from {
     opacity: 0;

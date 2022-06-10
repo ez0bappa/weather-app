@@ -1,6 +1,5 @@
 <template>
-
-  <h2>Counter test 2</h2>
+  <h3 class="text-center saving" style="color: #686468">Savings in Percentage(%)</h3>
   <CircleProgress
     :percent=percent
     :viewport="true"
@@ -21,17 +20,21 @@ import { ref, onMounted } from "vue";
 import CircleProgress from "vue3-circle-progress";
 import "vue3-circle-progress/dist/circle-progress.css";
 
+
 export default {
   name: "App",
   components: {
     CircleProgress: CircleProgress,
   },
-  setup() {
+  props: {
+    percentage: String
+  },
+  setup(props) {
     const percent = ref('');
 
     onMounted(() => {
       setInterval(() => {
-        percent.value = 100
+        percent.value = props.percentage
       }, 1000);
     });
 
@@ -41,3 +44,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.vue3-circular-progressbar {
+    margin-left: 35%;
+}
+</style>

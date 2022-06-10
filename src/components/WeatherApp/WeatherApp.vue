@@ -477,7 +477,6 @@ nav {
 	border-radius: 4px;
 	box-shadow: 0 1rem 2rem rgba(0, 0, 0, .25);
 
-	font-family: BlinkMacSystemFont, "Segoe UI", sans-serif;
 	/* font-size: 2rem; */
 	color: #fff;
 	text-transform: uppercase;
