@@ -136,7 +136,7 @@
 
                 <!-- <div class="col-xs-12 col-sm-12 shadow-box ">
                   <div class="col-12">
-                    <pre>You have {{ JSON.stringify(dateWiseExpenses, null, 2) }}</pre>
+                    <pre>You have {{ JSON.stringify(percentage, null, 2) }}</pre>
                     <PieChartVue :dateWiseExpenses="dateWiseExpenses" :categoryWiseExpenses="categoryWiseExpenses" :key="this.rerenderCount" />
                   </div>
                 </div> -->
@@ -194,7 +194,7 @@
   import { useToast } from "vue-toastification"
   import CategoryDateWiseData from '../../ExpenseBudget/BudgetTabledata/CategoryDateWiseData.vue'
   import CardInfo from '../BudgetSteps/CardInfo.vue'
-  import PercentageBar from '../BudgetSteps/PercentageBar.vue'
+  import PercentageBar from '../BudgetSteps/PercentageBar1.vue'
   import Vue3EasyDataTable from '../BudgetTabledata/Vue3EasyDataTable.vue'
   import GenericChart from '../ChartGraphs/GenericChart.vue'
   import PieChartVue from '../ChartGraphs/PieChart.vue'
@@ -336,9 +336,8 @@
 </script>
 
 <style scoped>
-/* * {
-  font-family: monospace;
-} */
+
+/* codeblock-flexbox */
 .codeblock-flexbox {
   filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.3));
 }
@@ -348,7 +347,6 @@
   border: none;
   background: rgb(173, 152, 165);
 }
-/* codeblock-flexbox */
 .leftside {
   background: #000599;
 }
