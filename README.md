@@ -22,16 +22,3 @@ To run project,
 
 2. Budget calculator App: 
      Budget App, where we can simply have a budget like specification where we have a total amount and from that totam amount we put how much expenses we have and how much we have left amout. 
-
-
-
-## Reference UI
-> https://www.youtube.com/watch?v=BCNxLtjeniE&ab_channel=CyberJunk
-
-> https://codepen.io/georgemejia/pen/bJvXpb
-
-> https://codepen.io/cch5ng/pen/owLLOv
-
-> https://vue-expense.herokuapp.com/dashboard
-
-
