@@ -238,11 +238,11 @@
         if(result.length == 0) {
           this.defaultCategories.push({key: this.addedNewCategory.replace(/\s+/g, '-').toLowerCase(), value: this.addedNewCategory})
           this.toast.success('Category Added successfully...', {
-              timeout: 2000
+            timeout: 2000
           });
           this.addedNewCategory = ''
         } else {
-          this.toast.warning('Category Already exists!', {
+          this.toast.error('Category Already exists!', {
               timeout: 2000
           });
         }
@@ -265,26 +265,29 @@
         } else {
           // Insert data into the base table
           if(this.expensesDataInTable) {
-            
             if(this.monthlyIncome <= 0){
               this.formErrors.push({expenses:  `Income can't be less than zero`})
             } else {
               let result = this.expensesDataInTable.filter(item => {
                 return item.date === this.dateSelected && item.category === this.selectedCategoryValue
               })
-
               if(result.length == 0) {
                 this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'date': this.dateSelected, 'category': this.selectedCategoryValue, 'expenses': this.expenses})
+                this.toast.success('Expense Added successfully...', {
+                  timeout: 2000
+                })
               } else {
                 let index = this.expensesDataInTable.findIndex((removeItem) => {
                   return removeItem.date === result[0].date && removeItem.category === result[0].category;
-                });
+                })
                 this.expensesDataInTable.splice(index, 1)
                 this.expensesDataInTable.push({'key':this.selectedCategoryValue.replace(/\s+/g, '-').toLowerCase(), 'date': this.dateSelected, 'category': this.selectedCategoryValue, 'expenses': Number(this.expenses) + Number(result[0].expenses) })
+                this.toast.info('Expense updated successfully...', {
+                  timeout: 2000
+                })
               }
             }
           }
-
           this.rerenderCount++
         }
         
@@ -612,6 +615,7 @@ div{
 
 button.btn.btn-sm.text-upercase {
   word-spacing: 4px;
+  line-height: 30px;
   background: #e67e22;
   border-radius: 15px;
   color: white;

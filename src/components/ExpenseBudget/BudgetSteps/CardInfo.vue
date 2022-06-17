@@ -24,13 +24,13 @@
                         </h4><span class="hind-font caption-12 c-dashboardInfo__count" style="animation: fadeInLeft 0.7s backwards;">₹ {{ this.totalExpenses }}</span>
                         </div>
                     </div>
-                    <div class="c-dashboardInfo col-lg-3 col-md-6" style="animation: fadeInRight 2s backwards;">
+                    <div class="c-dashboardInfo col-lg-3 col-md-6" style="animation: fadeInRight 4s backwards;">
                         <div class="wrap">
                         <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Categories selected (*)
                         </h4><span class="hind-font caption-12 c-dashboardInfo__count" style="animation: fadeInLeft 0.7s backwards;">{{ categoryLength }}</span>
                         </div>
                     </div>
-                    <div class="c-dashboardInfo col-lg-3 col-md-6" style="animation: fadeInRight 2s backwards;">
+                    <div class="c-dashboardInfo col-lg-3 col-md-6" style="animation: fadeInRight 4s backwards;">
                         <div class="wrap" :style="{'background-color': checkOverAllSavingTextColor ? this.cardBgColor : 'white'}"> 
                           <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title" :style="{'color': checkOverAllSavingTextColor ? '#f5f0f0' : '#6c6c6c'}">
                             {{ checkOverAllSavingTextColor ? `You'r run out of` : 'Overall savings (*)' }}
