@@ -8,10 +8,10 @@
                 <li>
                     <router-link to="/" class="menu-link text-white">Home</router-link>
                 </li>
-                <!-- <li>
+                <li>
                     <router-link to="/weather-app" class="menu-link text-white">Weather App</router-link>
                 </li>
-                <li>
+                <!-- <li>
                     <router-link to="/calculator" class="menu-link text-white">Budget App(Depricated)</router-link>
                 </li> -->
                 <li>

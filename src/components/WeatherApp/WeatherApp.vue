@@ -181,8 +181,10 @@
 
               // set Backgground image
               if(this.current.condition.text === 'Sunny') {
+                console.log('1')
                 this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/weatherBackground/sunny1.jpg`)).default
               } else if(this.current.condition.text === 'Mist') {
+                console.log('2')
                 this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/weatherBackground/mist2.jpeg`)).default
               } else if(this.current.condition.text === 'Partly cloudy' || this.current.condition.text === 'Cloudy') {
                 this.backgroundImage = (await import(/* @vite-ignore */ `../../assets/images/weatherBackground/cloudy2.jpg`)).default

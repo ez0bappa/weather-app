@@ -15,11 +15,11 @@ const routes = [
         name: WeatherAppVue,
         component: WeatherAppVue,
     },
-    {
-        path: '/calculator',
-        name: oldBudget,
-        component: oldBudget,
-    },
+    // {
+    //     path: '/calculator',
+    //     name: oldBudget,
+    //     component: oldBudget,
+    // },
     {
         path: '/budget-app',
         name: ExpenseBudget,
